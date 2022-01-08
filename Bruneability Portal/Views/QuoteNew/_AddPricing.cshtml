@@ -1,0 +1,127 @@
+﻿
+<div class="modal fade" id="AddPricingMo">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Suggested Price</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body pt-40 pb-30">
+                <form id="vehicleForm" data-toggle="validator">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" style="display:none" id="div1">
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-form-label">Clean Trade-in-Price</label>
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label CTP"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display:none" id="div2">
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-form-label">Average Trade-in-Price</label>
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label ATP"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" style="display:none" id="div3">
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-form-label pr-0">Rough Trade-in-Price</label>
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label RTP"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+
+                        <br class="ui-br">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label">Suggested Price</label>
+                                    <div class="col-sm-7 pl-0">
+                                        <input type="number" class="form-control" id="SuggestedPrice" Placeholder="Suggested Price" validate="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label">Comment</label>
+                                    <div class="col-sm-7 pl-0">
+                                        <textarea type="text" class="form-control" id="Comment" Placeholder="" validate="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-cstm btn-blue btnSavePricing">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/scripts/moment.js"></script>
+<script src="~/scripts/moment.min.js"></script>
+<script>
+
+    
+    var sugPrice = "";
+    var Comment = "";
+    $(document).ready(function () {
+
+
+        var vehicleCondition = $("input[type='radio'][name='Iswhat']:checked").val();
+
+        var clean = $("#clean").val();
+        var average = $("#average").val();
+        var rough = $("#rough").val();
+
+        if (vehicleCondition == "clean") {
+            $("#div1").css('display', 'block')
+        }
+        else if (vehicleCondition == "average") {
+            $("#div2").css('display', 'block')
+        } else if (vehicleCondition == "rough") {
+            $("#div3").css('display', 'block')
+        }
+
+
+
+        sugPrice = $("#hdnPricing").val();
+        Comment = $('#hdnComment').val();
+
+        $(".CTP").text($("#total_cleanvalue").text());
+        $(".ATP").text($("#total_avgvalue").text());
+        $(".RTP").text($("#total_roughvalue").text());
+
+        $("#SuggestedPrice").val(sugPrice == '' ? '' : sugPrice);
+        $('textarea#Comment').val(Comment == '' ? '' : Comment);
+    })
+    $(".btnSavePricing").click(function () {
+        debugger
+        sugPrice = $("#SuggestedPrice").val();
+        Comment = $('textarea#Comment').val();
+        $("#hdnPricing").val(sugPrice);
+        $('#hdnComment').val(Comment);
+
+        $('#AddPricingMo').modal('hide');
+    })
+</script>

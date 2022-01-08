@@ -1,0 +1,1095 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="vt_BraunAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="vt_Conversions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConversionName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Make" Type="nvarchar" MaxLength="200" />
+          <Property Name="MakeID" Type="int" />
+          <Property Name="RetailPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DealerPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="DeletedAt" Type="datetime" />
+          <Property Name="VisualCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="EpicorCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="TierID" Type="int" />
+        </EntityType>
+        <EntityType Name="vt_Deductions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeductionName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="vt_Depreciation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgeInMonths" Type="int" />
+          <Property Name="DepreciationPercent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="DeletedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vt_LinkSecurity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vt_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ViewName" Type="nvarchar" MaxLength="250" />
+          <Property Name="MethodName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="isException" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vt_MarkUp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="MarkUpPercent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MarkUpFixed" Type="int" />
+          <Property Name="Selected" Type="bit" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="DeletedAt" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="vt_Pages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageName" Type="varchar" MaxLength="50" />
+          <Property Name="PageUrl" Type="varchar" MaxLength="50" />
+          <Property Name="Created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vt_QuoteConversions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuoteID" Type="int" />
+          <Property Name="ConversionID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vt_QuoteDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuoteID" Type="int" />
+          <Property Name="ConversionID" Type="int" />
+          <Property Name="DeductionID" Type="int" />
+          <Property Name="ConversionAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DepreciatedAmount" Type="float" />
+          <Property Name="DeductionAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ActualValue" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vt_Quotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="varchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="varchar" MaxLength="100" />
+          <Property Name="SearchType" Type="varchar" MaxLength="100" />
+          <Property Name="SearchTypeID" Type="varchar" MaxLength="100" />
+          <Property Name="Make" Type="varchar" MaxLength="50" />
+          <Property Name="MakeID" Type="int" />
+          <Property Name="Model" Type="varchar" MaxLength="100" />
+          <Property Name="ModelID" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="YearID" Type="int" />
+          <Property Name="Trim" Type="varchar" MaxLength="100" />
+          <Property Name="TrimID" Type="int" />
+          <Property Name="CurrentMilage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StateCode" Type="varchar" MaxLength="50" />
+          <Property Name="CleanTrade" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AverageTrade" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RoughTrade" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RetailTrade" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MarkUpPercent" Type="varchar" MaxLength="50" />
+          <Property Name="MarkUpFixed" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="TotalConversionDeduction" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VinNumber" Type="nvarchar(max)" />
+          <Property Name="RegionVal" Type="nvarchar" MaxLength="50" />
+          <Property Name="RegionText" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edited" Type="datetime" />
+          <Property Name="IsClean" Type="bit" />
+          <Property Name="IsAverage" Type="bit" />
+          <Property Name="IsRough" Type="bit" />
+          <Property Name="IsApproved" Type="bit" />
+          <Property Name="SuggestedPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="ManagerComment" Type="nvarchar(max)" />
+          <Property Name="ManagerID" Type="int" />
+        </EntityType>
+        <EntityType Name="vt_Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="vt_SubDeductions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeductionID" Type="int" />
+          <Property Name="DeductionDetail" Type="varchar" MaxLength="500" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="vt_Tiers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TierName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="vt_UserPermissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageName" Type="varchar" MaxLength="100" />
+          <Property Name="PageURL" Type="varchar" MaxLength="500" />
+          <Property Name="Icon" Type="varchar" MaxLength="150" />
+          <Property Name="Group" Type="int" />
+          <Property Name="Order" Type="int" />
+          <Property Name="Controller" Type="varchar" MaxLength="250" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="vt_UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="State" Type="varchar" MaxLength="100" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="100" />
+          <Property Name="Address1" Type="varchar" MaxLength="100" />
+          <Property Name="Address2" Type="varchar" MaxLength="100" />
+          <Property Name="JoiningDate" Type="varchar" MaxLength="50" />
+          <Property Name="IsApproved" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="DeviceType" Type="varchar" MaxLength="50" />
+          <Property Name="DeviceToken" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerId" Type="int" />
+          <Property Name="ManagerStatus" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_vt_Log_vt_UserProfile">
+          <End Role="vt_UserProfile" Type="Self.vt_UserProfile" Multiplicity="0..1" />
+          <End Role="vt_Log" Type="Self.vt_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_Log">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteConversions_vt_Conversions">
+          <End Role="vt_Conversions" Type="Self.vt_Conversions" Multiplicity="0..1" />
+          <End Role="vt_QuoteConversions" Type="Self.vt_QuoteConversions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Conversions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteConversions">
+              <PropertyRef Name="ConversionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteConversions_vt_Quotes">
+          <End Role="vt_Quotes" Type="Self.vt_Quotes" Multiplicity="0..1" />
+          <End Role="vt_QuoteConversions" Type="Self.vt_QuoteConversions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Quotes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteConversions">
+              <PropertyRef Name="QuoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteDeduction_vt_Conversions">
+          <End Role="vt_Conversions" Type="Self.vt_Conversions" Multiplicity="0..1" />
+          <End Role="vt_QuoteDeduction" Type="Self.vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Conversions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="ConversionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteDeduction_vt_Deductions">
+          <End Role="vt_Deductions" Type="Self.vt_Deductions" Multiplicity="0..1" />
+          <End Role="vt_QuoteDeduction" Type="Self.vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Deductions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="DeductionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteDeduction_vt_Quotes">
+          <End Role="vt_Quotes" Type="Self.vt_Quotes" Multiplicity="0..1" />
+          <End Role="vt_QuoteDeduction" Type="Self.vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Quotes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="QuoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_Role_vt_UserProfile">
+          <End Role="vt_Roles" Type="Self.vt_Roles" Multiplicity="0..1" />
+          <End Role="vt_UserProfile" Type="Self.vt_UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_UserProfile">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_SubDeductions_vt_Deductions">
+          <End Role="vt_Deductions" Type="Self.vt_Deductions" Multiplicity="0..1" />
+          <End Role="vt_SubDeductions" Type="Self.vt_SubDeductions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Deductions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_SubDeductions">
+              <PropertyRef Name="DeductionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_UserPermissions_vt_Role">
+          <End Role="vt_Roles" Type="Self.vt_Roles" Multiplicity="1" />
+          <End Role="vt_UserPermissions" Type="Self.vt_UserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_UserPermissions">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="vt_BraunAppModelStoreContainer">
+          <EntitySet Name="vt_Conversions" EntityType="Self.vt_Conversions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Deductions" EntityType="Self.vt_Deductions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Depreciation" EntityType="Self.vt_Depreciation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_LinkSecurity" EntityType="Self.vt_LinkSecurity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Log" EntityType="Self.vt_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_MarkUp" EntityType="Self.vt_MarkUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Pages" EntityType="Self.vt_Pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_QuoteConversions" EntityType="Self.vt_QuoteConversions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_QuoteDeduction" EntityType="Self.vt_QuoteDeduction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Quotes" EntityType="Self.vt_Quotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Roles" EntityType="Self.vt_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_SubDeductions" EntityType="Self.vt_SubDeductions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_Tiers" EntityType="Self.vt_Tiers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_UserPermissions" EntityType="Self.vt_UserPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vt_UserProfile" EntityType="Self.vt_UserProfile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_vt_Log_vt_UserProfile" Association="Self.FK_vt_Log_vt_UserProfile">
+            <End Role="vt_UserProfile" EntitySet="vt_UserProfile" />
+            <End Role="vt_Log" EntitySet="vt_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteConversions_vt_Conversions" Association="Self.FK_vt_QuoteConversions_vt_Conversions">
+            <End Role="vt_Conversions" EntitySet="vt_Conversions" />
+            <End Role="vt_QuoteConversions" EntitySet="vt_QuoteConversions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteConversions_vt_Quotes" Association="Self.FK_vt_QuoteConversions_vt_Quotes">
+            <End Role="vt_Quotes" EntitySet="vt_Quotes" />
+            <End Role="vt_QuoteConversions" EntitySet="vt_QuoteConversions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Conversions" Association="Self.FK_vt_QuoteDeduction_vt_Conversions">
+            <End Role="vt_Conversions" EntitySet="vt_Conversions" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Deductions" Association="Self.FK_vt_QuoteDeduction_vt_Deductions">
+            <End Role="vt_Deductions" EntitySet="vt_Deductions" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Quotes" Association="Self.FK_vt_QuoteDeduction_vt_Quotes">
+            <End Role="vt_Quotes" EntitySet="vt_Quotes" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_Role_vt_UserProfile" Association="Self.FK_vt_Role_vt_UserProfile">
+            <End Role="vt_Roles" EntitySet="vt_Roles" />
+            <End Role="vt_UserProfile" EntitySet="vt_UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_SubDeductions_vt_Deductions" Association="Self.FK_vt_SubDeductions_vt_Deductions">
+            <End Role="vt_Deductions" EntitySet="vt_Deductions" />
+            <End Role="vt_SubDeductions" EntitySet="vt_SubDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_UserPermissions_vt_Role" Association="Self.FK_vt_UserPermissions_vt_Role">
+            <End Role="vt_Roles" EntitySet="vt_Roles" />
+            <End Role="vt_UserPermissions" EntitySet="vt_UserPermissions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="vt_BraunAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="vt_BraunAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vt_Deductions" EntityType="vt_BraunAppModel.vt_Deductions" />
+          <EntitySet Name="vt_Depreciation" EntityType="vt_BraunAppModel.vt_Depreciation" />
+          <EntitySet Name="vt_LinkSecurity" EntityType="vt_BraunAppModel.vt_LinkSecurity" />
+          <EntitySet Name="vt_Log" EntityType="vt_BraunAppModel.vt_Log" />
+          <EntitySet Name="vt_MarkUp" EntityType="vt_BraunAppModel.vt_MarkUp" />
+          <EntitySet Name="vt_Pages" EntityType="vt_BraunAppModel.vt_Pages" />
+          <EntitySet Name="vt_QuoteConversions" EntityType="vt_BraunAppModel.vt_QuoteConversions" />
+          <EntitySet Name="vt_QuoteDeduction" EntityType="vt_BraunAppModel.vt_QuoteDeduction" />
+          <EntitySet Name="vt_Quotes" EntityType="vt_BraunAppModel.vt_Quotes" />
+          <EntitySet Name="vt_Roles" EntityType="vt_BraunAppModel.vt_Roles" />
+          <EntitySet Name="vt_SubDeductions" EntityType="vt_BraunAppModel.vt_SubDeductions" />
+          <EntitySet Name="vt_UserPermissions" EntityType="vt_BraunAppModel.vt_UserPermissions" />
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Deductions" Association="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Deductions">
+            <End Role="vt_Deductions" EntitySet="vt_Deductions" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_SubDeductions_vt_Deductions" Association="vt_BraunAppModel.FK_vt_SubDeductions_vt_Deductions">
+            <End Role="vt_Deductions" EntitySet="vt_Deductions" />
+            <End Role="vt_SubDeductions" EntitySet="vt_SubDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteConversions_vt_Quotes" Association="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Quotes">
+            <End Role="vt_Quotes" EntitySet="vt_Quotes" />
+            <End Role="vt_QuoteConversions" EntitySet="vt_QuoteConversions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Quotes" Association="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Quotes">
+            <End Role="vt_Quotes" EntitySet="vt_Quotes" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_UserPermissions_vt_Role" Association="vt_BraunAppModel.FK_vt_UserPermissions_vt_Role">
+            <End Role="vt_Roles" EntitySet="vt_Roles" />
+            <End Role="vt_UserPermissions" EntitySet="vt_UserPermissions" />
+          </AssociationSet>
+          <EntitySet Name="vt_Conversions" EntityType="vt_BraunAppModel.vt_Conversions" />
+          <EntitySet Name="vt_Tiers" EntityType="vt_BraunAppModel.vt_Tiers" />
+          <AssociationSet Name="FK_vt_QuoteConversions_vt_Conversions" Association="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Conversions">
+            <End Role="vt_Conversions" EntitySet="vt_Conversions" />
+            <End Role="vt_QuoteConversions" EntitySet="vt_QuoteConversions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_QuoteDeduction_vt_Conversions" Association="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Conversions">
+            <End Role="vt_Conversions" EntitySet="vt_Conversions" />
+            <End Role="vt_QuoteDeduction" EntitySet="vt_QuoteDeduction" />
+          </AssociationSet>
+          <EntitySet Name="vt_UserProfile" EntityType="vt_BraunAppModel.vt_UserProfile" />
+          <AssociationSet Name="FK_vt_Log_vt_UserProfile" Association="vt_BraunAppModel.FK_vt_Log_vt_UserProfile">
+            <End Role="vt_UserProfile" EntitySet="vt_UserProfile" />
+            <End Role="vt_Log" EntitySet="vt_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vt_Role_vt_UserProfile" Association="vt_BraunAppModel.FK_vt_Role_vt_UserProfile">
+            <End Role="vt_Roles" EntitySet="vt_Roles" />
+            <End Role="vt_UserProfile" EntitySet="vt_UserProfile" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="vt_Deductions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeductionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="vt_QuoteDeduction" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Deductions" FromRole="vt_Deductions" ToRole="vt_QuoteDeduction" />
+          <NavigationProperty Name="vt_SubDeductions" Relationship="vt_BraunAppModel.FK_vt_SubDeductions_vt_Deductions" FromRole="vt_Deductions" ToRole="vt_SubDeductions" />
+        </EntityType>
+        <EntityType Name="vt_Depreciation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgeInMonths" Type="Int32" />
+          <Property Name="DepreciationPercent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vt_LinkSecurity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vt_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ViewName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MethodName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isException" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="vt_UserProfile" Relationship="vt_BraunAppModel.FK_vt_Log_vt_UserProfile" FromRole="vt_Log" ToRole="vt_UserProfile" />
+        </EntityType>
+        <EntityType Name="vt_MarkUp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MarkUpPercent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MarkUpFixed" Type="Int32" />
+          <Property Name="Selected" Type="Boolean" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="vt_Pages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PageUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vt_QuoteConversions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteID" Type="Int32" />
+          <Property Name="ConversionID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="vt_Quotes" Relationship="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Quotes" FromRole="vt_QuoteConversions" ToRole="vt_Quotes" />
+          <NavigationProperty Name="vt_Conversions" Relationship="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Conversions" FromRole="vt_QuoteConversions" ToRole="vt_Conversions" />
+        </EntityType>
+        <EntityType Name="vt_QuoteDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteID" Type="Int32" />
+          <Property Name="ConversionID" Type="Int32" />
+          <Property Name="DeductionID" Type="Int32" />
+          <Property Name="ConversionAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DepreciatedAmount" Type="Double" />
+          <Property Name="DeductionAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ActualValue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="vt_Deductions" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Deductions" FromRole="vt_QuoteDeduction" ToRole="vt_Deductions" />
+          <NavigationProperty Name="vt_Quotes" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Quotes" FromRole="vt_QuoteDeduction" ToRole="vt_Quotes" />
+          <NavigationProperty Name="vt_Conversions" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Conversions" FromRole="vt_QuoteDeduction" ToRole="vt_Conversions" />
+        </EntityType>
+        <EntityType Name="vt_Quotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SearchType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SearchTypeID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MakeID" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModelID" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="YearID" Type="Int32" />
+          <Property Name="Trim" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TrimID" Type="Int32" />
+          <Property Name="CurrentMilage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="StateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CleanTrade" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AverageTrade" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RoughTrade" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RetailTrade" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MarkUpPercent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MarkUpFixed" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="TotalConversionDeduction" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VinNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegionVal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegionText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edited" Type="DateTime" Precision="3" />
+          <Property Name="IsClean" Type="Boolean" />
+          <Property Name="IsAverage" Type="Boolean" />
+          <Property Name="IsRough" Type="Boolean" />
+          <NavigationProperty Name="vt_QuoteConversions" Relationship="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Quotes" FromRole="vt_Quotes" ToRole="vt_QuoteConversions" />
+          <NavigationProperty Name="vt_QuoteDeduction" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Quotes" FromRole="vt_Quotes" ToRole="vt_QuoteDeduction" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="SuggestedPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vt_Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vt_UserPermissions" Relationship="vt_BraunAppModel.FK_vt_UserPermissions_vt_Role" FromRole="vt_Roles" ToRole="vt_UserPermissions" />
+          <NavigationProperty Name="vt_UserProfile" Relationship="vt_BraunAppModel.FK_vt_Role_vt_UserProfile" FromRole="vt_Roles" ToRole="vt_UserProfile" />
+        </EntityType>
+        <EntityType Name="vt_SubDeductions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeductionID" Type="Int32" />
+          <Property Name="DeductionDetail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="vt_Deductions" Relationship="vt_BraunAppModel.FK_vt_SubDeductions_vt_Deductions" FromRole="vt_SubDeductions" ToRole="vt_Deductions" />
+        </EntityType>
+        <EntityType Name="vt_UserPermissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PageURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Group" Type="Int32" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="Controller" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <NavigationProperty Name="vt_Roles" Relationship="vt_BraunAppModel.FK_vt_UserPermissions_vt_Role" FromRole="vt_UserPermissions" ToRole="vt_Roles" />
+        </EntityType>
+        <Association Name="FK_vt_QuoteDeduction_vt_Deductions">
+          <End Type="vt_BraunAppModel.vt_Deductions" Role="vt_Deductions" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_QuoteDeduction" Role="vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Deductions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="DeductionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_SubDeductions_vt_Deductions">
+          <End Type="vt_BraunAppModel.vt_Deductions" Role="vt_Deductions" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_SubDeductions" Role="vt_SubDeductions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Deductions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_SubDeductions">
+              <PropertyRef Name="DeductionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteConversions_vt_Quotes">
+          <End Type="vt_BraunAppModel.vt_Quotes" Role="vt_Quotes" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_QuoteConversions" Role="vt_QuoteConversions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Quotes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteConversions">
+              <PropertyRef Name="QuoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteDeduction_vt_Quotes">
+          <End Type="vt_BraunAppModel.vt_Quotes" Role="vt_Quotes" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_QuoteDeduction" Role="vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Quotes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="QuoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_UserPermissions_vt_Role">
+          <End Type="vt_BraunAppModel.vt_Roles" Role="vt_Roles" Multiplicity="1" />
+          <End Type="vt_BraunAppModel.vt_UserPermissions" Role="vt_UserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_UserPermissions">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vt_Conversions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConversionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Make" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MakeID" Type="Int32" />
+          <Property Name="RetailPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DealerPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+          <Property Name="VisualCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EpicorCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TierID" Type="Int32" />
+          <NavigationProperty Name="vt_QuoteConversions" Relationship="vt_BraunAppModel.FK_vt_QuoteConversions_vt_Conversions" FromRole="vt_Conversions" ToRole="vt_QuoteConversions" />
+          <NavigationProperty Name="vt_QuoteDeduction" Relationship="vt_BraunAppModel.FK_vt_QuoteDeduction_vt_Conversions" FromRole="vt_Conversions" ToRole="vt_QuoteDeduction" />
+        </EntityType>
+        <EntityType Name="vt_Tiers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TierName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_vt_QuoteConversions_vt_Conversions">
+          <End Type="vt_BraunAppModel.vt_Conversions" Role="vt_Conversions" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_QuoteConversions" Role="vt_QuoteConversions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Conversions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteConversions">
+              <PropertyRef Name="ConversionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_QuoteDeduction_vt_Conversions">
+          <End Type="vt_BraunAppModel.vt_Conversions" Role="vt_Conversions" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_QuoteDeduction" Role="vt_QuoteDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Conversions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_QuoteDeduction">
+              <PropertyRef Name="ConversionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vt_UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="DeviceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceToken" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerId" Type="Int32" />
+          <Property Name="ManagerStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vt_Log" Relationship="vt_BraunAppModel.FK_vt_Log_vt_UserProfile" FromRole="vt_UserProfile" ToRole="vt_Log" />
+          <NavigationProperty Name="vt_Roles" Relationship="vt_BraunAppModel.FK_vt_Role_vt_UserProfile" FromRole="vt_UserProfile" ToRole="vt_Roles" />
+        </EntityType>
+        <Association Name="FK_vt_Log_vt_UserProfile">
+          <End Type="vt_BraunAppModel.vt_UserProfile" Role="vt_UserProfile" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_Log" Role="vt_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_Log">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vt_Role_vt_UserProfile">
+          <End Type="vt_BraunAppModel.vt_Roles" Role="vt_Roles" Multiplicity="0..1" />
+          <End Type="vt_BraunAppModel.vt_UserProfile" Role="vt_UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vt_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="vt_UserProfile">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="vt_BraunAppModelStoreContainer" CdmEntityContainer="vt_BraunAppEntities">
+          <EntitySetMapping Name="vt_Deductions">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Deductions">
+              <MappingFragment StoreEntitySet="vt_Deductions">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DeductionName" ColumnName="DeductionName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Depreciation">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Depreciation">
+              <MappingFragment StoreEntitySet="vt_Depreciation">
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DepreciationPercent" ColumnName="DepreciationPercent" />
+                <ScalarProperty Name="AgeInMonths" ColumnName="AgeInMonths" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_LinkSecurity">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_LinkSecurity">
+              <MappingFragment StoreEntitySet="vt_LinkSecurity">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Log">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Log">
+              <MappingFragment StoreEntitySet="vt_Log">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="isException" ColumnName="isException" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="ViewName" ColumnName="ViewName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_MarkUp">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_MarkUp">
+              <MappingFragment StoreEntitySet="vt_MarkUp">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
+                <ScalarProperty Name="MarkUpFixed" ColumnName="MarkUpFixed" />
+                <ScalarProperty Name="MarkUpPercent" ColumnName="MarkUpPercent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Pages">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Pages">
+              <MappingFragment StoreEntitySet="vt_Pages">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_QuoteConversions">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_QuoteConversions">
+              <MappingFragment StoreEntitySet="vt_QuoteConversions">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ConversionID" ColumnName="ConversionID" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_QuoteDeduction">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_QuoteDeduction">
+              <MappingFragment StoreEntitySet="vt_QuoteDeduction">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+                <ScalarProperty Name="DeductionAmount" ColumnName="DeductionAmount" />
+                <ScalarProperty Name="DepreciatedAmount" ColumnName="DepreciatedAmount" />
+                <ScalarProperty Name="ConversionAmount" ColumnName="ConversionAmount" />
+                <ScalarProperty Name="DeductionID" ColumnName="DeductionID" />
+                <ScalarProperty Name="ConversionID" ColumnName="ConversionID" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Quotes">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Quotes">
+              <MappingFragment StoreEntitySet="vt_Quotes">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="ManagerComment" ColumnName="ManagerComment" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SuggestedPrice" ColumnName="SuggestedPrice" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsRough" ColumnName="IsRough" />
+                <ScalarProperty Name="IsAverage" ColumnName="IsAverage" />
+                <ScalarProperty Name="IsClean" ColumnName="IsClean" />
+                <ScalarProperty Name="Edited" ColumnName="Edited" />
+                <ScalarProperty Name="RegionText" ColumnName="RegionText" />
+                <ScalarProperty Name="RegionVal" ColumnName="RegionVal" />
+                <ScalarProperty Name="VinNumber" ColumnName="VinNumber" />
+                <ScalarProperty Name="TotalConversionDeduction" ColumnName="TotalConversionDeduction" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MarkUpFixed" ColumnName="MarkUpFixed" />
+                <ScalarProperty Name="MarkUpPercent" ColumnName="MarkUpPercent" />
+                <ScalarProperty Name="RetailTrade" ColumnName="RetailTrade" />
+                <ScalarProperty Name="RoughTrade" ColumnName="RoughTrade" />
+                <ScalarProperty Name="AverageTrade" ColumnName="AverageTrade" />
+                <ScalarProperty Name="CleanTrade" ColumnName="CleanTrade" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="CurrentMilage" ColumnName="CurrentMilage" />
+                <ScalarProperty Name="TrimID" ColumnName="TrimID" />
+                <ScalarProperty Name="Trim" ColumnName="Trim" />
+                <ScalarProperty Name="YearID" ColumnName="YearID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="MakeID" ColumnName="MakeID" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="SearchTypeID" ColumnName="SearchTypeID" />
+                <ScalarProperty Name="SearchType" ColumnName="SearchType" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Roles">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Roles">
+              <MappingFragment StoreEntitySet="vt_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_SubDeductions">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_SubDeductions">
+              <MappingFragment StoreEntitySet="vt_SubDeductions">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DeductionDetail" ColumnName="DeductionDetail" />
+                <ScalarProperty Name="DeductionID" ColumnName="DeductionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_UserPermissions">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_UserPermissions">
+              <MappingFragment StoreEntitySet="vt_UserPermissions">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="PageURL" ColumnName="PageURL" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Conversions">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Conversions">
+              <MappingFragment StoreEntitySet="vt_Conversions">
+                <ScalarProperty Name="TierID" ColumnName="TierID" />
+                <ScalarProperty Name="EpicorCode" ColumnName="EpicorCode" />
+                <ScalarProperty Name="VisualCode" ColumnName="VisualCode" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DealerPrice" ColumnName="DealerPrice" />
+                <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
+                <ScalarProperty Name="MakeID" ColumnName="MakeID" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ConversionName" ColumnName="ConversionName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_Tiers">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_Tiers">
+              <MappingFragment StoreEntitySet="vt_Tiers">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TierName" ColumnName="TierName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vt_UserProfile">
+            <EntityTypeMapping TypeName="vt_BraunAppModel.vt_UserProfile">
+              <MappingFragment StoreEntitySet="vt_UserProfile">
+                <ScalarProperty Name="ManagerStatus" ColumnName="ManagerStatus" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="DeviceToken" ColumnName="DeviceToken" />
+                <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

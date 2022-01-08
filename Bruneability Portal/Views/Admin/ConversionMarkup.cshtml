@@ -1,0 +1,362 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.MarkUpFormData
+@{
+    ViewBag.Title = "ConversionMarkup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/validator.css" rel="stylesheet" />
+
+<script src="~/scripts/jquery.validator.js"></script>
+
+@*<script type="text/javascript">
+        function toasterMessage(data) {
+            debugger
+            if (data.indexOf("field-validation-error") > -1) {
+                //devextreme();
+                return;
+            }
+            else {
+                if (data.status) {
+                    AlertToast("success", data.message)
+                }
+                else {
+                    AlertToast("warning", data.message)
+                }
+
+            }
+
+
+            function devextreme()
+            {
+                var d = new Date();
+                var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+
+                $("#dx-datepicker").dxDateBox({
+                    type: "date",
+                    pickerType: "calendar",
+                    showClearButton: true,
+                    value: strDate,
+                    //min: new Date(),
+                    displayFormat: "dd/MM/yyyy",
+                    onValueChanged: function (data) {
+                        var dt = data.value;
+                        dt = moment(dt).format('DD/MM/YYYY');
+                        var Today = new Date();
+
+                        $('#JoiningDate').val(dt);
+                    }
+                });
+            }
+            //else {
+            //    AlertToast("warning", data.message)
+            //}
+        }
+</script>*@
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="main-hdng mb-30">Conversion Markup</h1>
+        </div>
+    </div>
+    
+@*@using (Ajax.BeginForm("UpdateMarkUpPercent", "Admin", new AjaxOptions
+{
+    HttpMethod = "post",
+    UpdateTargetId = "singup",
+    OnSuccess = "toasterMessage"
+    //OnBegin = "Begin",
+    //OnFailure = "Failure",
+    //OnComplete = "Complete"
+}))
+{*@
+
+    <input type="hidden" id="SelectedRadio" value="" />
+    <div class="row radio">
+        <div class="col-sm-6">
+            @*@Html.HiddenFor(x => x.Percent.ID)*@
+            <input type="hidden" id="IDPercent" value="" />
+            <label>
+                <input id="percent" name="markup" type="radio" checked>
+                <span class="circle"></span>
+                <span class="check"></span>
+                Current Markup (%)
+            </label>
+            <div class="row">
+                <div class="col-sm-6 col-8">
+                    @*@Html.TextBoxFor(m => m.Percent.MarkUpPercent, new { @class = "form-control", @title = "MarkUp Percentage", validate = "MarkUpForm", require = "*The MarkUp Percentage is required" })
+            @Html.ValidationMessageFor(m => m.Percent.MarkUpPercent)*@
+                    <input id="MarkUpPercent" type='text' class="form-control decimal" validate="MarkUpPercent"  require="Percent Markup Amount is required." />
+                </div>
+
+                <div class="col-sm-6 col-4">
+                    <button type="button" class="btn btn-cstm btn-blue btnSavePercent">Update</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="col-sm-6">
+            @*@Html.HiddenFor(x => x.Fixed.ID)*@
+            <input type="hidden" id="IDFixed" value="" />
+            <label>
+                <input id="fixed" name="markup" type="radio">
+                <span class="circle"></span>
+                <span class="check"></span>
+                Current Markup ($)
+            </label>
+
+            <div class="row">
+                <div class="col-sm-6 col-8">
+                    @*@Html.TextBoxFor(m => m.Fixed.MarkUpFixed, new { @class = "form-control", @title = "MarkUp Fixed", validate = "MarkUpForm", require = "*The MarkUp Fixed is required" })
+            @Html.ValidationMessageFor(m => m.Fixed.MarkUpFixed)*@
+                    <input id="MarkUpFixed" type='text' validate="MarkUpFixed" class="form-control decimal" require="Fixed Markup Amount is required." />
+                </div>
+
+                <div class="col-sm-6 col-4">
+                    <button type="button" class="btn btn-cstm btn-blue btnSaveFixed">Update</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- End row -->
+
+@*}*@
+
+</div><!-- End container-fluid -->
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        GetMarkupPercent();
+        GetMarkupFixed();
+        //SelectRadioButton();
+
+    });
+    
+    function allowDotNumber(e) {
+        debugger
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+    $('.decimal').keyup(function () {
+        var val = $(this).val();
+        if (isNaN(val)) {
+            val = val.replace(/[^0-9\.]/g, '');
+            if (val.split('.').length > 2)
+                val = val.replace(/\.+$/, "");
+        }
+        $(this).val(val);
+    });
+
+
+    function SelectRadioButton()
+    {
+        debugger
+        var selectedvalue = $("#SelectedRadio").val();
+
+        if (selectedvalue != "" && selectedvalue == "percent") {
+
+            $("#fixed").removeAttr("checked")
+            $("#percent").attr("checked", "")
+
+        }
+        else {
+            $("#percent").removeAttr("checked")
+            $("#fixed").attr("checked", "")
+        }
+    }
+
+    function GetMarkupPercent()
+    {
+        $(".loader").css({ "display": "block" });
+        $.ajax({
+            url: '@Url.Action("GetMarkUpPercent", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                if (JSONStatus.MarkupData.Selected)
+                {
+                    $("#SelectedRadio").val("percent");
+                }
+
+                $("#IDPercent").val(JSONStatus.MarkupData.ID);
+                $("#MarkUpPercent").val(JSONStatus.MarkupData.MarkUpPercent + " %");
+                SelectRadioButton();
+                $(".loader").css({ "display": "none" });
+            }
+        });
+    }
+
+    function GetMarkupFixed() {
+        $(".loader").css({ "display": "block" });
+        $.ajax({
+            url: '@Url.Action("GetMarkUpFixed", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                if (JSONStatus.MarkupData.Selected) {
+                    $("#SelectedRadio").val("fixed");
+                }
+
+                $("#IDFixed").val(JSONStatus.MarkupData.ID);
+                $("#MarkUpFixed").val("$ " + JSONStatus.MarkupData.MarkUpFixed);
+                SelectRadioButton();
+                $(".loader").css({ "display": "none" });
+            }
+        });
+    }
+
+    $(".btnSavePercent").click(function () {
+
+        UpdateMarkUpPercent();
+
+        @*$(".loader").css({ "display": "block" });
+
+        var id = $("#IDPercent").val();
+        var percent = $("#MarkUpPercent").val();
+
+        if (validate("MarkUpPercent") == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateMarkUpPercent", "Admin")',
+                data: '{ ID: "' + id + '" , MarkUpPercent: "' + percent + '" }',
+                processData: false,
+                contentType: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.status) {
+                        GetMarkupPercent();
+                        $("#SelectedRadio").val("percent");
+                        SelectRadioButton();
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+
+                },
+                error: function (xhr) {
+                    debugger
+                }
+            });
+        }*@
+
+
+    });
+
+    $(".btnSaveFixed").click(function () {
+
+        UpdateMarkUpFixed();
+
+      
+    });
+
+    function UpdateMarkUpPercent()
+    {
+        $(".loader").css({ "display": "block" });
+
+        var id = $("#IDPercent").val();
+        var percent = $("#MarkUpPercent").val();
+
+        if (validate("MarkUpPercent") == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateMarkUpPercent", "Admin")',
+                data: '{ ID: "' + id + '" , MarkUpPercent: "' + percent + '" }',
+                processData: false,
+                contentType: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.status) {
+                        GetMarkupPercent();
+                        $("#SelectedRadio").val("percent");
+                        SelectRadioButton();
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+
+                },
+                error: function (xhr) {
+                    debugger
+                }
+            });
+        }
+
+        $(".loader").css({ "display": "none" });
+    }
+
+
+    function UpdateMarkUpFixed()
+    {
+        $(".loader").css({ "display": "block" });
+        var id = $("#IDFixed").val();
+        var fixed = $("#MarkUpFixed").val();
+
+        if (validate("MarkUpFixed") == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateMarkUpFixed", "Admin")',
+                data: '{ ID: "' + id + '" , MarkUpFixed: "' + fixed + '" }',
+                processData: false,
+                contentType: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.status) {
+                        GetMarkupFixed();
+                        $("#SelectedRadio").val("fixed");
+                        SelectRadioButton();
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" });
+                    }
+
+                },
+                error: function (xhr) {
+                    debugger
+                }
+            });
+        }
+
+        $(".loader").css({ "display": "none" });
+    }
+
+    $("#percent").click(function () {
+        UpdateMarkUpPercent();
+    });
+
+    $("#fixed").click(function () {
+        UpdateMarkUpFixed();
+    });
+</script>

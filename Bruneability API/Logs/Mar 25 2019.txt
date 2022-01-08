@@ -1,0 +1,24 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 25 2019.txt
+03/25/2019 13:37:39
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjI8wSplCtovc40nI0kDltZJRknclCgNtU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D GT AWD V6","TrimID":1193966,"Year":2018,"YearID":2018,"Millage":"1200.00","StateCode":"AL","CleanTrade":"26700.000000","AverageTrade":"25300.000000","RoughTrade":"23600.000000","RetailTrade":"29375.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":null,"ConversionAmount":null,"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":null,"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 25 2019.txt
+03/25/2019 18:27:00
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjI8wSplCtovYgOUfuNsMS9rlT7RQHJLv0=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona V8","TrimID":1193930,"Year":2018,"YearID":2018,"Millage":"100000","StateCode":"AL","CleanTrade":"27325.000000","AverageTrade":"25825.000000","RoughTrade":"24000.000000","RetailTrade":"30000.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"8765","ConversionID":["105"],"ConversionAmount":["23575"],"DeductionID":["2"],"DeductionAmount":["5000"],"DepericiationAmount":["13765"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":true,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 25 2019.txt
+03/25/2019 18:38:08
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjI8wSplCtovQOtpZccQ6WUvJpLKajs5nc=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300S AWD V6","TrimID":1193912,"Year":2018,"YearID":2018,"Millage":"10000","StateCode":"AZ","CleanTrade":"24900.000000","AverageTrade":"23525.000000","RoughTrade":"21850.000000","RetailTrade":"27300.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"15642","ConversionID":["158","146"],"ConversionAmount":["21100","23575"],"DeductionID":["4"],"DeductionAmount":["2000"],"DepericiationAmount":["12320","13765"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 25 2019.txt
+03/25/2019 18:41:50
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjI8wSplCtovQOtpZccQ6WUvJpLKajs5nc=","QouteID":0,"CustomerName":"Sam","Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SXT V6","TrimID":1185375,"Year":2016,"YearID":2016,"Millage":"12000","StateCode":"WA","CleanTrade":"15825.000000","AverageTrade":"14825.000000","RoughTrade":"13600.000000","RetailTrade":"18150.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"25755","ConversionID":["179","180","175"],"ConversionAmount":["20100","20100","26025"],"DeductionID":["8","10","12"],"DeductionAmount":["400","750","0"],"DepericiationAmount":["8166","8166","10573"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":true,"IsRough":false}
+__________________________

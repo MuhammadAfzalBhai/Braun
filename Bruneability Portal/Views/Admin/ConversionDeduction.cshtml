@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "ConversionDeduction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30">Conversion Deduction</h1>
+        </div>
+
+        <div class="col-sm-6 text-right sm-left">
+
+            <button id="newDeduction" class="btn btn-cstm btn-blue">Add New Deduction</button>
+
+        </div>
+    </div>
+
+    <div id="griddeduction"></div>
+</div><!-- End container-fluid -->
+
+<div id="popupConversionDeduction"></div>  <!-- Dev-Extreme Conversion Deduction Form Model-->
+
+
+
+
+<!-- Deduction Delete Confirmation Modal   -->
+<div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div id='myModalContent_PromoCode'></div>
+                <label>Are you sure you want to delete ?</label>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        ConversionDeductionGrid();
+
+    })
+
+
+    function ConversionDeductionGrid() {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllConversionDeduction", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                $("#griddeduction").dxDataGrid({
+                    dataSource: JSONStatus.DeductionList,
+                    columnsAutoWidth: true,
+                    showBorders: true,
+                    paging: {
+                        pageSize: 10
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    headerFilter: {
+                        visible: true
+                    },
+                    columns: [{
+                        dataField: "Amount",
+                        caption: "Deduction Amount",
+                        alignment: "center",
+                        customizeText: function (cellInfo) {
+                            return  "$ " +cellInfo.value ;
+                        }
+                    },
+                        {
+                            dataField: "Description",
+                            alignment: "left",
+                        },
+                        {
+                            dataField: "ID",
+                            caption: "Action",
+
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                    .append($("<a class='DeductionEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                    .append($("<a class='DeductionDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                    .appendTo(container);
+                            }
+                        }
+                    ]
+                });
+                $(".loader").css({ "display": "none" }); //Loader
+            }
+        });
+    }
+
+
+    $("#newDeduction").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("NewDeductionForm", "Admin")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+
+                $("#popupConversionDeduction").html(response);
+                $("#deduction").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    })
+
+
+    $('body').on('click', '.DeductionEdit', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var deductionid = $(this).attr('_id');
+
+        $.ajax({
+            url: '@Url.Action("GetDeductionByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: deductionid
+            },
+            success: function (response) {
+
+                $("#popupConversionDeduction").html(response);
+                $("#deduction").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+
+    $('body').on('click', '.DeductionDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var deductionid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteDeductionByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: deductionid
+            },
+            success: function (response) {
+                ConversionDeductionGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+</script>

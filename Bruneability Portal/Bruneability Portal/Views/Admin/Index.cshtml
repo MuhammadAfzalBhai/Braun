@@ -1,0 +1,658 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    .options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    margin-top: 20px;
+}
+
+.option {
+    margin-top: 10px;
+}
+
+.caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.option > span {
+    margin-right: 10px;
+}
+
+.option > .dx-widget {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+</style>
+<div class="container-fluid pl-30 pr-30">
+    <h1 class="main-hdng mb-30">Dashboard</h1>
+
+
+    <!-- End row -->
+
+    
+
+    
+  
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats one">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/receipt.png" alt="">
+                    </div>
+                    <p class="card-category">Total Quotes </p>
+                    <h3 class="card-title" ><span class="count" id="TotalQuotes"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats two">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/approve-invoice.png" alt="">
+                    </div>
+                    <p class="card-category">Total New Quotes</p>
+                    <h3 class="card-title" ><span class="count" id="TotalNewQuotes"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats three">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/receiptdraft.png" alt="">
+                    </div>
+                    <p class="card-category">Total Draft Quotes</p>
+                    <h3 class="card-title" ><span class="count" id="TotalDraftQuotes"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="wigt_box">
+                <div class="wigt_panel_body">
+                    <div id="chart"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats one">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="~/assets/images/employee.png" alt="">
+                    </div>
+                    <p class="card-category">Total User </p>
+                    <h3 class="card-title"><span class="count" id="TotalUsers"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats two">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="~/assets/images/company.png" alt="">
+                    </div>
+                    <p class="card-category">Total Companies </p>
+                    <h3 class="card-title"><span class="count" id="TotalCompanies"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashbord_card card-stats three">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="~/assets/images/steering-wheel.png" alt="">
+                    </div>
+                    <p class="card-category">Total Make </p>
+                    <h3 class="card-title"><span class="count" id="TotalMakes"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="row">
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <img src="~/assets/images/set2.png" />
+                    <h2 class="title pull-left">Top Makes</h2>
+                </header>
+                <div class="wigt_panel_body">
+                   <div class="table-responsive">
+                       <table id="topMake" class="table dashbord_tbl">
+                        
+                       </table>
+                   </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <img src="~/assets/images/set2.png" />
+                    <h2 class="title pull-left">Top Models</h2>
+                </header>
+                <div class="wigt_panel_body">
+                    <div class="table-responsive">
+                        <table id="topModel" class="table dashbord_tbl">
+                         
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <img src="~/assets/images/set2.png" />
+                    <h2 class="title pull-left">Top Conversions</h2>
+                </header>
+                <div class="wigt_panel_body">
+                    <div class="table-responsive">
+                        <table id="topConversions" class="table dashbord_tbl">
+                           
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="wigt_box">               
+                <div class="wigt_panel_body">                  
+                        <div id="makechart"></div>                                                 
+                </div>
+            </section>
+        </div>        
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-md-6">
+            <section class="wigt_box">
+                @*<header class="wigt_panel_header">
+                    <h2 class="title pull-left">Top Models</h2>
+                </header>*@
+                <div class="wigt_panel_body">
+                    <div id="modelchart"></div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section class="wigt_box">
+                @*<header class="wigt_panel_header">
+                    <h2 class="title pull-left">Top Conversions</h2>
+                </header>*@
+                <div class="wigt_panel_body">
+                    <div id="conversionschart"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+  
+
+    @*<div class="row">
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <h2 class="title pull-left">Top Make</h2>
+                </header>
+                <div class="wigt_panel_body">
+                    <div class="makechart"></div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <h2 class="title pull-left">Top Cars</h2>
+                </header>
+                <div class="wigt_panel_body">
+                    <div class="makechart"></div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="wigt_box">
+                <header class="wigt_panel_header">
+                    <h2 class="title pull-left">Top Cars</h2>
+                </header>
+                <div class="wigt_panel_body">
+                    <div class="makechart"></div>
+                </div>
+            </section>
+        </div>
+    </div>*@
+
+    
+
+  
+
+
+
+    
+    
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+       
+        window.history.forward(1);
+        getquoteslastsixmonth();
+        GetCounterResult();
+
+       
+    });
+    function getquoteslastsixmonth() {
+
+        $.get('/Admin/QuoteslastSixMonth/', function (data, status) {
+            
+            if (status = "success") {
+                var result = JSON.parse(data.jsondata);
+                //var totalquotes = result.QuotesListLastSixMonth.length;
+    debugger
+                if (result.QuotesListLastSixMonth.status) {
+                    $("#chart").dxChart({
+                        palette: "#009688",
+                        dataSource: result.QuotesListLastSixMonth.QuotesListLastSixMonth,
+                        commonSeriesSettings: {
+                            argumentField: "MonthName",
+                            type: "stackedline"
+                        },
+                        margin: {
+                            bottom: 20
+                        },
+                        argumentAxis: {
+                            valueMarginsEnabled: false,
+                            discreteAxisDivisionMode: "crossLabels",
+                            grid: {
+                                visible: true
+                            }
+                        },
+                        series: [
+                            { valueField: "NoOfQuotes", name: "Number of Quotes" },
+
+                        ],
+                        legend: {
+                            verticalAlignment: "bottom",
+                            horizontalAlignment: "center",
+                            itemTextPosition: "bottom"
+                        },
+                        title: {
+                            text: "Number of Quotes",
+                            subtitle: {
+                                text: "(Last Six Months)"
+                            }
+                        },
+                        "export": {
+                            enabled: true
+                        },
+                        tooltip: {
+                            enabled: true,
+                            customizeTooltip: function (arg) {
+                                return {
+                                    text: "Number of Quotes: " + arg.valueText
+                                };
+                            }
+                        }
+                    }).dxChart("instance");
+                }
+
+                if (result.ListofTopfiveMake.status) {
+                    debugger
+                    $('#topMake').empty();
+                    var htmlTable = "";
+                    if (result.ListofTopfiveMake.ListofTopfiveMake.length>5) {
+                        for (var i = 0; i < 5; i++) {
+                            htmlTable += '<tr>' +
+                                       '<td><span class="tbl_sno">' + parseInt(parseInt(i) + parseInt(1)) + '.</span></td>' +
+                                       '<td>' + result.ListofTopfiveMake.ListofTopfiveMake[i].MakeName + '</td>' +
+                                       '</tr>';
+                        }
+                    }
+
+                    else {
+                        for (var i = 0; i < result.ListofTopfiveMake.ListofTopfiveMake.length; i++) {
+                            htmlTable += '<tr>' +
+                                       '<td><span class="tbl_sno">' + parseInt(parseInt(i) + parseInt(1)) + '.</span></td>' +
+                                       '<td>' + result.ListofTopfiveMake.ListofTopfiveMake[i].MakeName + '</td>' +
+                                       '</tr>';
+                        }
+                    }
+                   
+                    //$.each(result.ListofTopfiveMake.ListofTopfiveMake, function (key, val) {
+                    //    debugger
+                       
+                    //});
+
+                    $('#topMake').append(htmlTable);
+                   
+                    $("#makechart").dxChart({
+                        rotated: false,
+                        dataSource: result.ListofTopfiveMake.ListofTopfiveMake,
+                        palette: "hard",
+                        title: {
+                            text: "Top Ten Make",
+                            subtitle: "as per Quotes"
+                        },
+                        "export": {
+                            enabled: true
+                        },
+                        commonSeriesSettings: {
+                            type: "bar",
+                            valueField: "TotalMakeQuotes",
+                            argumentField: "MakeName",
+                            ignoreEmptyPoints: true,
+                            label: {
+                                visible: true,
+                                format: {
+                                    type: "fixedPoint",
+                                    precision: 0
+                                }
+                            }
+                        },
+                        series: [
+                { valueField: "Total", name: "MakeName" },
+
+                        ],
+                        legend: {
+                            verticalAlignment: "bottom",
+                            horizontalAlignment: "center",
+                            itemTextPosition: "bottom"
+                        },
+                        tooltip: {
+                            enabled: true,
+                            location: "edge",
+                            customizeTooltip: function (arg) {
+                                return {
+                                    text: arg.seriesName + " Total Quotes: " + arg.valueText
+                                };
+                            }
+                        },
+                        seriesTemplate: {
+                            nameField: "MakeName"
+                        }
+                    });
+
+                }
+
+                if (result.ListofTopfiveModel.status) {
+                    debugger
+                    $('#topModel').empty();
+                    var htmlTable = "";
+                    $.each(result.ListofTopfiveModel.ListofTopfiveModel, function (key, val) {
+                     
+                        htmlTable += '<tr>' +
+                                    '<td><span class="tbl_sno">' + parseInt(parseInt(key) + parseInt(1)) + '.</span></td>' +
+                                    '<td>' + val.ModelName + '</td>' +
+                                    '</tr>';
+                    });
+
+                    $('#topModel').append(htmlTable);
+
+
+                    $("#modelchart").dxPieChart({
+                        palette: "soft",
+                        type: "doughnut",
+                        dataSource: result.ListofTopfiveModel.ListofTopfiveModel,
+                        title: {
+                            text: "Top Five Models",
+                            subtitle: "as per Quotes"
+                        },
+                       
+                            legend: {
+                                orientation: "horizontal",
+                                itemTextPosition: "right",
+                                horizontalAlignment: "center",
+                                verticalAlignment: "bottom",
+                                columnCount: 5
+                            },
+                       
+                        "export": {
+                            enabled: true
+                        },
+                        series: [{
+                            argumentField: "ModelName",
+                            valueField: "TotalModelQuotes",
+                            label: {
+                                visible: true,
+                                font: {
+                                    size: 13
+                                },
+                                connector: {
+                                    visible: true,
+                                    width: 0.5
+                                },
+                                position: "columns",
+                                customizeText: function (arg) {
+                              
+                                    return arg.argumentText + " (" + arg.valueText + ")";
+                                }
+                            }
+                        }],
+                        tooltip: {
+                            enabled: true,
+                            customizeTooltip: function (args) {
+                            
+                                return {
+                                    html: "<div class='state-tooltip'><h6>" +
+                                    args.point.data.MakeName + "</h6><div><span class='' >Model</span>: " +
+                                    args.argumentText +
+                                    "</div><div><span class=''>No. of Quotes</span>: " +
+                                    args.valueText +
+                                    "</div>"
+                                };
+                            }
+                        }
+                    });
+                    ////////////
+                //    $("#modelchart").dxChart({
+                //        dataSource: result.ListofTopfiveModel.ListofTopfiveModel,
+                //        palette: "hard",
+                //        title: {
+                //            text: "Age Breakdown of Facebook Users in the U.S.",
+                //            subtitle: "as of January 2017"
+                //        },
+                //        commonSeriesSettings: {
+                //            type: "bar",
+                //            valueField: "TotalModelQuotes",
+                //            argumentField: "ModelName",
+                //            ignoreEmptyPoints: true,
+                //            label: {
+                //                visible: true,
+                //                format: {
+                //                    type: "fixedPoint",
+                //                    precision: 0
+                //                }
+                //            }
+                //        },
+                //        series: [
+                //{ valueField: "TotalModelQuotes", name: "ModelName" },
+
+                //        ],
+                //        legend: {
+                //            verticalAlignment: "bottom",
+                //            horizontalAlignment: "center",
+                //            itemTextPosition: "bottom"
+                //        },
+                //        tooltip: {
+                //            enabled: true,
+                //            location: "edge",
+                //            customizeTooltip: function (arg) {
+                //                return {
+                //                    text: arg.seriesName + " Total Quotes: " + arg.valueText
+                //                };
+                //            }
+                //        },
+                //        seriesTemplate: {
+                //            nameField: "ModelName"
+                //        }
+                //    });
+                }
+
+                if (result.ListofTopfiveConversions.status) {
+                    debugger
+                    $('#topConversions').empty();
+                    var htmlTable = "";
+                    $.each(result.ListofTopfiveConversions.ListofTopfiveConversions, function (key, val) {
+                 
+                        htmlTable += '<tr>' +
+                                    '<td><span class="tbl_sno">' + parseInt(parseInt(key) + parseInt(1)) + '.</span></td>' +
+                                    '<td>' + val.ConversionslName + '</td>' +
+                                    '</tr>';
+                    });
+
+                    $('#topConversions').append(htmlTable);
+                    $("#conversionschart").dxPieChart({
+                        palette: "hard",
+                        dataSource: result.ListofTopfiveConversions.ListofTopfiveConversions,
+                        title: {
+                            text: "Top Five Conversions",
+                            subtitle: "as per Quotes"
+                        },
+                        legend: {
+                            orientation: "horizontal",
+                            itemTextPosition: "right",
+                            horizontalAlignment: "center",
+                            verticalAlignment: "bottom",
+                            columnCount: 5
+                        },
+                        "export": {
+                            enabled: true
+                        },
+                        series: [{
+                            argumentField: "ConversionslName",
+                            valueField: "TotalConversionQuotes",
+                            label: {
+                                visible: true,
+                                font: {
+                                    size: 10
+                                },
+                                connector: {
+                                    visible: true,
+                                    width: 0.5
+                                },
+                                position: "columns",
+                                customizeText: function (arg) {
+                                    return arg.argumentText + " (" + arg.valueText + ")";
+                                }
+                            }
+                        }],
+                        tooltip: {
+                            enabled: true,
+                            customizeTooltip: function (args) {
+                         
+                                return {
+                                    html: "<div class='state-tooltip'><h6>" +
+                                    args.point.data.MakeName + "</h6><div><span class='' >Conversion</span>: " +
+                                    args.argumentText +
+                                    "</div><div><span class=''>No. of Quotes</span>: " +
+                                    args.valueText +
+                                    "</div>"
+                                };
+                            }
+                        }
+                    });
+
+                    ////////
+                //    $("#conversionschart").dxChart({
+                //        dataSource: result.ListofTopfiveConversions.ListofTopfiveConversions,
+                //        palette: "hard",
+                       
+                //        "export": {
+                //            enabled: true
+                //        },
+                //        commonSeriesSettings: {
+                //            type: "bar",
+                //            valueField: "TotalConversionQuotes",
+                //            argumentField: "ConversionslName",
+                //            ignoreEmptyPoints: true,
+                //            label: {
+                //                visible: true,
+                //                format: {
+                //                    type: "fixedPoint",
+                //                    precision: 0
+                //                }
+                //            }
+                //        },
+                //        series: [
+                //{ valueField: "TotalConversionQuotes", name: "ConversionslName" },
+
+                //        ],
+                //        legend: {
+                //            verticalAlignment: "bottom",
+                //            horizontalAlignment: "center",
+                //            itemTextPosition: "bottom"
+                //        },
+                //        tooltip: {
+                //            enabled: true,
+                //            location: "edge",
+                //            customizeTooltip: function (arg) {
+                //                return {
+                //                    text: arg.seriesName + " Total Quotes: " + arg.valueText
+                //                };
+                //            }
+                //        },
+                //        seriesTemplate: {
+                //            nameField: "ConversionslName"
+                //        }
+                //    });
+                }
+            }
+            else {
+                alert('error');
+            }
+        });
+    }
+       
+
+    function GetCounterResult() {
+
+        $.get('/Admin/GetDashboardcounterResult/', function (data, status) {
+            debugger
+            if (status = "success") {
+                var result = JSON.parse(data.jsondata);
+              
+                
+                if (result.status) {
+                    $('#TotalUsers').html(result.TotalUsers);
+                    $('#TotalCompanies').html(result.TotalCompanies);
+                    $('#TotalMakes').html(result.TotalMakes);
+                    $('#TotalQuotes').html(result.TotalQuotes);
+                    $('#TotalNewQuotes').html(result.TotalNewQuotes);
+                    $('#TotalDraftQuotes').html(result.TotalDraftQuotes);
+
+                    $('.count').each(function () {
+                        $(this).prop('Counter', 0).animate({
+                            Counter: $(this).text()
+                        }, {
+                            duration: 4000,
+                            easing: 'swing',
+                            step: function (now) {
+                                $(this).text(Math.ceil(now));
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    }
+
+</script>

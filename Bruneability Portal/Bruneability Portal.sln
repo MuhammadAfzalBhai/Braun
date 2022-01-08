@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bruneability Portal", "Bruneability Portal\Bruneability Portal.csproj", "{5696FDAE-D3B5-48E2-8C7C-4CCE216D205B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bruneability API", "Bruneability API\Bruneability API.csproj", "{AC539D34-95FC-440B-BDA9-8A6EEA772056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{2C730CC5-F423-44A3-8719-8D878B574B95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAL", "BAL\BAL.csproj", "{A1479052-10B1-4C5A-8BCD-0AD65F75D663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braunability_ViewModal", "Braunability_ViewModal\Braunability_ViewModal.csproj", "{EB885A75-11FD-487A-938D-9FC58C103623}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5696FDAE-D3B5-48E2-8C7C-4CCE216D205B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5696FDAE-D3B5-48E2-8C7C-4CCE216D205B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5696FDAE-D3B5-48E2-8C7C-4CCE216D205B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5696FDAE-D3B5-48E2-8C7C-4CCE216D205B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC539D34-95FC-440B-BDA9-8A6EEA772056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC539D34-95FC-440B-BDA9-8A6EEA772056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC539D34-95FC-440B-BDA9-8A6EEA772056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC539D34-95FC-440B-BDA9-8A6EEA772056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C730CC5-F423-44A3-8719-8D878B574B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C730CC5-F423-44A3-8719-8D878B574B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C730CC5-F423-44A3-8719-8D878B574B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C730CC5-F423-44A3-8719-8D878B574B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1479052-10B1-4C5A-8BCD-0AD65F75D663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1479052-10B1-4C5A-8BCD-0AD65F75D663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1479052-10B1-4C5A-8BCD-0AD65F75D663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1479052-10B1-4C5A-8BCD-0AD65F75D663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB885A75-11FD-487A-938D-9FC58C103623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB885A75-11FD-487A-938D-9FC58C103623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB885A75-11FD-487A-938D-9FC58C103623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB885A75-11FD-487A-938D-9FC58C103623}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://amarmaymon.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BAL\\BAL.csproj
+		SccProjectName1 = BAL
+		SccLocalPath1 = BAL
+		SccProjectUniqueName2 = Braunability_ViewModal\\Braunability_ViewModal.csproj
+		SccProjectName2 = Braunability_ViewModal
+		SccLocalPath2 = Braunability_ViewModal
+		SccProjectUniqueName3 = Bruneability\u0020API\\Bruneability\u0020API.csproj
+		SccProjectName3 = Bruneability\u0020API
+		SccLocalPath3 = Bruneability\u0020API
+		SccProjectUniqueName4 = Bruneability\u0020Portal\\Bruneability\u0020Portal.csproj
+		SccProjectName4 = Bruneability\u0020Portal
+		SccLocalPath4 = Bruneability\u0020Portal
+		SccProjectUniqueName5 = DAL\\DAL.csproj
+		SccProjectName5 = DAL
+		SccLocalPath5 = DAL
+	EndGlobalSection
+EndGlobal

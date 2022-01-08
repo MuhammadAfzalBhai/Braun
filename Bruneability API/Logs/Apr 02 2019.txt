@@ -1,0 +1,30 @@
+
+Log Entry : 
+D:\Junaid Zaheer\SorceTree\BraunabilityWeb\Bruneability API\Logs\Apr 02 2019.txt
+04/02/2019 17:32:23
+Error in: http://localhost:2500/api/Employee/CalDepreciation. Error Message:{"Month":38,"conversionamount":26450.0,"token":"NDIjIBUgekiBqi2Jgn-BkKLw1LR7YJp94wRMXF0DyXA="}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\SorceTree\BraunabilityWeb\Bruneability API\Logs\Apr 02 2019.txt
+04/02/2019 17:54:06
+Error in: http://localhost:2500/api/Employee/CalDepreciation. Error Message:{"Month":40,"conversionamount":26450.0,"token":"NDIjIBUgekiBqi2Jgn-BkPle1o7PNSoULWf5qeFc6PA="}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\SorceTree\BraunabilityWeb\Bruneability API\Logs\Apr 02 2019.txt
+04/02/2019 17:54:09
+Error in: http://localhost:2500/api/Employee/CalDepreciation. Error Message:{"Month":40,"conversionamount":27475.0,"token":"NDIjIBUgekiBqi2Jgn-BkPle1o7PNSoULWf5qeFc6PA="}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\SorceTree\BraunabilityWeb\Bruneability API\Logs\Apr 02 2019.txt
+04/02/2019 17:56:31
+Error in: http://localhost:2500/api/Employee/CalDepreciation. Error Message:{"Month":40,"conversionamount":26450.0,"token":"NDIjIBUgekiBqi2Jgn-BkPle1o7PNSoULWf5qeFc6PA="}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\SorceTree\BraunabilityWeb\Bruneability API\Logs\Apr 02 2019.txt
+04/02/2019 18:23:05
+Error in: http://localhost:2500/api/Employee/CalDepreciation. Error Message:{"Month":40,"conversionamount":24625.0,"token":"NDIjIBUgekiBqi2Jgn-BkF4kTwidkLPXMYe-s-_uFAc="}
+__________________________

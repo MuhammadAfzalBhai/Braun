@@ -1,0 +1,232 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Braun Ability</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap datepicker -->
+    <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- font-awesome -->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- poppins font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- iconmoon -->
+    <link href="~/assets/css/iconmoon.css" rel="stylesheet">
+
+    <!-- Toaster CSS -->
+    <link href="~/Content/jquery.toast.css" rel="stylesheet" />
+
+    <!-- mtstyle -->
+    <link href="~/assets/css/mtstyles.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+
+    <style type="text/css">
+        .errorEmailNotMatch, .error {
+            color: red;
+        }
+
+        .field-validation-error {
+            color: #fff;
+            /*background-color:white;*/
+            font-weight: bold;
+        }
+
+        .loader {
+            border: 7px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 10px solid #3498db;
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        div#some_div {
+            font-size: 75px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .note_hid {
+            border-radius: 8px;
+            width: 100%;
+            color: #fff;
+            background-color: #4CAF50;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 15px;
+        }
+    </style>
+
+
+</head>
+
+<body class="h-100">
+
+    <div class="bg-login">
+        <input data-val="true" data-val-required="The Status field is required." id="Status" name="Status" type="hidden" value="" />
+        <input id="Message" name="Message" type="hidden" value="" />
+        <div class="container">
+            <form action="/" method="post">
+                <div class="bx_registration">
+                    <div class="note_hid">
+                        <p>Your password change successfully.</p>
+                    </div>
+                    <div id="some_div"></div>
+                </div>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <P class="m-0">© Code Creators 2018, All Rights Reserved.</P>
+                    </div>
+
+                    <div class="col text-center">
+                        <img class="img-go" src="~/assets/images/logo-go.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+</html>
+
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/bootstrap.min.js"></script>
+
+<script>
+
+
+
+
+
+
+    $(document).ready(function () {
+
+
+
+		var timeLeft = 10;
+		var elem = document.getElementById('some_div');
+		var timerId = setInterval(countdown, 1000);
+
+		function countdown() {
+			if (timeLeft == -1) {
+				clearTimeout(timerId);
+				doSomething();
+			} else {
+				elem.innerHTML = timeLeft;
+				timeLeft--;
+			}
+		}
+
+		function doSomething() {
+			//alert("Hi");
+			 window.location = "/Employee/Index";
+		}
+
+    });
+
+
+
+
+
+</script>
+<script src="~/assets/js/jquery.min.js"></script>
+<script>
+    //(function () {
+    //    var counter = 10;
+
+    //    setInterval(function () {
+    //        counter--;
+    //        if (counter >= 0) {
+    //            span = document.getElementById("count");
+    //            span.innerHTML = counter;
+    //        }
+    //        // Display 'counter' wherever you want to display it.
+    //        if (counter === 0) {
+    //              //alert('this is where it happens');
+    //              clearInterval(counter);
+    //              window.location = "/Login/Logout";
+    //        }
+
+    //    }, 1000);
+
+    //})();
+
+
+    //function startTimer(duration, display) {
+    //    var timer = duration, minutes, seconds;
+    //    setInterval(function () {
+    //        minutes = parseInt(timer / 60, 10)
+    //        seconds = parseInt(timer % 60, 10);
+
+    //        minutes = minutes < 10 ? "0" + minutes : minutes;
+    //        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    //        display.textContent = minutes + ":" + seconds;
+
+    //        if (--timer < 0) {
+    //            timer = duration;
+    //        }
+    //    }, 1000);
+    //}
+
+    //window.onload = function () {
+    //    var fiveMinutes = 60 * 5,
+    //        display = document.querySelector('#time');
+    //    startTimer(fiveMinutes, display);
+    //};
+    //$(document).ready(function () {
+    //    setTimeout(function () {
+    //        window.location = "/Login/Logout";
+    //    }, 10000);
+
+    //});
+</script>

@@ -1,0 +1,293 @@
+﻿@{
+    ViewBag.Title = "ConversionDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/scripts/bootstrap-datepicker.js"></script>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/scripts/jquery.validator.js"></script>
+<script src="~/scripts/jquery.validate.js"></script>
+@*<link href="~/Content/validator.css" rel="stylesheet" />*@
+<script src="~/scripts/bootstrap-datetimepicker.min.js"></script>
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30">Conversion Details</h1>
+        </div>
+
+        <div class="col-sm-6 text-right sm-left">
+            <button id="uploadExcel" class="btn btn-cstm btn-gray mr-5">Import</button>
+            @*<input type="file" id="uploadExcel" class="btn btn-cstm btn-gray mr-5">Import*@
+
+            <button id="NewConversion" class="btn btn-cstm btn-blue">Add New Conversion</button>
+        </div>
+    </div>
+
+    <div id="gridConversionDetails"></div>
+</div><!-- End container-fluid -->
+
+
+<div id="popupConversionDetails"></div>  <!-- Dev-Extreme Conversion Detail Form Model-->
+
+
+
+<!-- Delete Confirmation Modal   -->
+<div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div id='myModalContent_PromoCode'></div>
+                <label>Are you sure you want to delete ?</label>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Conversion Upload Excel Modal   -->
+<div id="importExcel" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Upload Excel</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="upload" enctype="multipart/form-data" action="@Url.Action("UploadExcelConversion", "Admin")" method="POST">
+                    <div id='myModalContent_PromoCode'></div>
+                    <label>Select a file which you want to upload.</label>
+                    <input type="file" validate = "ConversionUpload", require = "File is required." id="excelFile" name="excelFile" />
+                </form>
+                
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-cstm btn-blue btnSave">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script src="~/assets/js/jQuery-2.1.4.min.js"></script>*@
+@*<script src="~/scripts/jquery.js"></script>*@
+@*<script src="~/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+
+
+
+    $(document).ready(function () {
+
+        ConversionDetailsGrid();
+
+    })
+
+
+    function ConversionDetailsGrid() {
+        $.ajax({
+            url: '@Url.Action("AllConversionDetails", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                $("#gridConversionDetails").dxDataGrid({
+                    dataSource: JSONStatus.ConversionsList,
+                    columnsAutoWidth: true,
+                    showBorders: true,
+                    paging: {
+                        pageSize: 10
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    headerFilter: {
+                        visible: true
+                    },
+
+                    columns: ["ConversionName", "Type", "Make",
+                        {
+                            dataField: "RetailPrice",
+                            dataType: "number",
+                            format: "currency",
+                            precision: 2,
+                            //type: "fixedPoint",
+                            customizeText: function (cellInfo) {
+                                return "$" + cellInfo.value;
+                            }
+                        }, {
+                            dataField: "DealerPrice",
+                            customizeText: function (cellInfo) {
+                                return "$" + cellInfo.value;
+                            }
+                        }, "Year", "Description", {
+                            dataField: "ID",
+                            caption: "Action",
+
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                    .append($("<a class='ConversionEdit' _id=" + options.value + " title='Edit' onclick=''><i class='icn icon-pencil p-5'></i></a>"))
+                                    .append($("<a class='ConversionDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                    .appendTo(container);
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    }
+
+
+    $('body').on('click', '.ConversionEdit', function () {
+
+        $(".loader").css({ "display": "block" }); //Loader
+
+        var conversionid = $(this).attr('_id');
+
+        $.ajax({
+            url: '@Url.Action("GetConversionByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: conversionid
+            },
+            success: function (response) {
+
+                $("#popupConversionDetails").html(response);
+                $("#conversiondetails").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+    $("#NewConversion").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("NewConversionForm", "Admin")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+
+                $("#popupConversionDetails").html(response);
+                $("#conversiondetails").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    })
+
+
+
+    $('body').on('click', '.ConversionDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+    $(".btnDelete").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var conversionid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteConversionByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: conversionid
+            },
+            success: function (response) {
+                ConversionDetailsGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                
+                else {
+                    AlertToast('warning', response.message);
+                }
+
+                window.setTimeout(function () {
+                    location.href = "/Admin/ConversionDetails";
+                }, 5000);
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+    $("#uploadExcel").click(function () {
+        $("#importExcel").modal("show");
+    });
+
+    $(".btnSave").click(function () {
+        if (validate("ConversionUpload") == true) {
+            $(".loader").css({ "display": "block" }); //Loader
+            var file = $("#excelFile")[0].files;
+
+            var formData = new FormData();
+
+            for (var i = 0; i < $("#excelFile")[0].files.length; i++) {
+                formData.append('excelFile', $("#excelFile")[0].files[i]);
+
+                $.ajax({
+                    url: '@Url.Action("UploadExcelConversion", "Admin")',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        debugger
+                        if (data.status) {
+                            ConversionDetailsGrid();
+                            $("#importExcel").modal("hide");
+                            AlertToast('success', data.message);
+                            $(".loader").css({ "display": "none" }); //Loader
+                        }
+                        else {
+                            AlertToast('warning', data.message);
+                            $(".loader").css({ "display": "none" }); //Loader
+                        }
+
+                        $('form')[0].reset();
+                    }
+                })
+            }
+        }
+    });
+
+</script>

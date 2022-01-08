@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .options {
+        padding: 20px;
+        background-color: rgba(191, 191, 191, 0.15);
+        margin-top: 20px;
+    }
+
+    .option {
+        margin-top: 10px;
+    }
+
+    .caption {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .option > span {
+        margin-right: 10px;
+    }
+
+    .option > .dx-widget {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+@section DashboardLogo{
+    <img class="img-nadalogo" src="/assets/images/img-powerednada.png" style="float: right;margin-right: 40px;margin-top: -30px;">
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <h1 class="main-hdng mb-30">Dashboard</h1>
+    <ul class="ul_quotes mt-75 mb-0 pl-0">
+        <li>
+            <a href="/QuoteNew/Index">
+                <i class="icn icon-new-quotes"></i>
+                <span class="txt">New Quotes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/Employee/ListofQoute">
+                <i class="icn icon-list-quotes"></i>
+                <span class="txt">List of Quotes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/Employee/ListofDraftQuotes">
+                <i class="icn icon-search-quotes"></i>
+                <span class="txt">Draft Quotes</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<script>
+        $(document).ready(function () {
+            window.history.forward(1);
+            GetManagerCounterResult();
+            getquoteslastsixmonth();
+        });
+        function getquoteslastsixmonth() {
+
+            $.get('/Employee/QuoteslastSixMonth/', function (data, status) {
+
+                if (status = "success") {
+                    var result = JSON.parse(data.jsondata);
+                    debugger
+                    if (result.QuotesListLastSixMonth.status) {
+                        $("#chart").dxChart({
+                            palette: "#009688",
+                            dataSource: result.QuotesListLastSixMonth.QuotesListLastSixMonth,
+                            commonSeriesSettings: {
+                                argumentField: "MonthName",
+                                type: "stackedline"
+                            },
+                            margin: {
+                                bottom: 20
+                            },
+                            argumentAxis: {
+                                valueMarginsEnabled: false,
+                                discreteAxisDivisionMode: "crossLabels",
+                                grid: {
+                                    visible: true
+                                }
+                            },
+                            series: [
+                                { valueField: "NoOfQuotes", name: "Number of Quotes" },
+
+                            ],
+                            legend: {
+                                verticalAlignment: "bottom",
+                                horizontalAlignment: "center",
+                                itemTextPosition: "bottom"
+                            },
+                            title: {
+                                text: "Number of Quotes",
+                                subtitle: {
+                                    text: "(Last Six Months)"
+                                }
+                            },
+                            "export": {
+                                enabled: true
+                            },
+                            tooltip: {
+                                enabled: true,
+                                customizeTooltip: function (arg) {
+                                    return {
+                                        text: "Number of Quotes: " + arg.valueText
+                                    };
+                                }
+                            }
+                        }).dxChart("instance");
+                    }
+                }
+            });
+        }
+
+
+        function GetManagerCounterResult() {
+            $.get('/Employee/GetManagerDashboardcounterResult/', function (data, status) {
+                if (status = "success") {
+                    var result = JSON.parse(data.jsondata);
+                    if (result.status) {
+                        $('#PendingQuotes').html(result.PendingQuotes);
+                        $('#RejectedQuotes').html(result.RejectedQuotes);
+                        $('#Approved').html(result.ApprovedQuotes);
+                        $('#TotalUsers').html(result.TotalUsers);
+                        $('.count').each(function () {
+                            $(this).prop('Counter', 0).animate({
+                                Counter: $(this).text()
+                            }, {
+                                duration: 4000,
+                                easing: 'swing',
+                                step: function (now) {
+                                    $(this).text(Math.ceil(now));
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        }
+</script>

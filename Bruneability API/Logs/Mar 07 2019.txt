@@ -1,0 +1,60 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 16:37:08
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MVD_ubGpLVb87_22D9QEK-c=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D R/T Plus V8","TrimID":1193968,"Year":2018,"YearID":2018,"Millage":"3434","StateCode":"AL","CleanTrade":"0","AverageTrade":"0","RoughTrade":"0","RetailTrade":"0","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[105],"ConversionAmount":["23575"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["9548"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 16:39:28
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MVD_ubGpLVb87_22D9QEK-c=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D R/T Plus V8","TrimID":1193968,"Year":2018,"YearID":2018,"Millage":"3434","StateCode":"AL","CleanTrade":"0","AverageTrade":"0","RoughTrade":"0","RetailTrade":"0","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[105],"ConversionAmount":["23575"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["9548"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 16:43:48
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MaouQR7ndODpdR_ripiPufc=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C V8","TrimID":1193913,"Year":2018,"YearID":2018,"Millage":"5242","StateCode":"AK","CleanTrade":"0","AverageTrade":"0","RoughTrade":"0","RetailTrade":"0","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:03:02
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MeHVVnjZoK8-bk0l-zXMjHU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"Pacifica","ModelID":597,"Trim":"Wagon 4D Limited Hybrid","TrimID":1193925,"Year":2018,"YearID":2018,"Millage":"34343","StateCode":"AK","CleanTrade":"33600.000000","AverageTrade":"32325.000000","RoughTrade":"30750.000000","RetailTrade":"36275.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:19:37
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MeHVVnjZoK8-bk0l-zXMjHU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300S AWD V6","TrimID":1193912,"Year":2018,"YearID":2018,"Millage":"5000","StateCode":"AR","CleanTrade":"25450.000000","AverageTrade":"24075.000000","RoughTrade":"22400.000000","RetailTrade":"27850.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:22:57
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MaIglXeB4lUQDBeBw8_JHEU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C V8","TrimID":1193913,"Year":2018,"YearID":2018,"Millage":"4445","StateCode":"AL","CleanTrade":"26350.000000","AverageTrade":"24950.000000","RoughTrade":"23250.000000","RetailTrade":"28775.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:23:38
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MaIglXeB4lUQDBeBw8_JHEU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C V8","TrimID":1193913,"Year":2018,"YearID":2018,"Millage":"4445","StateCode":"AL","CleanTrade":"26350.000000","AverageTrade":"24950.000000","RoughTrade":"23250.000000","RetailTrade":"28775.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:24:22
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MaIglXeB4lUQDBeBw8_JHEU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C V8","TrimID":1193913,"Year":2018,"YearID":2018,"Millage":"4445","StateCode":"AL","CleanTrade":"26350.000000","AverageTrade":"24950.000000","RoughTrade":"23250.000000","RetailTrade":"28775.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[140],"ConversionAmount":["26450"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["10712"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 17:46:11
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MbCxsTw-0Jgw0Af6M2RVMTU=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D GT AWD V6","TrimID":1193966,"Year":2018,"YearID":2018,"Millage":"434","StateCode":"AL","CleanTrade":"26700.000000","AverageTrade":"25300.000000","RoughTrade":"23600.000000","RetailTrade":"29375.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":[105],"ConversionAmount":["23575"],"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":["9548"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 07 2019.txt
+03/07/2019 18:07:48
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekivP8ZdfAI4MV_IPJdQjrZ-o_ZDeeU8uC0=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D Limited V6","TrimID":1193908,"Year":2018,"YearID":2018,"Millage":"2566","StateCode":"CO","CleanTrade":"21925.000000","AverageTrade":"20600.000000","RoughTrade":"19000.000000","RetailTrade":"24175.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"32258","ConversionID":[141,142,146],"ConversionAmount":["27475","28600","23575"],"DeductionID":[12,12,12],"DeductionAmount":["0","0","0"],"DepericiationAmount":["11127","11583","9548"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________

@@ -1,0 +1,344 @@
+﻿
+@{
+    ViewBag.Title = "Approved";
+}
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30 ff-myriad">Approved Quotes</h1>
+        </div><!-- End col -->
+
+    </div><!-- End row -->
+
+    <div id="gridContainer"></div>
+    <div id="qoutesgrid" class="dev_user_table"></div>
+
+
+
+
+    <!-- Qoute Delete Confirmation Modal   -->
+    <div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Approval Details</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Quote Number</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="qnumber"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Sales Report</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="sreport"></span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label>Portal Amount</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="pamount"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label>Suggested Price</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="sprice"></span>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Images</label>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div id="img"></div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+                            <textarea id="ManagerComments" placeholder="Write Comments"></textarea>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white btnReject" rejectid="" data-dismiss="modal">Reject</button>
+                        <button class="btn btn-cstm btn-blue btnApprove" approveid="">Approve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- End container-fluid -->
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        ListofApprovedQoutesGrid();
+
+    });
+
+    $(".btnNewQoute").click(function () {
+        window.location.href = '@Url.Action("Index", "QuoteNew")';
+    });
+
+
+
+    function ListofApprovedQoutesGrid()
+    {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllApprovedData", "Manager")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+                debugger;
+                if (JSONStatus.status) {
+                    $("#qoutesgrid").dxDataGrid({
+                        dataSource: JSONStatus.ApprovedQoutesList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+                        columns: ["ID", "CustomerName",
+                            {
+                                dataField: "Status",
+                                alignment: "center",
+                                cellTemplate: function (container, options) {
+                                    var htmlstatus = "";
+
+                                    switch (options.value) {
+                                        case 'New':
+                                            //htmlstatus = "<span class='badge green'>New</span>";
+                                            htmlstatus = "<span class='badge green'>" + options.value + "</span>";
+                                            break;
+                                        case 'Draft':
+                                            //htmlstatus="<span class='badge yellow'>Draft</span>";
+                                            htmlstatus = "<span class='badge'>" + options.value + " <i class='icn icon-pencil ml-5'></i></span>";
+                                            break;
+                                        default:
+                                            htmlstatus = "<span class='badge'>" + options.value + "</span>";
+                                    }
+
+                                    $(htmlstatus).appendTo(container);
+
+                                }
+                            },
+                                "Make", "Model", "Year", {
+                                    caption: "Trade-In",
+                                    width: "10%",
+                                    cellTemplate: function (element, info) {
+                                        debugger
+                                        var TradeIn = "";
+
+                                        if (info.data.IsClean) {
+                                            element.html(info.data.CleanTrade);  // TradeIn = "CleanTrade";
+                                        }
+
+                                        else if (info.data.IsAverage) {
+                                            element.html(info.data.AverageTrade); //TradeIn = "AverageTrade";
+                                        }
+
+                                        else if (info.data.IsRough) {
+                                            element.html(info.data.RoughTrade); //TradeIn = "RoughTrade";
+                                        }
+                                    }
+                                }, {
+                                    dataField: "ID",
+                                    caption: "Actions",
+                                    cellTemplate: function (container, options) {
+                                        $("<div>")
+                                            .append($("<a href='/QuoteNew/Edit?id=" + options.value + "' class='QouteEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                            .append($("<a class='QouteDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                            .appendTo(container);
+                                    }
+                                }]
+
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    $(".loader").css({ "display": "none" });
+                    AlertToast('warning', JSONStatus.message);
+                }
+
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+        });
+    }
+
+    function Rejected(id)
+    {
+        debugger
+        $('.btnApprove').attr("approveid", id);
+        $('.btnReject').attr("rejectid", id);
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("ApproveDetails", "Manager")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {ID:id},
+            success: function (result) {
+                debugger;
+                var html = '';
+                var JSONStatus = JSON.parse(result.jsondata);
+                console.log(JSONStatus);
+                $("#qnumber").text(JSONStatus.QoutesList[0].ID);
+                $("#sreport").text(JSONStatus.QoutesList[0].CustomerName);
+                $("#pamount").text(JSONStatus.QoutesList[0].TotalConversionDeduction);
+                $("#sprice").text(JSONStatus.QoutesList[0].SuggestedPrice);
+
+
+                var Images = JSONStatus.QoutesList[0].Files.split(',');
+                $("#img").html('');
+
+                $(Images).each(function (index) {
+
+                    html += '<img src="/Attechments/' + $.trim(Images[index]) + '" style="width:100%">';
+                });
+                $("#img").append(html);
+
+                    $(".loader").css({ "display": "none" }); //Loader
+                    $('#DeleteConfirmation').modal("show");
+
+
+            },
+            error: function (xhr) {
+
+            }
+
+        });
+    }
+
+
+    $(".btnApprove").click(function () {
+
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('approveid');
+        var comm = $('textarea#ManagerComments').val();
+        $.ajax({
+            url: '@Url.Action("Approve", "Manager")',
+            type: "GET",
+            data: {
+                ID: qouteid, Comment: comm
+            },
+            success: function (response) {
+                ListofQoutesGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+    });
+
+    $(".btnReject").click(function () {
+
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('rejectid');
+        var comm = $('textarea#ManagerComments').val();
+        $.ajax({
+            url: '@Url.Action("Reject", "Manager")',
+            type: "GET",
+            data: {
+                ID: qouteid, Comment: comm
+            },
+            success: function (response) {
+                ListofQoutesGrid();
+
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+    });
+
+
+
+
+
+
+</script>
+
+

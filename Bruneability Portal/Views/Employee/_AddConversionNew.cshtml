@@ -1,0 +1,1046 @@
+﻿
+@{
+
+    Layout = null;
+}
+
+<div class="modal fade" id="addconversion">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Coversion</h4>
+                <input type="hidden" id="MakeId" value="@ViewBag.MakeId" />
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body pt-40 pb-30">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right pr-0">Selected Make</label>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" id="selectedMake" disabled/>
+                    </div>
+
+                    @*<div id="conversions" class="form-control"></div>*@
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right pr-0">Makes</label>
+
+                    <div class="col-sm-6">
+                        <select class="form-control" id="Makes_select"></select>
+                    </div>
+                   
+                    @*<div id="conversions" class="form-control"></div>*@
+                </div>
+
+                @*<div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right pr-0">Tiers</label>
+
+                    <div class="col-sm-6">
+                        <select class="form-control" id="Tiers_select" disabled></select>
+                    </div>
+
+                    
+                </div>*@
+
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right pr-0">Conversion Make</label>
+
+                    <div class="col-sm-6">
+                        <select class="form-control" id="conversion_select"></select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="button" onclick="addTOConversionList()" value="Add" class="btn btn-blue" />
+                    </div>
+
+                    @*<div id="conversions" class="form-control"></div>*@
+                </div>
+
+                @*<div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right pr-0">Conversion Model</label>
+                        <div class="col-sm-7">
+                            <select class="form-control">
+                                <option>Select Conversion Model</option>
+                            </select>
+                        </div>
+                    </div>*@
+
+                <div class="form-group row hide">
+
+
+                    <div class="col-sm-12">
+
+
+                        <table id="ConversionListTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Selected Conversion</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer hide">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-cstm btn-blue btnSave">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/scripts/moment.js"></script>
+<script src="~/scripts/moment.min.js"></script>
+<script>
+    var BindConversions = [];
+    var BindConversionsValue = [];
+
+    var HtmlforTable = '';
+
+    var storeconversionList = {};
+
+
+    var index = 0;
+    var makeId = 0;
+    var tierId = 0;
+    $(document).ready(function () {
+        debugger
+        $("#selectedMake").val($("#MakeName").val());
+        MakesDropDown();
+
+    });
+    $("#Makes_select").change(function () {
+        makeId = $("#Makes_select").val();
+        $("#Tiers_select").prop("disabled", false);
+        ConversionDropDown(makeId, tierId)
+    })
+    //$("#Tiers_select").change(function () {
+    //    tierId = $("#Tiers_select").val();
+        
+    //    ConversionDropDown(makeId, tierId)
+    //})
+
+    function addTOConversionList() {
+
+        HtmlforTable = '';
+        debugger
+        var isExit = false;
+        var selectItem = $('#conversion_select option:selected').val();
+        var selectItemText = $('#conversion_select option:selected').text();
+
+        if (selectItemText == "Select Conversion") {
+            AlertToast("warning", "Select Any Conversion then Press Add Button.");
+        }
+
+        else {
+            for (var i = 0; i < BindConversions.length; i++) {
+                if (BindConversions[i] == selectItem) {
+                    isExit = true;
+                    break;
+                }
+            }
+            if (isExit == false) {
+
+                BindConversions.push(parseInt(selectItem));
+                BindConversionsValue.push([selectItem, selectItemText]);
+
+                $('#ConversionListTable tbody').empty();
+
+                $.each(BindConversionsValue, function (i, value) {
+                    HtmlforTable += '<tr>' +
+                        '<td>' + value[1] + '</td>' +
+                        '<td><i style="cursor:pointer" onclick="deleteCallConversionList(' + value[0] + ')" class="icn icon-trash"></i></td>' +
+                       '</tr>';
+                });
+                $('#ConversionListTable tbody').append(HtmlforTable);
+            }
+            else {
+                AlertToast("warning", "This Conversion already Exist.");
+            }
+        }
+
+
+
+        $('.btnSave').click();
+        
+        $(".btnUpdateQoute,.btnSaveQoute").removeAttr("disabled");
+
+    }
+
+    function deleteCallConversionList(val) {
+        debugger
+        HtmlforTable = '';
+        for (var i = 0; i < BindConversions.length; i++) {
+            if (BindConversionsValue[i][0]==val) {
+                BindConversions.splice(i, 1);
+                BindConversionsValue.splice(i, 1);
+                break;
+            }
+        }
+
+        $('#ConversionListTable tbody').empty();
+        $.each(BindConversionsValue, function (i, value) {
+            HtmlforTable += '<tr>' +
+                '<td>' + value[1] + '</td>' +
+                '<td><i style="cursor:pointer" onclick="deleteCallConversionList(' + value[0] + ')" class="icn icon-trash"></i></td>' +
+               '</tr>';
+        });
+        $('#ConversionListTable tbody').append(HtmlforTable);
+    }
+    function MakesDropDown() {
+        
+        $.ajax({
+            url: '@Url.Action("GetAllMakes", "Employee")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+                var JSONStatus = JSON.parse(response.jsondata);
+                debugger
+                $('#Makes_select').empty();
+                $('#Makes_select').append('<option>Select Makes</option>');
+                $.each(JSONStatus.MakesList, function (i, obj) {
+                    $('#Makes_select').append('<option value=' + obj.Id + '>' + obj.Makes + '</option>');
+                });
+                $('#Tiers_select').empty();
+                $('#Tiers_select').append('<option>Select Tiers</option>');
+                $.each(JSONStatus.TierList, function (i, obj) {
+                    $('#Tiers_select').append('<option value=' + obj.Id + '>' + obj.TierName + '</option>');
+                });
+                //yahan pe krna he
+                MultiselectDropdown(0, JSONStatus.ConversionsList);
+
+            }
+        });
+    }
+
+    function ConversionDropDown(makeId, tierId) {
+        //var makeId = $('#MakeId').val();
+        $.ajax({
+            url: '@Url.Action("GetAllConversionsByMakeId", "Employee")',
+            type: "GET",
+            data: { MakeId: makeId, TierId: tierId },
+            success: function (response) {
+                var JSONStatus = JSON.parse(response.jsondata);
+                debugger
+                $('#conversion_select').empty();
+                $('#conversion_select').append('<option>Select Conversion</option>');
+                $.each(JSONStatus.ConversionsList, function (i, obj)
+                    {
+                       $('#conversion_select').append('<option value=' + obj.ID + '>' + obj.ConversionName + '</option>');
+                    });
+                //yahan pe krna he
+                MultiselectDropdown(0, JSONStatus.ConversionsList);
+
+            }
+        });
+    }
+
+
+    //coment krna he
+    function MultiselectDropdown(selectdval, pumpsData) {
+        debugger
+        var dataGrid;
+        var getSelectedItemsKeys = function (items) {
+            var result = [];
+            items.forEach(function (item) {
+                if (item.selected) {
+                    result.push(item.key);
+                }
+                if (item.items.length) {
+                    result = result.concat(getSelectedItemsKeys(item.items));
+                }
+            });
+            return result;
+
+        };
+
+        var makeAsyncDataSource = function () {
+            return new DevExpress.data.CustomStore({
+                loadMode: "raw",
+                key: "ID",
+                load: function () {
+                    return pumpsData
+                }
+            });
+        };
+
+        $("#conversions").dxDropDownBox({
+
+            value: BindConversions,
+            valueExpr: "ID",
+            placeholder: "Select a value...",
+            displayExpr: "Name",
+            showClearButton: true,
+            dataSource: makeAsyncDataSource(),
+            contentTemplate: function (e) {
+
+                var value = e.component.option("value"),
+                    $dataGrid = $("<div>").dxDataGrid({
+                        dataSource: e.component.option("dataSource"),
+                        columns: ["ConversionName"],
+                        showBorders: false,
+                        showColumnHeaders: false,
+                        showColumnLines: false,
+                        searchPanel: {
+                            visible: true,
+                            width: 240,
+                            placeholder: "Search..."
+                        },
+                        hoverStateEnabled: true,
+                        paging: { enabled: true, pageSize: 10 },
+                        filterRow: { visible: false },
+                        scrolling: { mode: "infinite" },
+                        height: 345,
+                        selection: { mode: "multiple" },
+                        selectedRowKeys: value,
+                        onSelectionChanged: function (e) {
+                            var keys = e.selectedRowKeys;
+                            BindConversions = keys;
+                            e.component.option("value", keys);
+                        }
+                    });
+
+                dataGrid = $dataGrid.dxDataGrid("instance");
+
+                e.component.on("valueChanged", function (args) {
+                    var value = args.value;
+                    dataGrid.selectRows(value, false);
+                });
+
+                return $dataGrid;
+            }
+        });
+    }
+
+
+    $(".btnSave").click(function ()
+    {
+       // $('#totalSum_').text('0');
+        debugger
+
+        var array = BindConversions;
+        if (array.length > 0)
+        {
+
+
+            $.ajax({
+                url: '@Url.Action("GetQouteConversionsDetails", "Employee")',
+                type: "POST",
+                data: { conversionArray: array },
+                success: function (response) {
+
+                    var JSONStatus = JSON.parse(response.jsondata);
+                    var Amt = JSONStatus.Amount;
+                    var year = parseInt($('#Year').val());
+
+                    var a = moment(moment().toDate()).diff(moment([year, 0, 1]), 'months', true);
+
+                    var month_ = Math.ceil(a);
+
+
+                    //var d1 = new Date(year, 0, 1);
+                    //var d2 = new Date()
+                    //var today = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+                    //var d = today - d1;
+                    //var month_ = calcDate(today, d1);
+
+                    debugger
+                    var conversionobj = {};
+                    var deductionobj = {};
+                    var isExit = false;
+                    var IsExit = false;
+
+                    for (var i = 0; i < JSONStatus.ConversionList.length; i++) {
+                        var conversionamount = JSONStatus.ConversionList[i].RetailPrice;
+                        var a = getDepreciatedAmount(month_,Amt, conversionamount);
+                        JSONStatus.ConversionList[i].DepreciatedAmount = Math.round(parseFloat(a));
+                        var grid = $("#conversiondetailGrid").dxDataGrid("instance");
+                        var _gridrowcount = grid.totalCount();
+                        //if (_gridrowcount == 0) {
+
+                        //    appendListofConversion = [];
+                        //    appendListofDeduction = [];
+                        //}
+                        if (appendListofConversion.length > 0) {
+                            for (var j = 0; j < appendListofConversion.length; j++) {
+                                if (appendListofConversion[j].ID == JSONStatus.ConversionList[i].ID) {
+                                    isExit = true;
+                                    break;
+                                }
+                                else {
+                                    isExit = false;
+                                }
+                            }
+                            debugger
+                            if (isExit == false) {
+                                debugger
+                                conversionobj = JSONStatus.ConversionList[i];
+                                conversionobj.ActualValue = conversionobj.DepreciatedAmount;
+                                appendListofConversion.push(conversionobj);
+                                var ptotal = $('#totalSum_').text();
+                                ptotal = parseInt(ptotal) + parseInt(conversionobj.DepreciatedAmount);
+                                $('#totalSum_').text(ptotal);
+                                conversionobj = {};
+                                for (var v = 0; v < JSONStatus.DeductionsList.length; v++) {
+                                    if (JSONStatus.DeductionsList[v].Amount == 0) {
+                                        DeductionsIDs.push(JSONStatus.DeductionsList[v].ID.toString());
+                                        Deductionsdesc.push(JSONStatus.DeductionsList[v].Description.toString());
+                                        DeductionsAmounts.push(JSONStatus.DeductionsList[v].Amount)
+                                    }
+                                }
+
+                            }
+                            else {
+                                AlertToast("warning", " Conversion already Exist.");
+                            }
+
+
+                        }
+
+                        else {
+                            debugger
+                            conversionobj = JSONStatus.ConversionList[i];
+                            conversionobj.ActualValue = conversionobj.DepreciatedAmount;
+                            appendListofConversion.push(conversionobj);
+                            var ptotal = $('#totalSum_').text();
+                            ptotal = parseInt(ptotal) + parseInt(conversionobj.DepreciatedAmount);
+                            $('#totalSum_').text(ptotal);
+                            for (var v = 0; v < JSONStatus.DeductionsList.length; v++) {
+                                if (JSONStatus.DeductionsList[v].Amount == 0) {
+                                    DeductionsIDs.push(JSONStatus.DeductionsList[v].ID.toString());
+                                    Deductionsdesc.push(JSONStatus.DeductionsList[v].Description.toString());
+                                    DeductionsAmounts.push(JSONStatus.DeductionsList[v].Amount)
+                                }
+                            }
+                        }
+
+
+
+                    }
+
+                    for (var l = 0; l < JSONStatus.DeductionsList.length; l++) {
+
+                        if (appendListofDeduction.length > 0) {
+                            for (var j = 0; j < appendListofDeduction.length; j++) {
+                                if (appendListofDeduction[j].ID == JSONStatus.DeductionsList[l].ID) {
+                                    IsExit = true;
+                                    break;
+                                }
+                                else {
+                                    IsExit = false;
+                                }
+                            }
+                            if (IsExit == false) {
+                                deductionobj = JSONStatus.DeductionsList[l];
+                                appendListofDeduction.push(deductionobj);
+                                deductionobj = {};
+
+                            }
+                            else {
+                                //  AlertToast("warning", " Conversion already Exist.");
+                            }
+                        }
+
+                        else {
+                            deductionobj = JSONStatus.DeductionsList[l];
+                            appendListofDeduction.push(deductionobj);
+
+                        }
+
+
+                    }
+
+                    ConversionGrid(JSONStatus.ConversionList);
+                    DeductionGrid(JSONStatus.ConversionList, JSONStatus.DeductionsList);
+                    storeconversionList = JSONStatus.ConversionList;
+                    $("#addconversion").modal("hide");
+                }
+            });
+            $("#conversiondetails #addconversion").hide();
+        }
+
+        else {
+            AlertToast("warning", "You didn't Select any conversion.");
+        }
+
+
+    });
+
+    function appendRow(_conversionList) {
+        debugger
+        //departmentsGrid.addRow();
+        //departmentsGrid.cellValue(0, 'id', department.id);
+        //departmentsGrid.cellValue(0, 'title', department.title);
+        var conversionGrid = $('#conversiondetailGrid').dxDataGrid('instance');
+        conversionGrid.option("dataSource", _conversionList);
+    };
+
+    function appendRowtodeductiongrid(deductionList, _conversionList) {
+        debugger
+        var _deducCount = 0;
+        var deducLength = DeductionsAmounts.length;
+        $("#deductiondetailGrid").dxDataGrid({
+            dataSource: _conversionList,
+
+            columns: ["ConversionName", "DepreciatedAmount",
+                {
+                    //dataField: "authorId",
+                    caption: "Deductions",
+                    width: "50%",
+                    alignment: "left",
+                    cellTemplate: function (container, options) {
+
+                        //////////////
+                        debugger
+                        var radiobuttons = "";
+                        radiobuttons += "<div class='radio'>";
+                        for (var i = 0; i < deductionList.length; i++) {
+                            var isFound = false;
+                            if (parseInt(DeductionsIDs[options.rowIndex]) == deductionList[i].ID) {
+                                isFound = true;
+                            }
+
+
+                                debugger
+                                if (isFound) {
+
+                                    radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+                                }
+                                else
+                                {
+                                    if (deductionList[i].Amount == 0) {
+                                        radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+                                    }
+                                    else {
+                                        radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" ><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+                                    }
+
+                                    //radiobuttons += "<label><input id=" + objdeductionlist.ID + " amount='" + objdeductionlist.Amount + "'  name='deduction" + icount + "' type='radio' onclick='onradiochange(this) '><span class='circle'></span><span class='check'></span><b>$" + objdeductionlist.Amount + "</b>(" + objdeductionlist.Description + ")</label></br>";
+                                }
+
+
+
+
+
+                        }
+                        icount++;
+                        radiobuttons += "</div>";
+                        $(radiobuttons).appendTo(container);
+
+
+                    }
+
+                },
+                {
+
+                    dataField: "ActualValue",
+                    caption: "Price After Deduction",
+                    //calculateDisplayValue: function (data) {
+                    //    debugger
+                    //    ///fgfg/fgfgrf
+
+                    //    if (deducLength > 0) {
+
+                    //        var ret = Math.round(parseInt(data.DepreciatedAmount) - parseInt(DeductionsAmounts[_deducCount]));
+                    //        _deducCount = parseInt(_deducCount) + 1;
+                    //        deducLength = parseInt(deducLength) - 1;
+                    //        return ret;
+                    //    }
+
+
+                    }
+                    //calculateCellValue: function (e) {
+                    //    if (e.dataField == "ID")
+                    //        return 0;
+
+                    //    //if (e.IsActive == true)
+                    //    //    return ["Active"];
+                    //    //if (data.IsActive == false)
+                    //    //    return ["InActive"];
+
+                    //}
+
+
+               // }
+            ],
+            onRowClick: function (e) {
+                debugger
+                if (e.rowType == "data") {
+                    rowindex = e.rowIndex;
+                }
+            },
+            summary: {
+                totalItems: [{
+
+                    column: "RetailPrice",
+                    summaryType: "sum",
+                    alignment: "left",
+                    customizeText: function (data) {
+                        debugger
+                        $("#ConversionAmount").val(data.value);
+                        return ("Total Sum: " + data.value);
+                    }
+
+                    //valueFormat: "currency"
+                }]
+            },
+            showBorders: true
+        });
+    }
+
+    function ConversionGrid(conversionList)
+    {
+
+        var conversionobj = {};
+        var isExit = false;
+        for (var i = 0; i < conversionList.length; i++)
+        {
+            ConversionsIDs.push(conversionList[i].ID);
+            ConversionsAmounts.push(conversionList[i].RetailPrice);
+            DepericiationAmounts.push(conversionList[i].DepreciatedAmount)
+        }
+
+
+
+        var grid = $("#conversiondetailGrid").dxDataGrid("instance");
+
+       var rowCount= parseInt(grid.totalCount());
+       if (rowCount > 0)
+       {
+           appendRow(appendListofConversion);
+       }
+
+        else
+        {
+            $("#conversiondetailGrid").dxDataGrid({
+
+                dataSource: conversionList,
+
+                columns: ["ConversionName",
+                    {
+                        dataField: 'Description',
+                        caption: 'Conversion Description',
+                        //width: 60,
+                    }
+                    , "RetailPrice",
+
+                      {
+                          dataField: 'ID',
+                          caption: 'Delete',
+                          fixed: true,
+                          fixedPosition: 'right',
+
+                          //width: 60,
+                          alignment: 'center',
+                          allowSorting: false,
+                          cellTemplate: function (container, options) {
+                              $('<div />').dxButton({
+                                  icon: 'trash',
+                                  type: 'danger',
+                                  onClick: function (e) {
+                                      debugger;
+                                      $('#conversiondetailGrid').dxDataGrid('instance').deleteRow(options.rowIndex);
+                                  }
+                              }).appendTo(container);
+                          },
+                      }
+
+                ],
+
+                showBorders: true,
+                onRowRemoving: function (e) {
+                    debugger;
+
+                    //ConversionsAmounts;
+                    //ConversionsIDs;
+                    //DeductionsAmounts;
+                    //DeductionsIDs;
+                    //DepericiationAmounts;
+                    for (var i = 0; i < ConversionsIDs.length; i++) {
+                        if (ConversionsIDs[i] == e.data.ID) {
+                            ConversionsIDs.splice(i, 1);
+                            ConversionsAmounts.splice(i, 1);
+                            DeductionsIDs.splice(i, 1);
+                            Deductionsdesc.splice(i, 1);
+                            DeductionsAmounts.splice(i, 1);
+                            appendListofConversion.splice(i,1);
+                        }
+                    }
+
+
+
+                    for (var i = 0; i < DepericiationAmounts.length; i++) {
+                        if (DepericiationAmounts[i] == e.data.DepreciatedAmount) {
+                            DepericiationAmounts.splice(i, 1);
+
+                        }
+                    }
+
+                    $("#deductiondetailGrid tbody tr").remove();
+
+
+                    //$('#deductiondetailGrid').dxDataGrid('instance').deleteRow(e.component.getRowIndexByKey(e.key));
+                    //$("#totalSum_").text('0');
+                    //debugger
+                    //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+                    //var priceafterde = 0;
+                    //$('#totalSum_').text(0);
+
+                    //var sumval = 0;
+                    //for (var i = 0; i < DeductionsIDs.length ; i++) {
+
+                    //    var priceafterde = grid.getCellElement(i, 3).html();
+
+
+                    //    sumval += parseFloat(priceafterde);
+
+                    //    //}
+
+
+                    //}
+                    //$('#totalSum_').text(sumval);
+                },
+                onRowRemoved: function (e) {
+                    debugger;
+                    $("#conversiondetails #addconversion").show();
+                    $("#tab4").addClass("disabled_anchor");
+
+                    $(".btnUpdateQoute,.btnSaveQoute").attr("disabled", "");
+
+                    $("#totalSum_").text('0');
+                    debugger
+                    //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+                    var priceafterde = 0;
+                    $('#totalSum_').text(0);
+
+                    var sumval = 0;
+                    for (var i = 0; i < DeductionsIDs.length ; i++) {
+
+                        //var priceafterde = grid.getCellElement(i, 3).html();
+
+                        //if (sumval >= 0) {
+                        // var sumval =  parseFloat(DepericiationAmounts[i]) - parseFloat(DeductionsAmounts[i]);
+                        sumval += parseFloat(priceafterde);
+
+                        //}
+
+
+                    }
+                    $('#totalSum_').text(sumval);
+
+                }
+            });
+        }
+
+    }
+    //function addDeductionRow(conversion, deductionlist) {
+    //    var html;
+    //    debugger;
+    //    html = '<tr>'
+    //         + '    <td>' + conversion.ConversionName + '</td>'
+    //         + '    <td>' + conversion.DepreciatedAmount + '</td>'
+    //         + '    <td>'
+    //         + '        <label class="form-switch">Deduction<input type="checkbox" onchange="onChangeDeduction(this)"><i></i></label>'
+    //         + '    </td>'
+    //         + '    <td>' + conversion.ActualValue + '</td>'
+    //         //<input id="hdnConversionValue" type="hidden" value="' + conversion.ActualValue + '">
+    //         + '</tr>'
+
+    //         + '<tr class="comparisonRow" style="display: none;">'
+    //         + '    <td colspan="5">'
+    //         + '        <table class="comparisonSelectionTable checkbox">'
+    //         + '            <tbody>'
+    //    var number = 0;
+    //    html += '<tr>'
+    //    $.each(deductionlist, function (i, e) {
+    //        number += 1;
+    //        var threeCalc = (number / 3).toString();
+    //        var amount = e.Amount;
+    //        var deductionName = e.Description;
+    //        html += '<td class="checkbox-custom">'
+    //        + '    <label><input id="'+ i +'" amount="'+ amount +'" name="deduction1" deductionname="' + deductionName + '" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$'+ amount +'</b> ('+ deductionName +')</label>'
+    //        + '</td>'
+
+    //        if (threeCalc.indexOf(".") == -1) {
+    //            html += '</tr><tr>'
+    //        }
+    //    })
+    //    html += '</tr>'
+
+
+
+    //         html += '            </tbody>'
+    //         + '        </table>'
+    //         + '    </td>'
+    //         + '</tr>'
+    //         + ''
+    //         + ''
+    //         + ''
+    //         $("#deductiondetailGrid table tbody").append(html);
+    //}
+    function DeductionGrid(conversionList , deductionList)
+    {
+        debugger
+        var _deducCounts = 0;
+        var deducLengths = DeductionsAmounts.length;
+        //for (var i = 0; i < conversionList.length; i++) {
+        //    DeductionsIDs.push(conversionList[i].DeductionID);
+        //    DeductionsAmounts.push(conversionList[i].DeductionAmount);
+        //}
+        //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+        var rowCount = 0;
+        if (rowCount > 0)
+        {
+            appendRowtodeductiongrid(appendListofDeduction, appendListofConversion);
+        }
+        else {
+            addDeductionRow(conversionList[conversionList.length - 1], deductionList);
+            
+            //$("#deductiondetailGrid").dxDataGrid({
+            //    dataSource: conversionList,
+            //    editing: {
+            //        texts: { confirmDeleteMessage: "" },
+            //    },
+            //    columns: ["ConversionName", "DepreciatedAmount",
+            //        {
+            //            //dataField: "authorId",
+            //            caption: "Deductions",
+            //            width: "50%",
+            //            alignment: "left",
+            //            cellTemplate: function (container, options) {
+            //                //index = index + 1;
+            //                //var radiobuttons = "";
+            //                //radiobuttons += "<div class='radio'>";
+            //                //for (var i = 0; i < deductionList.length; i++) {
+            //                //    radiobuttons += "<label><input id=" + deductionList[i].ID + " amount='" + deductionList[i].Amount + "'  name='deduction" + index + "' type='radio' onclick='onradiochange(this)'><span class='circle'></span><span class='check'></span><b>$" + deductionList[i].Amount + "</b>(" + deductionList[i].Description + ")</label></br>";
+            //                //}
+            //                //radiobuttons += "</div>";
+            //                //$(radiobuttons).appendTo(container);
+
+            //                //////////////-----////
+
+            //                debugger
+            //                var radiobuttons = "";
+            //                radiobuttons += "<div class='radio'>";
+            //                for (var i = 0; i < deductionList.length; i++) {
+            //                    var isFound = false;
+            //                    if (parseInt(DeductionsIDs[options.rowIndex]) == deductionList[i].ID) {
+            //                        isFound = true;
+            //                    }
+            //                    if (isFound) {
+
+            //                        radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+            //                    }
+            //                    else {
+            //                        if (deductionList[i].Amount == 0) {
+            //                            radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+            //                        }
+            //                        else {
+            //                            radiobuttons += '<label><input id=' + deductionList[i].ID + ' amount="' + deductionList[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionList[i].Description + '" type="radio" onclick="onradiochange(this)" ><span class="circle"></span><span class="check"></span><b>$' + deductionList[i].Amount + '</b> (' + deductionList[i].Description + ')</label></br>';
+            //                        }
+
+            //                        //radiobuttons += "<label><input id=" + objdeductionlist.ID + " amount='" + objdeductionlist.Amount + "'  name='deduction" + icount + "' type='radio' onclick='onradiochange(this) '><span class='circle'></span><span class='check'></span><b>$" + objdeductionlist.Amount + "</b>(" + objdeductionlist.Description + ")</label></br>";
+            //                    }
+
+
+
+            //                }
+            //                icount++;
+            //                radiobuttons += "</div>";
+            //                $(radiobuttons).appendTo(container);
+
+            //            }
+
+            //        },
+            //        {
+            //            dataField: "ActualValue",
+            //            caption: "Price After Deduction",
+            //            //calculateCellValue: function (e) {
+            //            //    if (e.dataField == "ID")
+            //            //        return 0;
+
+            //            //    //if (e.IsActive == true)
+            //            //    //    return ["Active"];
+            //            //    //if (data.IsActive == false)
+            //            //    //    return ["InActive"];
+
+            //            //}
+            //            //calculateCellValue: function (data) {
+            //            //     debugger
+            //            //     if (deducLengths > 0) {
+            //            //         var ret = Math.round(parseInt(data.DepreciatedAmount) - parseInt(DeductionsAmounts[_deducCounts]));
+            //            //         _deducCounts = parseInt(_deducCounts)+ 1;
+            //            //         deducLengths = parseInt(deducLengths) - 1;
+            //            //      return ret;
+            //            //     }
+            //            //     else {
+            //            //         return 0;
+            //            //     }
+
+
+            //            //}
+
+
+            //        }
+            //    ],
+            //    onRowClick: function (e) {
+            //        debugger
+            //        if (e.rowType == "data") {
+            //            rowindex = e.rowIndex;
+            //        }
+            //    },
+            //    summary: {
+            //        totalItems: [{
+
+            //            column: "RetailPrice",
+            //            summaryType: "sum",
+            //            alignment: "left",
+            //            customizeText: function (data) {
+            //                debugger
+            //                $("#ConversionAmount").val(data.value);
+            //                return ("Total Sum: " + data.value);
+            //            }
+
+            //            //valueFormat: "currency"
+            //        }]
+            //    },
+            //    showBorders: true
+            //});
+        }
+
+    }
+
+    var rowindex = "";
+    var conversion_amount = "";
+    var TotalTest = "";
+
+    //function onradiochange(b) {
+    //faraz
+    //    //when make new quote.
+    //    debugger
+    //    b.setAttribute("checked", "");
+    //    //var hdnConversionValue = parseInt($("#hdnConversionValue").val());
+    //    var dedcution_amount = $(b).attr('amount'); //Deduction Amount
+
+    //    //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+
+
+    //    //conversion_amount = grid.cellValue(rowindex, "RetailPrice"); //Conversion Amount
+
+    //    //var depreciated_amount = grid.cellValue(rowindex, "DepreciatedAmount");
+
+    //    var depreciated_amount = parseInt($(b).parents(".comparisonRow").prev().find("td:nth-child(2)").text());
+
+
+
+
+
+    //    var aftercal_amount = depreciated_amount - parseInt(dedcution_amount); //After Deduction Amount
+
+    //    //appendListofConversion[rowindex].ActualValue = aftercal_amount;
+    //    var deductionAmounts = [];
+    //    $('input[name="deduction1"]').each(function (i, e) {
+    //        if ($(this).is(":checked")) {
+    //            var amount = parseInt($(this).attr("amount"));
+    //            deductionAmounts.push(amount);
+    //        }
+    //    })
+    //    var totalAmountToDeduct = 0;
+    //    $.each(deductionAmounts, function (i, e) {
+    //        totalAmountToDeduct += e;
+    //    })
+
+    //    $(b).parents(".comparisonRow").prev().find("td:nth-child(4)").html(depreciated_amount - totalAmountToDeduct);
+
+    //    //grid.getCellElement(rowindex, 3).html(aftercal_amount);
+    //    //Arrays for DeductionIDs and DeductionsAmounts
+
+    //    DeductionsAmounts.push($(b).attr('amount'));
+    //    DeductionsIDs.push($(b).attr('data-id'));
+    //    Deductionsdesc.push($(b).attr('deductionname'));
+
+    //    //DeductionsAmounts[rowindex] = $(b).attr('amount');
+    //    //DeductionsIDs[rowindex] = $(b).attr('id');
+    //    //Deductionsdesc[rowindex] = $(b).attr('deductionname');
+    //    //var sds = grid.cellValue(rowindex, "DepreciatedAmount");
+
+    //    var priceafterde = 0;
+    //    $('#totalSum_').text(0);
+    //    var sumval = parseInt($('#totalSum_').text());
+
+    //    //for (var i = 0; i < grid.totalCount() ; i++) {
+
+    //    //    var priceafterde = grid.getCellElement(i, 3).html();
+
+    //    //    if (sumval >= 0) {
+
+    //    //        if (priceafterde == '&nbsp;') {
+    //    //            priceafterde = 0;
+    //    //        }
+    //    //        var sum_ = parseInt(priceafterde) + parseInt($('#totalSum_').text())
+    //    //        $('#totalSum_').text(sum_);
+    //    //    }
+
+    //    //    else {
+    //    //        var sum_ = parseInt(priceafterde);
+    //    //        $('#totalSum_').text(sum_);
+    //    //    }
+    //    //}
+
+
+
+
+    //}
+
+
+    function calcDate(date1, date2) {
+        var diff = Math.floor(date1.getTime() - date2.getTime());
+        var day = 1000 * 60 * 60 * 24;
+
+        var days = Math.floor(diff / day);
+        var months = Math.floor(days / 31);
+        var years = Math.floor(months / 12);
+
+        return months + 2;
+    }
+
+
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
+    function getDepreciatedAmount(monthDiff,Amt, conversion_amount) {
+        debugger;
+        var resultvalue = 0;
+        $.ajax({
+            url: '/Employee/GetDep_per_ByMonth',
+            type: 'GET',
+            data: { month: monthDiff,Amount:Amt, _conversionamount: conversion_amount },
+            async: false,
+            success: function (response) {
+
+                resultvalue = response.result.Depreciationresult;
+               // alert('deperication amount: ' + resultvalue);
+            }
+        });
+
+        return resultvalue;
+    }
+</script>

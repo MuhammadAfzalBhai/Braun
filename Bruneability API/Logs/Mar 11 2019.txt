@@ -1,0 +1,12 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 11 2019.txt
+03/11/2019 10:37:42
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekhYa-7KmCPqkZ_jFO5jIqD7KwPMz-3ewAAMfcu-PT0dCA==","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"By VIN","SearchTypeID":"By VIN","Make":"CHRYSLER","MakeID":9,"Model":"Town & Country","ModelID":854,"Trim":"Wagon S V6","TrimID":1182269,"Year":2015,"YearID":2015,"Millage":"10000","StateCode":null,"CleanTrade":"14725","AverageTrade":"13700","RoughTrade":"12425","RetailTrade":"17325","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"115787","ConversionID":[143,149,158],"ConversionAmount":["29625","27200","21100"],"DeductionID":[3,5,9],"DeductionAmount":["2000","400","10000"],"DepericiationAmount":["48733","44744","34710"],"QouteAmount":null,"VinNumber":"2C4RC1HG9FR573032","RegionVal":"4","RegionText":"Midwest"}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 11 2019.txt
+03/11/2019 10:39:35
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekhYa-7KmCPqkZ_jFO5jIqD7KwPMz-3ewAAMfcu-PT0dCA==","QouteID":0,"CustomerName":"Junaid Zaheer","Email":"junaidzaheerkhan@outlook.com","Phone":"03042710106","AddressLine1":"Karachi","AddressLine2":"Sindh","SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona 392 V8","TrimID":1191218,"Year":2017,"YearID":2017,"Millage":"20000","StateCode":"AK","CleanTrade":"35775.000000","AverageTrade":"34275.000000","RoughTrade":"32425.000000","RetailTrade":"38475.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"70380","ConversionID":[105,111,134],"ConversionAmount":["23575","26025","18400"],"DeductionID":[4,11,9],"DeductionAmount":["2000","5000","10000"],"DepericiationAmount":["30294","33442","23644"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________

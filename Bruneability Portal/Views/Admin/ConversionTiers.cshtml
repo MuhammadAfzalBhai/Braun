@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "ConversionTiers";
+}
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30">Conversion Tier</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div class="row mg-bt-20">
+                <div class="col-md-4">
+                    <label class="col-form-label">Tier 1</label>
+                </div>
+                <div class="col-md-8">
+                    <input id="Tier1" type='number' class="form-control decimal" validate="MarkUpPercent" require="Percent Markup Amount is required." />
+                </div>
+
+            </div>
+
+            <div class="row mg-bt-20">
+                <div class="col-md-4">
+                    <label class="col-form-label">Tier 2</label>
+                </div>
+                <div class="col-md-8">
+                    <input id="Tier2" type='number' class="form-control decimal" validate="MarkUpPercent" require="Percent Markup Amount is required." />
+                </div>
+
+            </div>
+
+            <div class="row mg-bt-20">
+                <div class="col-md-4">
+                    <label class="col-form-label">Tier 3</label>
+                </div>
+                <div class="col-md-8">
+                    <input id="Tier3" type='number' class="form-control decimal" validate="MarkUpPercent" require="Percent Markup Amount is required." />
+                </div>
+            </div>
+
+            <div class="row mg-bt-20">
+                <div class="col-md-12">
+                    <button id="btnUpdateTiersDetails" type="button" class="pull-right btn btn-cstm btn-blue">Update</button>
+                </div>
+            </div>
+            <style>
+                .mg-bt-20 {
+                    margin-bottom: 10px;
+                }
+
+                table tr td:nth-child(1) {
+                    width: 175px;
+                }
+
+                table tr td:nth-child(2) {
+                    width: 65%;
+                }
+            </style>
+
+            <script>
+                    function settiersamount() {
+
+                        $.ajax({
+                            url: '@Url.Action("GetTiersDetails", "Admin")',
+                            contentType: 'application/json; charset=utf-8',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {},
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                debugger
+                                var JSONStatus = JSON.parse(result.jsondata);
+
+                                $("#Tier1").val(JSONStatus.MarkupData[0].Amount);
+                                $("#Tier2").val(JSONStatus.MarkupData[1].Amount);
+                                $("#Tier3").val(JSONStatus.MarkupData[2].Amount);
+                                console.log(JSONStatus);
+
+                            }
+                        });
+                    }
+
+                    $(document).ready(function () {
+                        settiersamount();
+
+                        $("#btnUpdateTiersDetails").click(function () {
+                            debugger
+
+
+                            var varTier1 = $("#Tier1").val();
+                            var varTier2 = $("#Tier2").val();
+                            var varTier3 = $("#Tier3").val();
+
+
+
+                            var data = {
+                                'Tier1Amount': varTier1,
+                                'Tier2Amount': varTier2,
+                                'Tier3Amount': varTier3
+                            };
+
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Content("~/Admin/UpdateTierAmount")',
+                                data: '{Tier1Amount: "' + varTier1 + '" ,Tier2Amount: "' + varTier2 + '" ,Tier3Amount: "' + varTier3 + '"}',
+                                processData: false,
+                                contentType: false,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (response) {
+                                    settiersamount();
+
+                                    console.log(response);
+                                    AlertToast('success', response.message);
+
+                                }
+
+                            });
+                        });
+
+                    })
+            </script>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,371 @@
+﻿
+@{
+    ViewBag.Title = "Approval";
+}
+
+<style>
+    div#img {
+        display: flex;
+        overflow: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+        div#img img {
+            height: 60px;
+            width: 60px !important;
+            margin: 0 5px;
+        }
+</style>
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30 ff-myriad">List of Quotes</h1>
+        </div><!-- End col -->
+
+    </div><!-- End row -->
+
+    <div id="gridContainer"></div>
+    <div id="qoutesgrid" class="dev_user_table"></div>
+
+
+
+
+    <!-- Qoute Delete Confirmation Modal   -->
+    <div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Approval Details</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Quote Number</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="qnumber"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Customer Name</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="sreport"></span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label id="txtText"></label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="txtAmount"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label>Conversion Amount</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="pamount"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label>Suggested Price</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span id="sprice"></span>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="">
+                                <label>Images</label>
+                            </div>
+                            <div id="img"></div>
+                        </div>
+
+                        @*<div class="col-sm-6">
+
+                            </div>*@
+
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+                            <textarea id="ManagerComments" placeholder="Write Comments"  style="width: 100%;margin-top: 10px;min-height: 80px;"></textarea>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white btnView" qouteID="">View Details</button>
+                        <button class="btn btn-cstm btn-white btnReject" rejectid="" data-dismiss="modal">Reject</button>
+                        <button class="btn btn-cstm btn-blue btnApprove" approveid="">Approve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- End container-fluid -->
+
+
+<script>
+
+    var chekingRunning = "";
+    $(function () {
+        chekingRunning = "OnLoad";
+        FillQoutesGrid();
+    });
+
+
+    function FillQoutesGrid()
+    {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllPUpApprovedQoutesDataByEmployeeId", "Manager")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+                //$("#qoutesgrid").html('');
+                if (JSONStatus.status) {
+                    $("#qoutesgrid").dxDataGrid({
+                        dataSource: JSONStatus.QoutesList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+                        scrolling: {
+                            mode: "standard", // or "virtual" | "infinite"
+                        },
+
+                        columns: [{ dataField: "ID", caption: "Quote No" }, { dataField: "CustomerName", caption: "Sales Rep" },
+
+                                { dataField: "SuggestedPrice", caption: "Suggested Price" }, { dataField: "TotalConversionDeduction", caption: "Portal Amount" },
+                                {
+                                    dataField: "Files",
+                                    caption: "Images",
+                                    cellTemplate: function (container, options) {
+                                        if (options.value != "") {
+                                            if (options.value != null) {
+                                                var Images = options.value.split(',');
+                                            }
+                                            else {
+                                                var Images = options.value;
+                                            }
+
+                                            $(Images).each(function (index) {
+                                                debugger
+                                                var Img = $.trim(Images[index]);
+                                                $("<div>")
+
+                                              .append($("<a href='/Attechments/" + Img + "' title='Image' target='_blank'><i class='fa fa-eye'></i></a>"))
+                                              .appendTo(container);
+                                            });
+                                        }
+                                        else {
+                                            $("<div>")
+
+                                                  .append($("<a>Image Not Found</a>"))
+                                                  .appendTo(container);
+                                        }
+                                    }
+                                },
+                                {
+                                    dataField: "ID",
+                                    caption: "Actions",
+                                    cellTemplate: function (container, options) {
+                                        $("<div>")
+                                            .append($("<a onclick='Approval(" + options.value + ")' class='QouteDelete' _id=" + options.value + " title='Delete'><i class='icn icon-pencil p-5'></i></a>"))
+                                            .appendTo(container);
+                                    }
+                                }]
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    if (chekingRunning == "OnLoad") {
+                        AlertToast('warning', JSONStatus.message);
+                    }
+                    $(".loader").css({ "display": "none" });
+                    $("#qoutesgrid").html('');
+                }
+            }
+        });
+    }
+
+    function Approval(id)
+    {
+        $('.btnApprove').attr("approveid", id);
+        $('.btnReject').attr("rejectid", id);
+        $('.btnView').attr("qouteID", id);
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("ApproveDetails", "Manager")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {ID:id},
+            success: function (result) {
+
+                debugger;
+                var html = '';
+                var JSONStatus = JSON.parse(result.jsondata);
+                console.log(JSONStatus);
+                $("#qnumber").text(JSONStatus.QoutesList[0].ID);
+                $("#sreport").text(JSONStatus.QoutesList[0].CustomerName);
+                $("#pamount").text(JSONStatus.QoutesList[0].TotalConversionDeduction);
+                $("#sprice").text(JSONStatus.QoutesList[0].SuggestedPrice);
+                if (JSONStatus.QoutesList[0].IsClean == true)
+                {
+                    var IsClean = JSONStatus.QoutesList[0].CleanTrade + JSONStatus.QoutesList[0].TotalConversionDeduction;
+                    $("#txtText").text('Clean Trade in Price');
+                    $("#txtAmount").text('');
+                }
+                else if (JSONStatus.QoutesList[0].IsAverage == true) {
+                    var IsAverage = JSONStatus.QoutesList[0].AverageTrade + JSONStatus.QoutesList[0].TotalConversionDeduction;
+                    $("#txtText").text('Average Trade in Price');
+                    $("#txtAmount").text('');
+                } else {
+                    var RoughTrade = JSONStatus.QoutesList[0].RoughTrade + JSONStatus.QoutesList[0].TotalConversionDeduction;
+                    $("#txtText").text('Rough Trade in Price');
+                    $("#txtAmount").text('');
+                }
+
+                var Images;
+                if (JSONStatus.QoutesList[0].Files != null) {
+                    Images = JSONStatus.QoutesList[0].Files.split(',');
+                }
+
+                $("#img").html('');
+
+                $(Images).each(function (index) {
+
+                    html += '<a href="/Attechments/' + $.trim(Images[index]) + '" target="_blank"><img src="/Attechments/' + $.trim(Images[index]) + '" style="width:100%"></a>';
+                });
+                $("#img").append(html);
+                $(".loader").css({ "display": "none" }); //Loader
+                $('#DeleteConfirmation').modal("show");
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+
+    // working on btn Reject
+    $(".btnReject").click(function () {
+        chekingRunning = "";
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('rejectid');
+        var comm = $('textarea#ManagerComments').val();
+        $.ajax({
+            url: '@Url.Action("Reject", "Manager")',
+            type: "GET",
+            data: {
+                ID: qouteid, Comment: comm
+            },
+            success: function (response) {
+                $('#DeleteConfirmation').modal("hide");
+                $(".loader").css({ "display": "none" }); //Loader
+                $('#ManagerComments').val("");
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+                FillQoutesGrid();
+            },
+            error: function (xhr) {
+
+            }
+        });
+    });
+
+
+    // working on btn Approved
+    $(".btnApprove").click(function () {
+        chekingRunning = "";
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('approveid');
+        var comm = $('textarea#ManagerComments').val();
+        $.ajax({
+            url: '@Url.Action("Approve", "Manager")',
+            type: "GET",
+            data: {
+                ID: qouteid, Comment: comm
+            },
+            success: function (response) {
+                FillQoutesGrid();
+                $('#DeleteConfirmation').modal("hide");
+                $(".loader").css({ "display": "none" }); //Loader
+                $('#ManagerComments').val("");
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            }
+        });
+    });
+
+    $(".btnNewQoute").click(function () {
+        window.location.href = '@Url.Action("Index", "QuoteNew")';
+    });
+
+    $(".btnView").click(function () {
+        var qouteid = $(this).attr('qouteID');
+        var url = "/QuoteNew/Edit?id=" + qouteid + "&View=true";
+        //window.location.replace("/QuoteNew/Edit?id=" + qouteid)
+        window.open(url);
+
+    });
+</script>
+
+

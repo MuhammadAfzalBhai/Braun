@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Makes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30">Makes</h1>
+        </div>
+ 
+    </div>
+
+    <div id="makesgrid"></div>
+</div><!-- End container-fluid -->
+
+<script>
+
+
+$(document).ready(function () {
+
+        MakesGrid();
+
+    });
+
+
+function MakesGrid() {
+    debugger
+    $(".loader").css({ "display": "block" }); //Loader
+
+    var year = new Date().getFullYear();
+
+    $.ajax({
+        url: '@Url.Action("GetAllMakesbyNADA", "Admin")',
+        contentType: 'application/json; charset=utf-8',
+        type: 'GET',
+        dataType: 'json',
+        data: { Year: year },
+        success: function (result) {
+            debugger
+
+            //var JSONStatus = JSON.parse(result.jsondata);
+
+            $("#makesgrid").dxDataGrid({
+                dataSource: result.CarsMake,
+                columns: [{
+                    dataField: "Descr",
+                    caption: "Makes",
+                }, {
+                    dataField: "Code",
+                    caption: "Make ID",
+                }],
+                showBorders: true
+            });
+
+        }
+    });
+    $(".loader").css({ "display": "none" }); //Loader
+}
+
+
+</script>

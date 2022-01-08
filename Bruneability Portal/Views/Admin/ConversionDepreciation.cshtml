@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "ConversionDepriciation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30">Conversion Depreciation</h1>
+        </div>
+        <div class="col-sm-6 text-right sm-left">
+            @*<button id="uploadExcel" class="btn btn-cstm btn-gray mr-5">Import</button>*@
+
+            <button id="NewDepreciation" class="btn btn-cstm btn-blue">Add New Depreciation</button>
+        </div>
+    </div>
+
+    <div id="depreciationgrid"></div>
+</div><!-- End container-fluid -->
+
+
+<div id="popupConversionDepriciation"></div>  <!-- Dev-Extreme Conversion Depriciation Form Model-->
+
+
+
+<!-- Depreciation Delete Confirmation Modal   -->
+<div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div id='myModalContent_PromoCode'></div>
+                <label>Are you sure you want to delete ?</label>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Depreciation Upload Excel  Modal   -->
+<div id="importExcel" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Upload Excel</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+            @using (Html.BeginForm("GetMarkUpPercent", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="modal-body">
+                    <div id='myModalContent_PromoCode'></div>
+                    <label>Select a file which you want to upload.</label>
+                    <input type="file" name="excelFile" />
+                </div>
+
+            <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-cstm btn-blue">Yes</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        ConversionDepreciationGrid();
+
+    })
+
+
+    function ConversionDepreciationGrid() {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllConversionDepriciation", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                $("#depreciationgrid").dxDataGrid({
+                    dataSource: JSONStatus.DepriciationList,
+                    columnsAutoWidth: true,
+                    showBorders: true,
+                    paging: {
+                        pageSize: 10
+                    },
+
+                    //filterRow: {
+                    //    visible: true,
+                    //    applyFilter: "auto"
+                    //},
+                    //headerFilter: {
+                    //    visible: true
+                    //},
+                    searchPanel: { visible: true },
+                    columns: [{
+                        dataField: "ID",
+                        allowSearch: false
+                    }],
+                    columns: [{
+                        dataField: "DepreciationPercent",
+                        customizeText: function (cellInfo) {
+                            return cellInfo.value + " %";
+                        }
+                    },
+                        {
+                            dataField: "AgeInMonths",
+                            customizeText: function (cellInfo) {
+                                if (cellInfo.value == 0 || cellInfo.value == 1)
+                                    return cellInfo.value + " month";
+                                else
+                                    return cellInfo.value + " months";
+                            }
+                        },
+                        {
+                            dataField: "ID",
+                            caption: "Action",
+                            allowSearch: false,
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                    .append($("<a class='DepriciationEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                    .append($("<a class='DepriciationDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                    .appendTo(container);
+                            }
+                        }
+                    ]
+                });
+                $(".loader").css({ "display": "none" }); //Loader
+            }
+        });
+    }
+
+
+    $("#NewDepreciation").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("NewDeprecaitionForm", "Admin")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+
+                $("#popupConversionDepriciation").html(response);
+                $("#depreciation").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    })
+
+
+    $('body').on('click', '.DepriciationEdit', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var depreciationid = $(this).attr('_id');
+
+        $.ajax({
+            url: '@Url.Action("GetDepreciationByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: depreciationid
+            },
+            success: function (response) {
+
+                $("#popupConversionDepriciation").html(response);
+                $("#depreciation").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+
+    $('body').on('click', '.DepriciationDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var depid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteDepreciationByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: depid
+            },
+            success: function (response) {;
+                ConversionDepreciationGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+    $("#uploadExcel").click(function () {
+        debugger
+        $("#importExcel").modal("show");
+    });
+
+</script>

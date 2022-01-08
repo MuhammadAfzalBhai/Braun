@@ -1,0 +1,120 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.TradeInValues
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="col-lg-8 m-auto">
+        <h4 class="main_hdng_sm">Vehicle Result</h4>
+
+        <div class="text-center">
+            <img class="img-responsive img-car mt-30 mb-20" src="~/assets/images/img-car.png">
+           
+        </div>
+        @Html.HiddenFor(x =>x.Status)
+        @Html.HiddenFor(x => x.Message)
+        
+        @Html.HiddenFor(x => x.CleanTradeIn)
+        @Html.HiddenFor(x => x.AverageTradeIn)
+        @Html.HiddenFor(x => x.RoughTradeIn)
+        @Html.HiddenFor(x => x.RetailTradeIn)
+        @Html.HiddenFor(x => x.MarkUpPercent)
+        @Html.HiddenFor(x => x.MarkUpFixed)
+
+        @Html.HiddenFor(x => x.MakeId)
+        @Html.HiddenFor(x => x.MakeName)
+
+        @Html.HiddenFor(x => x.YearId)
+        @Html.HiddenFor(x => x.Year)
+
+        @Html.HiddenFor(x => x.Model)
+        @Html.HiddenFor(x => x.ModelId)
+
+        @Html.HiddenFor(x => x.Trim)
+        @Html.HiddenFor(x => x.TrimId)
+        <div id="hidecleanavgroughtable" class="table-responsive">
+            <table class="table table_trade">
+                <thead>
+                    <tr>
+                        <th colspan="2">Trade-in</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Clean Trade</td>
+                        @*<td align="right">$18,000</td>*@
+                        <td align="right">$ @Html.DisplayFor(x => x.CleanTradeIn)</td>
+                    </tr>
+                    <tr>
+                        <td>Average Trade</td>
+                        @*<td align="right">$16,800</td>*@
+                        <td align="right">$ @Html.DisplayFor(x => x.AverageTradeIn)</td>
+                    </tr>
+                    <tr>
+                        <td>Rough Trade</td>
+                        @*<td align="right">$15,350</td>*@
+                        <td align="right">$ @Html.DisplayFor(x => x.RoughTradeIn)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!-- End table-responsive -->
+    </div><!-- End col -->
+</div><!-- End row -->
+
+
+<script>
+
+    $(document).ready(function () {
+debugger
+        var status = $("#Status").val();
+        var message = $("#Message").val();
+
+
+        if (status != "" && message != "")
+        {
+            if (status == "True")
+            {
+                AlertToast("success", message);
+                var cleanvalue = $("#CleanTradeIn").val();
+                var avgvalue = $("#AverageTradeIn").val();
+                var roughvalue = $("#RoughTradeIn").val();
+                var retailvalue = $("#RetailTradeIn").val();
+                var markup_percent = $("#MarkUpPercent").val();
+                var markup_fixed = $("#MarkUpFixed").val();
+
+                var makeId = $("#MakeId").val();
+                var make = $("#MakeName").val();
+
+                var model = $("#Model").val();
+                var modelId = $("#ModelId").val();
+
+                var year = $("#Year").val();
+                var yearId = $("#YearId").val();
+
+                var trim = $("#Trim").val();
+                var trimId = $("#TrimId").val();
+                //$("#CleanValue").val(cleanvalue);
+                //$("#AverageValue").val(avgvalue);
+                //$("#RoughValue").val(roughvalue);
+                //$("#RetailValue").val(retailvalue);
+                //$("#MarkUpPercentValue").val(markup_percent);
+                //$("#MarkUpFixedValue").val(markup_fixed);
+                //$("#percent").attr("val", parseFloat(markup_percent)); 
+                //$("#fixed").attr("val", parseFloat(markup_fixed));
+
+
+                //$("#MakeValue").val(make);
+                //$("#ModelValue").val(model);
+                //$("#YearValue").val(year);
+                //$("#TrimValue").val(trim);
+                //$("#roughValue").val(roughvalue);
+            }
+            else
+                AlertToast("warning", message);
+        }
+
+    });
+
+    
+
+</script>

@@ -1,0 +1,370 @@
+﻿
+@{
+    ViewBag.Title = "ApprovedQuotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="main-hdng mb-30 ff-myriad">Approved Quotes</h1>
+        </div><!-- End col -->
+
+        <div class="col-sm-6 text-right">
+            <button class="btn btn-cstm btn-blue btnNewQoute">Add New Quotes</button>
+        </div><!-- End col -->
+    </div><!-- End row -->
+
+
+    <div id="qoutesgrid" class="dev_user_table"></div>
+
+
+    <!-- Qoute Delete Confirmation Modal   -->
+    <div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div id='myModalContent_PromoCode'></div>
+                    <label>Are you sure you want to delete ?</label>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                        <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Product</th>
+                        <th>Last Update</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge yellow">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge orange">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="nam">Kelly M. Williams</span></td>
+                        <td><span class="badge green">New</span></td>
+                        <td>2018 Ford Xi</td>
+                        <td>01-01-2018</td>
+                        <td>$28,900.00</td>
+                        <td>
+                            <a href="javascript:;"><i class="icn icon-pencil"></i></a>
+                            <a href="javascript:;"><i class="icn icon-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>*@<!-- End table-responsive -->
+</div><!-- End container-fluid -->
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        ListofApprovedQoutesGrid();
+
+    });
+
+    $(".btnNewQoute").click(function () {
+        window.location.href = '@Url.Action("Index", "QuoteNew")';
+    });
+
+
+
+    function ListofApprovedQoutesGrid()
+    {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllApprovedData", "Employee")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+                debugger;
+                if (JSONStatus.status) {
+                    $("#qoutesgrid").dxDataGrid({
+                        dataSource: JSONStatus.ApprovedQoutesList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        columns: ["ID", "CustomerName",
+                            {
+                                dataField: "Status",
+                                alignment: "center",
+                                cellTemplate: function (container, options) {
+                                    var htmlstatus = "";
+
+                                    switch (options.value) {
+                                        case 'New':
+                                            //htmlstatus = "<span class='badge green'>New</span>";
+                                            htmlstatus = "<span class='badge green'>" + options.value + "</span>";
+                                            break;
+                                        case 'Draft':
+                                            //htmlstatus="<span class='badge yellow'>Draft</span>";
+                                            htmlstatus = "<span class='badge'>" + options.value + " <i class='icn icon-pencil ml-5'></i></span>";
+                                            break;
+                                        default:
+                                            htmlstatus = "<span class='badge'>" + options.value + "</span>";
+                                    }
+
+                                    $(htmlstatus).appendTo(container);
+
+                                }
+                            },
+                                "Make", "Model", "Year", {
+                                    caption: "Trade-In",
+                                    width: "10%",
+                                    cellTemplate: function (element, info) {
+                                        debugger
+                                        var TradeIn = "";
+
+                                        if (info.data.IsClean) {
+                                            element.html(info.data.CleanTrade);  // TradeIn = "CleanTrade";
+                                        }
+
+                                        else if (info.data.IsAverage) {
+                                            element.html(info.data.AverageTrade); //TradeIn = "AverageTrade";
+                                        }
+
+                                        else if (info.data.IsRough) {
+                                            element.html(info.data.RoughTrade); //TradeIn = "RoughTrade";
+                                        }
+                                    }
+                                }, {
+                                    dataField: "ID",
+                                    caption: "Actions",
+                                    cellTemplate: function (container, options) {
+                                        $("<div>")
+                                            .append($("<a href='/QuoteNew/Edit?id=" + options.value + "' class='QouteEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                            .append($("<a class='QouteDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                            .appendTo(container);
+                                    }
+                                }]
+
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    $(".loader").css({ "display": "none" });
+                    AlertToast('warning', JSONStatus.message);
+                }
+
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+        });
+    }
+
+
+    $('body').on('click', '.QouteDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteQouteByID", "Employee")',
+            type: "GET",
+            data: {
+                ID: qouteid
+            },
+            success: function (response) {
+                ListofQoutesGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+
+    @*$(".QouteEdit").click(function () {
+
+        debugger
+
+        var ID = $(this).attr("_id");
+        window.location.href = "@Url.Action("NewQoute", "Employee",new { @id = "" + ID + "" });
+        //.load("/Home/AllPhotos?itemid=" + id);
+
+
+    });
+
+    function EditQoute(id) {
+
+        debugger
+
+        var ID = $(this).attr("_id");
+        window.location.href = "@Url.Action("NewQoute", "Employee",new { @id = id })";
+        //.load("/Home/AllPhotos?itemid=" + id);
+
+
+    };*@
+
+
+</script>
+

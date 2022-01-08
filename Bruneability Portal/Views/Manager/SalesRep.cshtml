@@ -1,0 +1,630 @@
+﻿
+@{
+    ViewBag.Title = "SalesRep";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>Braun Ability</title>
+
+@*<!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap datepicker -->
+    <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- font-awesome -->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- dev extreme -->
+    <link href="~/assets/css/dx.common.css" rel="stylesheet">
+
+    <!-- dev extreme -->
+    <link href="https://cdn3.devexpress.com/jslib/18.2.4/css/dx.light.css" rel="stylesheet">
+
+
+    <!-- poppins font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- iconmoon -->
+    <link href="~/assets/css/iconmoon.css" rel="stylesheet">
+
+    <!-- mtstyle -->
+    <link href="~/assets/css/mtstyles.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/assets/css/style.css" rel="stylesheet">*@
+
+@*<!-- Custom styles for this template -->
+    <link href="~/Content/jquery.toast.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <script src="~/scripts/jquery.toast.js"></script>
+
+    <!-- Custom styles for this template -->
+    <script src="~/scripts/toastNotifications.js"></script>*@
+
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-5">
+            <h1 class="main-hdng mb-30">Sales Rep</h1>
+        </div>
+
+        <div class="col-sm-7 text-right sm-left">
+            <button type="button" id="NewEmployee" class="btn btn-cstm btn-blue ml-5">Create a new</button>
+        </div>
+    </div>
+
+    <div id="employees-grid"></div>    <!-- Dev-Extreme Employees Grid-->
+    <div id="empform-model"></div>    <!-- Dev-Extreme Employees Form Model-->
+
+</div><!-- End container-fluid -->
+<!-- Employee Delete Confirmation Modal   -->
+<div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div id='myModalContent_PromoCode'></div>
+                <label>Are you sure you want to delete ?</label>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="requestmodel"></div>
+
+@*<!-- Employee Requests Modal   -->
+
+    <div class="modal fade" id="emp_request">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Approve Request</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="employee-request" class="w-100">
+                        <p>Employee Name has requested as a Employee/Admin.</p>
+                        <button class="btn btn-cstm btn-blue">Accept</button>
+                        <button class="btn btn-cstm btn-white">Reject</button>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-blue" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+@*<!-- Create Employee Modal   -->
+
+    <div class="modal fade" id="create_user">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New User</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body pt-40 pb-30">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">User Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">User Email</label>
+                        <div class="col-sm-7">
+                            <input type="email" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Joining Date</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control datetimepicker1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Contact</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">User ID</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Password</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-cstm btn-blue">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="change_pswrd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-sm-right pr-0">Current Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-sm-right pr-0">New Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-0">
+                    <label class="col-sm-4 col-form-label text-sm-right pr-0">Confirm Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-cstm btn-blue">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#reportNotify").hide();
+        GetEmployeeData();
+        $(".img-nadalogo").css("display", "none");
+    });
+    $("#NewEmployee").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("NewEmployeeForm", "Manager")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+
+                $("#empform-model").html(response);
+                $("#create_user").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+    function GetEmployeeData() {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllEmployeeData", "Manager")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                if (JSONStatus.status) {
+                    $("#employees-grid").dxDataGrid({
+                        dataSource: JSONStatus.EmployeeList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+
+                        columns: ["UserName", "Email", "Phone", "IsActive", {
+                            dataField: "ID",
+                            caption: "Action",
+
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                    .append($("<a class='EmployeeEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                    .append($("<a class='EmployeeDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                    .appendTo(container);
+                            }
+                        }
+                        ]
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    AlertToast('warning', JSONStatus.message);
+                }
+
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+        });
+    }
+    $('body').on('click', '.EmployeeEdit', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var empid = $(this).attr('_id');
+
+        $.ajax({
+            url: '@Url.Action("GetEmployeeByID", "Manager")',
+            type: "GET",
+            data: {
+                ID: empid
+            },
+            success: function (response) {
+                debugger
+                $("#empform-model").html(response);
+                $("#create_user").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+                //var joiningDate1 = $("#JoiningDate").val();
+                //var dateobj = joiningDate1.split("/");
+                //joiningDate2 = "" + dateobj[2] + "/" + dateobj[1] + "/" + dateobj[0] + "";
+
+                //$("#dx-datepicker").dxDateBox({
+                //    type: "date",
+                //    value: new Date(dateobj[2], (dateobj[1] - 1), dateobj[0]), //Convert dd/MM/yyyy -> MM/dd/yyyy
+                //    //value: joiningDate2, //Convert dd/MM/yyyy -> MM/dd/yyyy
+                //    displayFormat: "dd/MM/yyyy",
+
+                //});
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+    $('body').on('click', '.EmployeeDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var empid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteEmployeeByID", "Manager")',
+            type: "GET",
+            data: {
+                ID: empid
+            },
+            success: function (response) {
+                GetEmployeeData();
+                $('#DeleteConfirmation').modal("hide");
+                $(".loader").css({ "display": "none" }); //Loader
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+</script>
+<!-- jQuery -->
+@*<script src="~/assets/js/jquery.min.js"></script>*@
+
+<!-- jQuery User management -->
+@*<script src="~/scripts/BraunScripts/UserManagement.js"></script>*@
+
+@*<!-- popper -->
+    <script src="~/assets/js/popper.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- moment js -->
+    <script src="~/assets/js/moment.min.js"></script>
+
+    <!-- daterangepicker js -->
+    <script src="~/assets/js/bootstrap-datetimepicker.min.js"></script>*@
+
+<!-- dev extreme js -->
+@*<script src="~/assets/js/dx.all.js"></script>*@
+
+@* <!-- custom js  -->
+    <script src="~/assets/js/custom.js"></script>*@
+
+
+
+@*<script>
+
+
+    $(document).ready(function () {
+        $("#reportNotify").hide();
+        GetEmployeeData();
+        checkforRequest();
+
+
+
+    });
+
+    function checkforRequest() {
+        debugger
+        $.ajax({
+            url: '/Admin/CheckRequest',
+            type: 'GET',
+            success: function (result) {
+                debugger
+                if (result.isexit) {
+
+                    $("#reportNotify").show();
+                    $('#btnrequest').attr("disabled", false);
+                }
+
+                else {
+                    $("#reportNotify").hide();
+                    $('#btnrequest').attr("disabled", true);
+                }
+
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+
+        });
+    }
+
+
+
+    function GetEmployeeData()
+    {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllEmployeeData", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                if (JSONStatus.status) {
+                    $("#employees-grid").dxDataGrid({
+                        dataSource: JSONStatus.EmployeeList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+
+                        columns: ["UserName", "Email", "Phone", "IsActive", {
+                            dataField: "ID",
+                            caption: "Action",
+
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                    .append($("<a class='EmployeeEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                    .append($("<a class='EmployeeDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                    .appendTo(container);
+                            }
+                        }
+                        ]
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else
+                {
+                    AlertToast('warning', JSONStatus.message);
+                }
+
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+        });
+    }
+
+
+    $('body').on('click', '.EmployeeEdit', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var empid = $(this).attr('_id');
+
+        $.ajax({
+            url: '@Url.Action("GetEmployeeByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: empid
+            },
+            success: function (response) {
+                debugger
+                $("#empform-model").html(response);
+                $("#create_user").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+                //var joiningDate1 = $("#JoiningDate").val();
+                //var dateobj = joiningDate1.split("/");
+                //joiningDate2 = "" + dateobj[2] + "/" + dateobj[1] + "/" + dateobj[0] + "";
+
+                //$("#dx-datepicker").dxDateBox({
+                //    type: "date",
+                //    value: new Date(dateobj[2], (dateobj[1] - 1), dateobj[0]), //Convert dd/MM/yyyy -> MM/dd/yyyy
+                //    //value: joiningDate2, //Convert dd/MM/yyyy -> MM/dd/yyyy
+                //    displayFormat: "dd/MM/yyyy",
+
+                //});
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+    $('body').on('click', '.EmployeeDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var empid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteEmployeeByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: empid
+            },
+            success: function (response) {
+                GetEmployeeData();
+                $('#DeleteConfirmation').modal("hide");
+                $(".loader").css({ "display": "none" }); //Loader
+                if (response.status)
+                {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+    //$('body').on('click', '.raza', function () { //EmployeeDelete
+
+    //});
+
+
+
+
+    $("#NewEmployee").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("NewEmployeeForm", "Admin")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+
+                $("#empform-model").html(response);
+                $("#create_user").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+    $("#btnrequest").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("EmployeesRequest", "Admin")',
+            type: "GET",
+            data: {},
+            success: function (response) {
+                $("#requestmodel").html(response);
+                $("#emp_request").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+
+
+
+
+@*</script>*@

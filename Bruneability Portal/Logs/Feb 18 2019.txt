@@ -1,0 +1,33 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability Portal\Logs\Feb 18 2019.txt
+02/18/2019 15:51:22
+Error in: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=SALTY1241XA217744&RegionID=1&Mileage=10000. Error Message:
+  [Error]: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=SALTY1241XA217744&RegionID=1&Mileage=10000
+  [Errornumber]: mscorlib
+  [ErrorMessage]: System.Web.Services.Protocols.SoapException: No vehicle found.
+   at NADAVehicle_WebService.Vehicle.getDefaultVehicleAndValueByVin(GetVehicleValuesByVinRequest vehicleRequest)
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability Portal\Logs\Feb 18 2019.txt
+02/18/2019 15:51:36
+Error in: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=NM0LS7BN3DT159847&RegionID=1&Mileage=10000. Error Message:
+  [Error]: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=NM0LS7BN3DT159847&RegionID=1&Mileage=10000
+  [Errornumber]: mscorlib
+  [ErrorMessage]: System.Web.Services.Protocols.SoapException: No vehicle found.
+   at NADAVehicle_WebService.Vehicle.getDefaultVehicleAndValueByVin(GetVehicleValuesByVinRequest vehicleRequest)
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability Portal\Logs\Feb 18 2019.txt
+02/18/2019 15:51:58
+Error in: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=NM0LS7BN3DT159847&RegionID=1&Mileage=10000. Error Message:
+  [Error]: http://localhost:2506/Employee/GetPricesByVIN?Token=fd6dc634-7f26-43b5-a1af-b09570e854ff&VIN=NM0LS7BN3DT159847&RegionID=1&Mileage=10000
+  [Errornumber]: mscorlib
+  [ErrorMessage]: System.Web.Services.Protocols.SoapException: No vehicle found.
+   at NADAVehicle_WebService.Vehicle.getDefaultVehicleAndValueByVin(GetVehicleValuesByVinRequest vehicleRequest)
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________

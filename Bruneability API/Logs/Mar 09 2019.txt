@@ -1,0 +1,42 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 10:01:03
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfT6cQUojelrzufz_S7XXcgg=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Avenger-V6","ModelID":94,"Trim":"Sedan 4D R/T 2.7","TrimID":1165062,"Year":2010,"YearID":2010,"Millage":"1000000","StateCode":"AK","CleanTrade":"2295.00","AverageTrade":"1620.00","RoughTrade":"795.00","RetailTrade":"4345.00","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"52099","ConversionID":[105,106],"ConversionAmount":["23575","24625"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["57099","59642"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 10:04:16
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfT6cQUojelrzufz_S7XXcgg=","QouteID":0,"CustomerName":"Junaid Zaheer","Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"200-V6","ModelID":6,"Trim":"Convertible 2D S","TrimID":1172404,"Year":2012,"YearID":2012,"Millage":"1000000","StateCode":"AK","CleanTrade":"4545.00","AverageTrade":"3695.00","RoughTrade":"2645.00","RetailTrade":"7095.00","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"52397","ConversionID":[140,142],"ConversionAmount":["26450","28600"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["57397","62062"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 10:07:25
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfT6cQUojelrzufz_S7XXcgg=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Journey-4 Cyl.","ModelID":442,"Trim":"Utility 4D SXT 2WD","TrimID":1175955,"Year":2013,"YearID":2013,"Millage":"20000","StateCode":"AK","CleanTrade":"11100.00","AverageTrade":"10250.00","RoughTrade":"9225.00","RetailTrade":"13525.00","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"22661","ConversionID":[164,169],"ConversionAmount":["13900","23575"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["27661","46914"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 10:34:57
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfUJ6_TwfB7NbOb_UhylnqSo=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C AWD V8","TrimID":1178788,"Year":2014,"YearID":2014,"Millage":"25000","StateCode":"AK","CleanTrade":"19600.000000","AverageTrade":"18350.000000","RoughTrade":"16850.000000","RetailTrade":"22050.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"45142","ConversionID":[141,143],"ConversionAmount":["27475","29625"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["50142","54066"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 12:47:40
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfbcQxtG1H5Kw7zfsLMLp6xg=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D R/T V8","TrimID":1186184,"Year":2016,"YearID":2016,"Millage":"1200.00","StateCode":"AL","CleanTrade":"25775.000000","AverageTrade":"24425.000000","RoughTrade":"22800.000000","RetailTrade":"28375.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"66140","ConversionID":[105,107,123],"ConversionAmount":["23575","26350","16500"],"DeductionID":[2,3],"DeductionAmount":["5000","2000"],"DepericiationAmount":["34537","38603","24173"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 13:04:24
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfY4ntiTzCNiQ0ys4Qt87LDs=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"300","ModelID":15,"Trim":"Sedan 4D 300C V6","TrimID":1190738,"Year":2017,"YearID":2017,"Millage":"5000.00","StateCode":"AR","CleanTrade":"21950.000000","AverageTrade":"20650.000000","RoughTrade":"19075.000000","RetailTrade":"24150.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"32192","ConversionID":[145,144,163],"ConversionAmount":["15450","15050","18950"],"DeductionID":[2,4],"DeductionAmount":["5000","2000"],"DepericiationAmount":["19853","19339","24351"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 09 2019.txt
+03/09/2019 17:57:44
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekguCBscn4fMfebQVIn9e_HesvTPjVFFvVU=","QouteID":0,"CustomerName":"Junaid Zaheer","Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Police V6","TrimID":1186335,"Year":2016,"YearID":2016,"Millage":"1200.00","StateCode":"CA","CleanTrade":"17825.000000","AverageTrade":"16625.000000","RoughTrade":"15175.000000","RetailTrade":"20050.000000","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"98418","ConversionID":[107,109,111],"ConversionAmount":["26350","22995","26025"],"DeductionID":[2,4,11],"DeductionAmount":["5000","2000","5000"],"DepericiationAmount":["38603","33688","38127"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________

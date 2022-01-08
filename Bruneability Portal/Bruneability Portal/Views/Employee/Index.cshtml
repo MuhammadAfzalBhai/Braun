@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid pl-30 pr-30">
+    <ul class="ul_quotes mt-75 mb-0 pl-0">
+        <li>
+            <a href="/Employee/NewQoute">
+                <i class="icn icon-new-quotes"></i>
+                <span class="txt">New Quotes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/Employee/ListofQoute">
+                <i class="icn icon-list-quotes"></i>
+                <span class="txt">List of Quotes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/Employee/SearchQoute">
+                <i class="icn icon-search-quotes"></i>
+                <span class="txt">Search Quotes</span>
+            </a>
+        </li>
+    </ul>
+</div><!-- End container-fluid -->
+
+<script>
+    $(document).ready(function () {
+        window.history.forward(1);
+    });
+
+</script>

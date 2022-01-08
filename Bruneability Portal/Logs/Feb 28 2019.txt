@@ -1,0 +1,10 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability Portal\Logs\Feb 28 2019.txt
+02/28/2019 12:11:55
+Error in: http://localhost:2506/Employee/GetPricesByVIN?Token=&VIN=2C4RDGCG9GR250351&RegionID=3&Mileage=4343. Error Message:
+  [Error]: http://localhost:2506/Employee/GetPricesByVIN?Token=&VIN=2C4RDGCG9GR250351&RegionID=3&Mileage=4343
+  [Errornumber]: mscorlib
+  [ErrorMessage]: The underlying connection was closed: A connection that was expected to be kept alive was closed by the server.
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________

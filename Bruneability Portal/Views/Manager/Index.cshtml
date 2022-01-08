@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .options {
+        padding: 20px;
+        background-color: rgba(191, 191, 191, 0.15);
+        margin-top: 20px;
+    }
+
+    .option {
+        margin-top: 10px;
+    }
+
+    .caption {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .option > span {
+        margin-right: 10px;
+    }
+
+    .option > .dx-widget {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+@section DashboardLogo{
+    <img class="img-nadalogo" src="/assets/images/img-powerednada.png" style="float: right;margin-right: 40px;margin-top: -30px;">
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <h1 class="main-hdng mb-30">Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="dashbord_card card-stats one">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/receipt.png" alt="">
+                    </div>
+                    <p class="card-category">Approved Qoutes </p>
+                    <h3 class="card-title"><span class="count" id="PendingQuotes"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashbord_card card-stats two">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/receiptdraft.png" alt="">
+                    </div>
+                    <p class="card-category">Rejected Quotes</p>
+                    <h3 class="card-title"><span class="count" id="RejectedQuotes"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashbord_card card-stats three">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/approve-invoice.png" alt="">
+                    </div>
+                    <p class="card-category">Pending Quotes</p>
+                    <h3 class="card-title"><span class="count" id="Approved"></span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashbord_card card-stats one">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="/assets/images/receipt.png" alt="">
+                    </div>
+                    <p class="card-category">Total Users</p>
+                    <h3 class="card-title"><span class="count" id="TotalUsers"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="wigt_box">
+                <div class="wigt_panel_body">
+                    <div id="chart"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+        $(document).ready(function () {
+            window.history.forward(1);
+
+            GetManagerCounterResult();
+
+            getquoteslastsixmonth();
+        });
+
+        function GetManagerCounterResult() {
+            
+            $.get('/Manager/GetManagerDashboardcounterResult/', function (data, status) {
+                debugger
+                if (status = "success") {
+                    var result = JSON.parse(data.jsondata);
+                    if (result.status) {
+                        $('#PendingQuotes').html(result.PendingQuotes);
+                        $('#RejectedQuotes').html(result.RejectedQuotes);
+                        $('#Approved').html(result.ApprovedQuotes);
+                        $('#TotalUsers').html(result.TotalUsers);
+                        $('.count').each(function () {
+                            $(this).prop('Counter', 0).animate({
+                                Counter: $(this).text()
+                            }, {
+                                duration: 4000,
+                                easing: 'swing',
+                                step: function (now) {
+                                    $(this).text(Math.ceil(now));
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        }
+
+    // fill a chart
+        function getquoteslastsixmonth() {
+
+            $.get('/Manager/QuoteslastSixMonth/', function (data, status) {
+
+                if (status = "success") {
+                    var result = JSON.parse(data.jsondata);
+                    debugger
+                    if (result.status) {
+                        $("#chart").dxChart({
+                            palette: "#009688",
+                            dataSource: result.QuotesListLastSixMonth.QuotesListLastSixMonth,
+                            commonSeriesSettings: {
+                                argumentField: "MonthName",
+                                type: "stackedline"
+                            },
+                            margin: {
+                                bottom: 20
+                            },
+                            argumentAxis: {
+                                valueMarginsEnabled: false,
+                                discreteAxisDivisionMode: "crossLabels",
+                                grid: {
+                                    visible: true
+                                }
+                            },
+                            series: [
+                                { valueField: "NoOfQuotes", name: "Number of Quotes" },
+
+                            ],
+                            legend: {
+                                verticalAlignment: "bottom",
+                                horizontalAlignment: "center",
+                                itemTextPosition: "bottom"
+                            },
+                            title: {
+                                text: "Number of Quotes",
+                                subtitle: {
+                                    text: "(Last Six Months)"
+                                }
+                            },
+                            "export": {
+                                enabled: true
+                            },
+                            tooltip: {
+                                enabled: true,
+                                customizeTooltip: function (arg) {
+                                    return {
+                                        text: "Number of Quotes: " + arg.valueText
+                                    };
+                                }
+                            }
+                        }).dxChart("instance");
+                    }
+                }
+            });
+        }
+</script>

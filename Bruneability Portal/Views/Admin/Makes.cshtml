@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "Makes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1 class="main-hdng mb-30">Makes</h1>
+        </div>
+        <div class="col-sm-7 text-right sm-left">
+            <button type="button" id="NewMake" class="btn btn-cstm btn-blue ml-5">Add new make</button>
+        </div>
+    </div>
+    <div id="makes-in-grid"></div>
+    <div id="makesgrid" style="display:none;"></div>
+    <div id="makeform-modal"></div>
+</div><!-- End container-fluid -->
+<!-- Makes Delete Confirmation Modal   -->
+<div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div id='myModalContent_PromoCode'></div>
+                <label>Are you sure you want to delete ?</label>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                    <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+$(document).ready(function () {
+        MakesGrid();
+    });
+
+    // modal popup
+$('#NewMake').on('click', function () {
+    $(".loader").css({ "display": "block" }); //Loader
+    $.ajax({
+        url: '@Url.Action("AddNewMake", "Admin")',
+        type: "GET",
+        success: function (responce) {
+            GetMakesData();
+            $('#makeform-modal').html(responce);
+            $('#add_new_make').modal("show");
+            $('.loader').css({ "display": "none" });
+        },
+        error: function(err){
+
+        }
+    });
+});
+
+function MakesGrid() {
+    debugger
+    $(".loader").css({ "display": "block" }); //Loader
+
+    var year = new Date().getFullYear();
+
+    $.ajax({
+        url: '@Url.Action("GetAllMakesbyNADA", "Admin")',
+        contentType: 'application/json; charset=utf-8',
+        type: 'GET',
+        dataType: 'json',
+        data: { Year: year },
+        success: function (result) {
+            debugger
+
+            //var JSONStatus = JSON.parse(result.jsondata);
+
+            $("#makesgrid").dxDataGrid({
+                dataSource: result.CarsMake,
+                columns: [{
+                    dataField: "Descr",
+                    caption: "Makes",
+                }, {
+                    dataField: "Code",
+                    caption: "Make ID",
+                }],
+                showBorders: true
+            });
+
+        }
+    });
+    $(".loader").css({ "display": "none" }); //Loader
+}
+
+    $(document).ready(function () {
+        GetMakesData();
+    });
+
+    function GetMakesData() {
+        $('.loader').css({ "display": "block" });// loader
+
+        $.ajax({
+            url: '@Url.Action("GetMakesDataList", "Admin")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                var JSONStatus = JSON.parse(result.jsondata);
+                if (JSONStatus.status) {
+                    $("#makes-in-grid").dxDataGrid({
+                        dataSource: JSONStatus.MakesList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+
+                        columns: ["Id", "Makes", {
+                            dataField: "Id",
+                            caption: "Action",
+
+                            cellTemplate: function (container, options) {
+                                $("<div>")
+                                .append($("<a class='MakeEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                .append($("<a class='MakeDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                .appendTo(container);
+                            }
+                        }
+                        ]
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    AlertToast('warning', JSONStatus.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    }
+
+    $('body').on('click', '.MakeEdit', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var ID = $(this).attr("_id");
+        $.ajax({
+            url: '@Url.Action("GetMakesByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: ID
+            },
+            success: function (response) {
+                GetMakesData();
+                $("#makeform-modal").html(response);
+                $("#add_new_make").modal("show");
+                $(".loader").css({ "display": "none" }); //Loader
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+    $('body').on('click', '.MakeDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+    $(".btnDelete").click(function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var makeid = $(this).attr('deleteid');
+        $.ajax({
+            url: '@Url.Action("DeleteMakeByID", "Admin")',
+            type: "GET",
+            data: {
+                ID: makeid
+            },
+            success: function (response) {
+                GetMakesData();
+                $('#DeleteConfirmation').modal("hide");
+                $(".loader").css({ "display": "none" }); //Loader
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+</script>

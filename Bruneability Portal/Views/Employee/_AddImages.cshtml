@@ -1,0 +1,251 @@
+﻿
+<div class="modal fade" id="AddImagesMo">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Upload Pictures</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body pt-40 pb-30">
+                <form id="vehicleForm" data-toggle="validator">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <div class="col-sm-12 p-0">
+                                <input type="file" id="files" accept="image/x-png,image/gif,image/jpeg" multiple/>
+                            </div>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            @*<th>File Name</th>
+                <th>Action</th>*@
+                        </tr>
+
+                        <tbody id="choosefiles"></tbody>
+
+
+                    </table>
+                    @*<table>
+                        <tr>
+                
+                        </tr>
+
+                        <tbody id="UploadedFiles"></tbody>
+
+
+                    </table>*@
+                    <div class="col-sm-6">
+                        <div id="img"></div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-cstm btn-blue btnSaveImages" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var id = 0;
+        
+        if ($("#QouteID").val() != '')
+        {
+            id = $("#QouteID").val();
+            var html = null;
+            $.ajax({
+                type: "POST",
+                url: "/Quotenew/GetFilesFromdb",
+                data: '{id: "' + id + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var json = JSON.parse(data);
+
+                    //$('#docs').html('');
+                    $("#img").html('');
+                    $(json).each(function (index, item) {
+
+                        var ID = json[index].Id;
+                        var FileName = json[index].Image;
+                        //html = '<tr><td><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/' + ID + '" >' + FileName + '</a></td><td><a class="FileDelete" onclick="RemoveFileFromDB(this)">Delete</a><input type="hidden" id="FileName_' + ID + '" name="ID" value="' + ID + '"></td></tr>'
+                        //html = '<input type="hidden" id="DocID" name="ID" value="' + ID + '"><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/'+ID+'" >'+FileName+'</a>  </br>'<a class="removefile" onclick="RemovingFileFromDb(' + ID + ')">remove</a>
+                        //html = '<tr><td><a href="/Attechments/' + FileName + '" target="_blank">' + FileName + '</a></td><td><input type="hidden" id="FileName_' + FileName + '" name="ID" value="' + FileName + '"></td></tr>'
+                        html += '<img src="/Attechments/' + FileName + '" style="width:100%">';
+                        //$('#UploadedFiles').append(html);
+                        $("#img").append(html);
+                    });
+
+
+                },
+                failure: function (response) {
+                    //alert("failure");
+                },
+                error: function (response) {
+                    //alert("conn");
+                }
+            });
+        }
+        else {
+            var html = null;
+            $.ajax({
+                type: "POST",
+                url: "/Quotenew/GetFiles",
+                data: '{id: "' + id + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var json = JSON.parse(data);
+
+                    $('#docs').html('');
+                    $(json).each(function (index, item) {
+
+                        var ID = json[index].ID;
+                        
+                        var FileName = json[index].FileName;
+                        //html = '<tr><td><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/' + ID + '" >' + FileName + '</a></td><td><a class="FileDelete" onclick="RemoveFileFromDB(this)">Delete</a><input type="hidden" id="FileName_' + ID + '" name="ID" value="' + ID + '"></td></tr>'
+                        //html = '<input type="hidden" id="DocID" name="ID" value="' + ID + '"><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/'+ID+'" >'+FileName+'</a>  </br>'
+                        html = '<tr><td>' + FileName + '</td><td><a class="removefile" onclick="RemovingFile(this)">remove</a><input type="hidden" id="FileName_' + FileName + '" name="ID" value="' + FileName + '"></td></tr>'
+                        $('#choosefiles').append(html);
+                    });
+
+
+                },
+                failure: function (response) {
+                    //alert("failure");
+                },
+                error: function (response) {
+                    //alert("conn");
+                }
+            });
+        }
+       
+        
+        
+    })
+    $('input[type="file"]').change(function () {
+        debugger;
+        var formData = new FormData();
+        var totalFiles = document.getElementById("files").files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("files").files[i];
+            var Ext = document.getElementById("files").files[i].type;
+            var Name = document.getElementById("files").files[i].name;
+
+            if (Ext == 'image/x-png' || Ext == 'image/gif' || Ext == 'image/jpeg' || Ext == 'image/jpg')
+            {
+                formData.append("files", file);
+            }
+            else {
+                AlertToast("warning", Name +" this file is not supported");
+            }
+            
+        }
+        $.ajax({
+            type: "POST",
+            url: '/QuoteNew/Upload',
+            data: formData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //debugger;
+                var html = null;
+                var json = JSON.parse(data);
+                $('#choosefiles').html('');
+                $(json).each(function (index, item) {
+                    var FileName = json[index].FileName;
+                    var Path = json[index].Path;
+                       
+                    
+                        html = '<tr><td>' + FileName + '</td><td><a class="removefile" onclick="RemovingFile(this)">remove</a><input type="hidden" id="FileName_' + FileName + '" name="ID" value="' + FileName + '"></td></tr>'
+                        $('#choosefiles').append(html);
+                        
+                    
+                });
+            },
+            error: function (err) {
+                alert("error");
+            }
+        })
+    });
+    //function getFileExtension1(filename) {
+    //    var fname = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename)[0] : undefined;
+    //    return fname;
+    //}
+    function RemovingFile(e) {
+        var Path = e.nextSibling.value;
+
+        $.ajax({
+            type: "POST",
+            url: '/QuoteNew/RemoveFiles',
+            data: '{Path: "' + Path + '"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            //contentType: false,
+            processData: false,
+            success: function (data) {
+                debugger;
+                var html = null;
+                var json = JSON.parse(data);
+                $('#choosefiles').html('');
+                $(json).each(function (index, item) {
+                    var FileName = json[index].FileName;
+                    var Path = json[index].Path;
+
+                    html = '<tr><td>' + FileName + '</td><td><a class="removefile" onclick="RemovingFile(this)">remove</a><input type="hidden" id="FileName_' + FileName + '" name="ID" value="' + FileName + '"></td></tr>'
+
+
+                    $('#choosefiles').append(html);
+                });
+            },
+            error: function (err) {
+                alert("error");
+            }
+        })
+    }
+    //function RemoveFileFromDB(e) {
+    //    debugger
+    //    var ID = e.nextSibling.value;
+    //    var html = null;
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/SuspiciousTransactionReports/RemoveFile",
+    //        data: '{id: "' + ID + '"}',
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (data) {
+    //            debugger;
+    //            var json = JSON.parse(data);
+
+    //            $('#docs').html('');
+    //            $(json).each(function (index, item) {
+
+    //                var ID = json[index].ID;
+    //                var SuspiciousTransactionReportId = json[index].SuspiciousTransactionReportId;
+    //                var FileName = json[index].FileName;
+    //                html = '<tr><td><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/' + ID + '" >' + FileName + '</a></td><td><a class="FileDelete" onclick="RemoveFileFromDB(this)">Delete</a><input type="hidden" id="FileName_' + ID + '" name="ID" value="' + ID + '"></td></tr>'
+    //                //html = '<input type="hidden" id="DocID" name="ID" value="' + ID + '"><a href="/SuspiciousTransactionReports/DownloadDocumentsFile/'+ID+'" >'+FileName+'</a>  </br>'
+    //                $('#docs').append(html);
+    //            });
+
+
+    //        },
+    //        failure: function (response) {
+    //            //alert("failure");
+    //        },
+    //        error: function (response) {
+    //            //alert("conn");
+    //        }
+    //    });
+    //}
+</script>

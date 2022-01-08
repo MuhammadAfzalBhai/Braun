@@ -1,0 +1,472 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="main-hdng mb-30">Reports</h1>
+        </div>
+    </div>
+
+    @*<label for="">Select Report:</label>*@
+    <div class="row">
+        <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2 text-right pt-2">
+                        <label for="">From</label>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="startDate" class="w-100"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2 text-right pt-2">
+                        <label for="">To</label>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="endDate" class="w-100"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+       
+          
+        </div><!-- End col -->
+
+      
+
+      
+
+     
+
+      
+    </div><!-- ENd row -->
+
+    <div class="row mt-30">
+        @*<div class="col-8">
+            <span class="datetitle">18.03.2016 - 24.03.2016</span>
+        </div>*@<!-- End col -->
+
+        <div class="col text-sm-right mt-sm-10 pl-0 pl-sm-15">
+            <button onclick="getAllQuotes();" class="btn btn-cstm btn-gray mb-30">Reset</button>
+            <button onclick="generateReport();" class="btn btn-cstm btn-blue mb-30">Generate Report</button>            
+            @*<button class="btn btn-cstm btn-blue mb-30" id="export-to-excel">Export</button>*@
+        </div><!-- End col -->
+    </div><!-- End row -->
+<div class="col-md-12">
+    <div class="card-body b-1 pr-0 pl-0 cstm-card-body-as bx">
+    <div id="dx-datagrid-report" class="dev_user_table "></div>
+        @*<div class="table-responsive">
+            <table class="table table-cstm">
+                <thead>
+                    <tr>
+                        <td>date of scan </td>
+                        <td>campaign</td>
+                        <td>user details </td>
+                        <td>location</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2016<br> <span class="li8_txt">18:10</span></td>
+                        <td>TomFord - Lena<br><span class="li8_txt">Print</span></td>
+                        <td>Edward Horton<br><span class="li8_txt">Male 18-24 iOS</span></td>
+                        <td>South Terrancefort<br><span class="li8_txt">Cameroo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>*@<!-- End table-responsive -->
+
+
+    </div><!-- End card-bx -->
+</div>
+    @*<div class="row">
+        <div class="col-md-4 m-auto text-center">
+            <ul class="pagination mt-30">
+                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+        </div>
+    </div>*@<!-- End row -->
+</div><!-- End container-fluid -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+<script>
+    $(document).ready(function () {
+        getAllQuotes();
+        bindStartDate();
+        bindEndDate();
+       
+    });
+
+    function bindStartDate() {
+        var now = new Date();
+        $("#startDate").dxDateBox({
+            type: "date",
+            value: now
+        });
+    }
+
+    function bindEndDate() {
+        var _now = new Date();
+        $("#endDate").dxDateBox({
+            type: "date",
+            value: _now
+        });
+    }
+
+    function generateReport() {
+
+        $(".loader").css({ "display": "block" });
+        //From
+        debugger
+        var _dxstartdate=$('#startDate').dxDateBox('instance');      
+        var _From = new Date(_dxstartdate._options.text);
+
+
+        //To
+        var _dxenddate=$('#endDate').dxDateBox('instance');
+        var _To = new Date(_dxenddate._options.text);
+     
+        if (_To < _From) {
+            $(".loader").css({ "display": "none" });
+            AlertToast('warning', "To date always greater than from date.");
+        }
+        else {
+            $.post('/Admin/GetQuotesBetweenTwoDates', { From: _From.toLocaleDateString(), To: _To.toLocaleDateString() }, function (response, status) {
+                if (status = "success") {
+                    $(".loader").css({ "display": "block" });
+                    debugger
+                    var result = JSON.parse(response.jsondata);
+                    if (result.status) {
+                        debugger
+                        var reportDataGrid = $('#dx-datagrid-report').dxDataGrid('instance');
+                        reportDataGrid.option('dataSource', result.QoutesList);
+                        $(".loader").css({ "display": "none" });
+                    }
+
+
+                    else {
+                        $(".loader").css({ "display": "none" });
+                        AlertToast('warning', JSONStatus.message);
+                    }
+
+                }
+
+                else {
+                    AlertToast('warning', "Some thing went wrong. Try again");
+                    $(".loader").css({ "display": "none" });
+                }
+
+            });
+        }
+
+    }
+
+    $('#export-to-excel').on('click', function () {
+    
+        var gridexport = $('#dx-datagrid-report').dxDataGrid('instance');
+        gridexport.exportToExcel(true);
+    });
+
+    function getAllQuotes() {
+        var nowdate = new Date();
+        debugger;
+        $(".loader").css({ "display": "block" });
+        $.get('/Admin/GetAllQuotesReport', function (response,status) {
+            if (status = "success") {
+                debugger
+                var result = JSON.parse(response.jsondata);
+                if (result.status) {
+
+                    $('#dx-datagrid-report').dxDataGrid({
+                        selection: {
+                            mode: "multiple"
+                        },
+                        dataSource: result.QoutesList,
+                        width: '100%',
+                        columnsAutoWidth: true,
+                        allowColumnResizing: true,
+                        showBorder: true,
+                        
+                        export: {
+                            enabled: true,
+                            allowExportSelectedData: true,
+                            fileName: "Quotes Reports " + nowdate.toLocaleDateString()
+                        },
+                       
+                        filterRow: { visible: true @* ,applyFilter: "onClick"*@ },
+                        headerFilter: { visible: true, allowSearch: true },
+                        searchPanel: { visible: true },
+                        paging: { pageSize: 10 },
+                        pager: {
+                            showInfo: true,
+                            infoText: "Page #{0}. Total: {1} ({2} items)" ,
+                            showPageSizeSelector: true,
+                            allowedPageSizes: [10, 25, 50],
+                            showNavigationButtons: true
+                        },
+                        scrolling: {
+                            mode: "standard", // or "virtual" | "infinite"
+                          },
+                        columns: [
+                            {
+                                dataField:"Row#",
+                                caption: 'Sno',
+                                width: "100",
+                                alignment: "left",
+                               
+                                //cellTemplate: function (cellElement, cellInfo) {
+                                //    debugger
+                                //    cellElement.text(parseInt(cellInfo.row.rowIndex)+1)
+                                //}
+                            },
+                            , {
+                                dataField: "CustomerName",
+                                alignment: "left",
+                                width: "200",
+                                
+                            },{
+                            
+                                dataField: "CompanyName",
+                                alignment: "left",
+                                width: "200",
+                                
+                            }, {
+                                caption:"Username",
+                                dataField: "FirstName",
+                                alignment: "left",
+                                width: "200",
+                               
+                            },
+
+                               {
+                                   dataField: "Status",
+                                   alignment: "center",
+                                   width: "150",
+                                   cellTemplate: function (container, options) {
+                                       debugger
+                                       var htmlstatus = "";
+
+                                       switch (options.value) {
+                                           case 'New':
+
+                                               htmlstatus = "<span class='badge green'>New</span>";
+                                               break;
+                                           case 'Draft':
+
+                                               htmlstatus = "<span class='badge orange'>Draft <i class='icn icon-pencil ml-5'></i></span>";
+                                               break;
+                                           case 'unapproved':
+
+                                               htmlstatus = "<span class='badge orange'>Pending For Approval <i class='icn icon-pencil ml-5'></i></span>";
+                                               break;
+                                           case 'Decline':
+
+                                               htmlstatus = "<span class='badge orange'>Rejected <i class='icn icon-pencil ml-5'></i></span>";
+                                               break;
+                                           case 'Approved':
+
+                                               htmlstatus = "<span class='badge orange'>Approved <i class='icn icon-pencil ml-5'></i></span>";
+                                               break;
+                                           default:
+                                               htmlstatus = "<span class='badge green'>Draft</span>";
+                                       }
+
+                                       $(htmlstatus).appendTo(container);
+
+                                   }
+                               },
+                                   {
+                                       dataField: "Created",
+                                       caption: "Date",
+                                       dataType: "date",
+                                       width: "150",
+                                       alignment: "left"
+                                   },
+                                   {
+                                       dataField: "Make",
+                                       width: "150",
+                                       alignment: "left"
+                                   }, {
+                                       caption:"Make Model",
+                                       dataField: "Model",
+                                       width: "150",
+                                       alignment: "left"
+                                   }, {
+                                       caption: "Make Year",
+                                       dataField: "Year",
+                                       width: "200",
+                                       alignment: "left"
+
+                                   }, {
+                                       caption: "Trade-In",
+                                       width: "200",
+                                       allowFiltering: true,
+                                       alignment: "left",
+                                       calculateCellValue: function (data) {
+                                           debugger
+                                           var TradeIn = "";
+
+                                           if (data.IsClean) {
+                                               return data.CleanTrade;  // TradeIn = "CleanTrade";
+                                           }
+
+                                           else if (data.IsAverage) {
+                                               return data.AverageTrade;//element.html(info.data.AverageTrade); //TradeIn = "AverageTrade";
+                                           }
+
+                                           else if (data.IsRough) {
+                                               return data.RoughTrade; //element.html(info.data.RoughTrade); //TradeIn = "RoughTrade";
+                                           }
+                                       }
+                                   }, 
+                                   //, {
+                                   //    dataField: "ID",
+                                   //    caption: "Actions",
+                                   //    cellTemplate: function (container, options) {
+                                   //        $("<div>")
+                                   //            .append($("<a href='/Employee/EditQoute?id=" + options.value + "' class='QouteEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                   //            .append($("<a class='QouteDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                   //            .appendTo(container);
+                                   //    }
+                                   //}
+                        ],
+
+                        //masterDetail: {
+                           
+                        //enabled: true,
+                        //template: function (container, options) {
+                        //    debugger
+                        //    var hideData = options.data;
+                        //    var datasourcenew = [];
+                        //    datasourcenew.push(options.data);
+
+                        //    $("<div>")
+                        //        .addClass("master-detail-caption")
+                        //        .text(hideData.FirstName)
+                        //        .appendTo(container);
+
+                        //    $("<div>")
+                        //        .dxDataGrid({
+                        //            columnAutoWidth: true,
+                        //            showBorders: true,
+                        //            columns: [
+                        //                {
+                        //                dataField: "Phone",                                        
+                        //                },
+                        //            {
+                        //                caption:"Clean Price",
+                        //                dataField: "CleanTrade"
+                                       
+                        //            }, 
+                        //            {
+                        //                caption:"Average Price",
+                        //                dataField: "AverageTrade"
+                        //            },
+                        //                {                        
+                        //                caption:"Rough Price",
+                        //                dataField:"RoughTrade"
+                        //                },
+                        //            {
+                        //                dataField:"RetailTrade",
+                        //                caption:"Retail Price"
+                        //            },
+                        //            {
+                        //                caption: "Total",
+                        //                dataField: "TotalConversionDeduction"
+                        //            }],
+                        //            dataSource: new DevExpress.data.DataSource({
+                        //                store: new DevExpress.data.ArrayStore({
+                        //                    key: "ID",
+                        //                    data: datasourcenew
+                        //                }),
+                                        
+                        //            })
+                        //        }).appendTo(container);
+                        //}
+                        //}
+
+                    });
+                    $(".loader").css({ "display": "none" });
+                }
+                else {
+                    $(".loader").css({ "display": "none" });
+                    AlertToast('warning', JSONStatus.message);
+                }
+
+            }
+            else {
+
+                AlertToast('warning', "Some thing went wrong. Try again");
+                $(".loader").css({ "display": "none" });
+            }
+
+
+
+
+        });
+
+    }
+</script>

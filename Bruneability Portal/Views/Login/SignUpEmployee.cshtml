@@ -1,0 +1,321 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.EmployeeForm
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Braun Ability</title>
+ 
+
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap datepicker -->
+    <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- font-awesome -->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- dev extreme -->
+    <link href="~/assets/css/dx.common.css" rel="stylesheet">
+
+    <!-- dev extreme -->
+    <link href="https://cdn3.devexpress.com/jslib/18.2.4/css/dx.light.css" rel="stylesheet">
+
+    <!-- poppins font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- iconmoon -->
+    <link href="~/assets/css/iconmoon.css" rel="stylesheet">
+
+    <!-- mtstyle -->
+    @*<link href="~/assets/css/mtstyles.css" rel="stylesheet">*@
+
+    <!-- Custom styles for this template -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+    <!-- Toaster CSS -->
+    <link href="~/Content/jquery.toast.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="~/assets/js/jquery.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- moment js -->
+    <script src="~/assets/js/moment.min.js"></script>
+
+    <!-- daterangepicker js -->
+    <script src="~/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Custom Script Toaster JS -->
+    <script src="~/scripts/jquery.toast.js"></script>
+
+    <!-- Custom Script Toaster JS -->
+    <script src="~/scripts/toastNotifications.js"></script>
+
+    <!-- custom js -->
+    @*<script src="~/assets/js/custom.js"></script>*@
+
+    <!-- dev extreme js -->
+    <script src="~/assets/js/dx.all.js"></script>
+
+
+    @*<script src="~/scripts/jquery.validate.js"></script>*@
+    <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/scripts/moment.min.js"></script>
+    <style type="text/css">
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body class="h-100">
+    <div class="bg-login">
+        <div class="container">
+            @Html.HiddenFor(m => m.Status)
+            @Html.HiddenFor(m => m.Message)
+            <div class="login-panel">
+                @using (Html.BeginForm("SignUpEmployee", "Login", FormMethod.Post,new { @id="signupform"}))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <div class="bx_registration">
+                        <a href="/Login/Index"><img class="logo-login" src="~/assets/images/login-logo.png"></a>
+
+                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.JoiningDate)
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @*<input type="text" class="form-control" placeholder="Name">*@
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @title = "Name", Placeholder = "User Name" })
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </div><!-- End form-group -->
+
+                            <div class="form-group col-sm-6">
+                                @*<input type="email" class="form-control" placeholder="Email">*@
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @title = "Email", Placeholder = "User Email" })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div><!-- End form-group -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group form-group signupdate">
+                                    @*<div id="dx-datepicker"></div>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-calender"></i></span>
+                                    </div>*@
+                                    <div id="dx-datepicker"></div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                @*<input type="text" class="form-control" placeholder="Contact">*@
+                                @Html.TextBoxFor(m => m.Contact, new { @class = "form-control ", @title = "Contact", Placeholder = "Contact Number" })
+                                @Html.ValidationMessageFor(m => m.Contact)
+                            </div><!-- End form-group -->
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @*<input type="text" class="form-control" placeholder="ID">*@
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control ", @title = "City", Placeholder = "City" })
+                                @Html.ValidationMessageFor(m => m.City)
+                            </div><!-- End form-group -->
+
+                            <div class="form-group col-sm-6">
+                                @*<input type="text" class="form-control">*@
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control ", @title = "State", Placeholder = "State" })
+                                @Html.ValidationMessageFor(m => m.State)
+                            </div>
+                                
+                            </div><!-- End form-group -->
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @*<input type="text" class="form-control">*@
+                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control ", @title = "Company Name", Placeholder = "Company Name" })
+                                @Html.ValidationMessageFor(m => m.CompanyName)
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @Placeholder = "Password", @type = "password", @title = "Password" })
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-eye"></i></span>
+                                    </div>
+                                </div>
+                                <div class="pwstrength_viewport_progress"></div>
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div><!-- End form-group -->
+                        @*</div>*@
+
+                        <button type="submit" class="btn btn-cstm btn-login w-100">Sign Up</button>
+                        
+                    </div>
+                }
+            </div><!-- End login-panel -->
+        </div>
+
+        <div class="login-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <P class="m-0">© Code Creators 2018, All Rights Reserved.</P>
+                    </div>
+
+                    <div class="col text-center">
+                        <img class="img-go" src="~/assets/images/logo-go.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End bg-login -->
+
+
+</body>
+</html>
+
+
+
+<script>
+
+    $(document).ready(function () {
+       
+        debugger
+       
+        var status = $("#Status").val();
+        var message = $("#Message").val();
+
+        if (status != "" && message != "") {
+            if (status == "True")
+            {
+                AlertToast("success", message);
+                window.setTimeout(function () {
+                    location.href = '@Url.Action("Index", "Login")';
+                }, 5000);
+              //  document.getElementById("signupform").reset();
+              //  $('#signupform').trigger("reset");
+              
+
+            }
+
+            else
+            {
+                if (message == "Please fill the mandatory fields.") {
+
+                }
+                else {
+                    AlertToast("warning", message);
+                }
+                
+               // document.getElementById("signupform").reset();
+               // $('#signupform').trigger("reset");
+            }
+               
+        }
+        var d = new Date();
+        var defaultDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        $("#JoiningDate").val(defaultDate);
+        $("#ID").val(0);
+        debugger
+        //var d = new Date();
+        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+
+        $("#dx-datepicker").dxDateBox({
+            type: "date",
+            pickerType: "calendar",
+            showClearButton: false,
+            value: strDate,
+            //min: new Date(),
+            displayFormat: "dd/MM/yyyy",
+            onValueChanged: function (data) {
+                var dt = data.value;
+                dt = moment(dt).format('DD/MM/YYYY');
+                var Today = new Date();
+
+                $('#JoiningDate').val(dt);
+            }
+        });
+    });
+
+
+    @*$("#signup").click(function () {
+        debugger
+
+        var id = 0;
+        var username = $("#UserName").val();
+        var email = $("#Email").val();
+        var phone = $("#Contact").val();
+        var joiningdate = $("#JoiningDate").val();
+        var empid = $("#UserID").val();
+        var password = $("#Password").val();
+        var isapprove = false;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/Login/SignUpEmployee")',
+            data: '{ID: "' + id + '" ,UserName: "' + username + '" ,Email: "' + email + '" ,Contact: "' + phone + '" ,JoiningDate: "' + joiningdate + '" ,City: "' + city + '" ,State: "' + state + '" ,CompanyName: "' + companyname + '" ,Password: "' + password + '" ,IsApproved: "' + isapprove + '"}',
+            processData: false,
+            contentType: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger
+                AlertToast('success', response.message);
+
+                if (response.status) {
+
+                    setTimeout(function () {
+                        location.href = '@Url.Action("Index", "Login")';
+                    }, 5000);
+                }
+            }
+
+        });
+
+    });*@
+
+
+    $(".input-group-prepend").click(function () {
+        debugger
+
+        //$('#Password').attr('type', 'text');
+
+        var flag = $(this).find("i").hasClass("fa fa-eye")
+        if (flag) {
+            $('#Password').attr('type', 'text');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye-slash');
+        }
+        else {
+            $('#Password').attr('type', 'password');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye');
+        }
+        //$(this).find("i").removeAttr("class");
+        //$(this).find("i").attr('class', 'fa fa-eye-slash');
+
+    });
+
+
+
+
+
+
+</script>

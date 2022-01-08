@@ -1,0 +1,374 @@
+﻿
+@{
+    ViewBag.Title = "SearchQoute";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="main-hdng mb-30 ff-myriad">Search Quotes</h1>
+        </div><!-- End col -->
+    </div><!-- End row -->
+
+    <div id="searchqoutesgrid" class="dev_user_table"></div>
+
+    <!-- Qoute Delete Confirmation Modal   -->
+    <div id="DeleteConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div id='myModalContent_PromoCode'></div>
+                    <label>Are you sure you want to delete ?</label>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                        <button class="btn btn-cstm btn-blue btnDelete" deleteid="">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row form-group form-quotes">
+        <div class="col-md-3 pr-5 pr-sm-15 mb-md-15">
+            <select class="form-control">
+                <option>All Customers</option>
+            </select>
+        </div>
+
+        <div class="col-md-2 pl-5 pr-5 pr-sm-15 pl-sm-15 mb-md-15">
+            <select class="form-control">
+                <option>All Statuses</option>
+            </select>
+        </div>
+        <div class="col-md-4 pl-5 pr-0 pr-sm-15 pl-sm-15 mb-md-15">
+            <div class="input-group calendergrp">
+                <input type="text" class="form-control datetimepicker1" placeholder="From">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-calender"></i></span>
+                </div>
+
+                <input type="text" class="form-control datetimepicker1" placeholder="To">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-calender"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 pl-5 pl-sm-15 mb-md-15">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter Name">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    @*<div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Product</th>
+                    <th>Last Update</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge yellow">Current</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge orange">Expired</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+
+                <tr>
+                    <td><span class="nam">Kelly M. Williams</span></td>
+                    <td><span class="badge green">New</span></td>
+                    <td>2018 Ford Xi</td>
+                    <td>01-01-2018</td>
+                    <td>$28,900.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@<!-- End table-responsive -->
+</div><!-- End container-fluid -->
+
+
+<script>
+
+    $(document).ready(function () {
+
+        SearchListofQoutesGrid();
+
+    });
+
+    $(".btnNewQoute").click(function () {
+        window.location.href = '@Url.Action("NewQoute", "Employee")';
+    });
+
+
+
+    function SearchListofQoutesGrid() {
+        $(".loader").css({ "display": "block" }); //Loader
+        $.ajax({
+            url: '@Url.Action("GetAllQoutesDataByEmployeeId", "Employee")',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (result) {
+                debugger
+                var JSONStatus = JSON.parse(result.jsondata);
+
+                if (JSONStatus.status) {
+                    $("#searchqoutesgrid").dxDataGrid({
+                        dataSource: JSONStatus.QoutesList,
+                        columnsAutoWidth: true,
+                        showBorders: true,
+                        paging: {
+                            pageSize: 10
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: {
+                            visible: true
+                        },
+                        columns: [{
+                            dataField: "ID",
+                           
+                            width: "auto"
+                        },
+                            {
+                                dataField: "CustomerName",
+                                caption:"Customer Name",
+                            
+
+                        }, 
+                            {
+                                dataField: "Status",
+                                alignment: "center",
+                                width:"auto",
+                                cellTemplate: function (container, options) {
+                                    debugger
+                                    var htmlstatus = "";
+
+                                    switch (options.value) {
+                                        case 'New':
+                                            //htmlstatus = "<span class='badge green'>New</span>";
+                                            htmlstatus = "<span class='badge green'>New</span>";
+                                            break;
+                                        case 'Draft':
+                                            //htmlstatus="<span class='badge yellow'>Draft</span>";
+                                            htmlstatus = "<span class='badge'>Draft <i class='icn icon-pencil ml-5'></i></span>";
+                                            break;
+                                        default:
+                                            htmlstatus = "<span class='badge'>Draft</span>";
+                                        //case 'New':
+                                        //    //htmlstatus = "<span class='badge green'>New</span>";
+                                        //    htmlstatus = "<span class='btn btn-success btn-sm disabled'>New</span>";
+                                        //    break;
+                                        //case 'Draft':
+                                        //    //htmlstatus="<span class='badge yellow'>Draft</span>";
+                                        //    htmlstatus = "<span class='btn btn-warning btn-sm disabled'>Draft</span>";
+                                        //    break;
+                                        //default:
+                                        //    htmlstatus = "<span class='btn btn-secondary btn-sm disabled'>Draft</span>";
+                                    }
+
+                                    $(htmlstatus).appendTo(container);
+
+                                }
+                            },{
+                                dataField: "Make",                                
+                                
+                            },
+                                {
+                                    dataField: "Model",
+                                   
+                                    width: "auto"
+                                },
+                                {
+                                    dataField: "Year",
+                                    width: "auto"
+                                }, {
+                                    caption: "Trade-In",
+                                    width: "12%",
+                                    allowFiltering: true,
+                                    calculateCellValue: function (data) {
+                                        debugger
+                                        var TradeIn = "";
+
+                                        if (data.IsClean) {
+                                            return data.CleanTrade;  // TradeIn = "CleanTrade";
+                                        }
+
+                                        else if (data.IsAverage) {
+                                            return data.AverageTrade;//element.html(info.data.AverageTrade); //TradeIn = "AverageTrade";
+                                        }
+
+                                        else if (data.IsRough) {
+                                            return data.RoughTrade; //element.html(info.data.RoughTrade); //TradeIn = "RoughTrade";
+                                        }
+                                    }
+                                },
+                               
+
+                                 {
+                                    dataField: "ID",
+                                    caption: "Actions",
+                                    allowFiltering: false,
+                                    allowHeaderFiltering: false,
+                                    width: "auto",
+                                    cellTemplate: function (container, options) {
+                                        $("<div>")
+                                            .append($("<a href='/Employee/EditQoute?id=" + options.value + "' class='QouteEdit' _id=" + options.value + " title='Edit'><i class='icn icon-pencil p-5'></i></a>"))
+                                            .append($("<a class='QouteDelete' _id=" + options.value + " title='Delete'><i class='icn icon-trash p-5'></i></a>"))
+                                            .appendTo(container);
+                                    }
+                                }]
+
+                    });
+                    $(".loader").css({ "display": "none" }); //Loader
+                }
+                else {
+                    AlertToast('warning', JSONStatus.message);
+                }
+                $(".loader").css({ "display": "none" });
+
+            },
+            error: function (xhr) {
+                debugger
+            }
+
+        });
+    }
+
+    $('body').on('click', '.QouteDelete', function () {
+
+        $('.btnDelete').attr("deleteid", $(this).attr('_id'));
+        $('#DeleteConfirmation').modal("show");
+
+    });
+
+    $(".btnDelete").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var qouteid = $(this).attr('deleteid');
+
+        $.ajax({
+            url: '@Url.Action("DeleteQouteByID", "Employee")',
+            type: "GET",
+            data: {
+                ID: qouteid
+            },
+            success: function (response) {
+                SearchListofQoutesGrid();
+                $('#DeleteConfirmation').modal("hide");
+                //AlertToast('success', response.message);
+                $(".loader").css({ "display": "none" }); //Loader
+
+                if (response.status) {
+                    AlertToast('success', response.message);
+                }
+                else {
+                    AlertToast('warning', response.message);
+                }
+            },
+            error: function (xhr) {
+                debugger
+            }
+        });
+    });
+
+</script>
+

@@ -1,0 +1,111 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.AddNewMake
+@{
+    ViewBag.Title = "AddNewMake";
+}
+
+<style type="text/css">
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/validator.css" rel="stylesheet" />
+@*<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>*@
+<script src="~/scripts/jquery.validator.js"></script>
+<script src="~/scripts/jquery.validate.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/scripts/jquery.toast.js"></script>
+@*<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"*@
+
+<div class="modal fade" id="add_new_make">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Make</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body pt-40 pb-30">
+                <form id="vehicleForm" data-toggle="validator">
+                    <div id="hidden">
+                        @Html.HiddenFor(m => m.makeID, new { @id = "MakeID" })
+                        @Html.HiddenFor(m => m.Status)
+                        @Html.HiddenFor(m => m.Message)
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Make Name</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(m => m.Makes, new { @class = "form-control", @title = "Make", id = "Make", Placeholder = "Make Name", validate = "MakeFrom", require = "*The Make is required" })
+                            @*@Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @title = "UserName", Placeholder = "UserName", validate = "EmployeeFrom", require = "*The User Name is required" })*@
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-cstm btn-blue btnSave">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $('.btnSave').on('click', function () {
+        $(".loader").css({ "display": "block" }); //Loader
+        var make = $('#Make').val();
+        var makeid = $('#MakeID').val();
+        if (makeid == 0) {
+
+            $.ajax({
+                url: '@Url.Content("~/Admin/AddMake")',
+                type: "POST",
+                data: { 'make': make },
+                dataType: "JSON",
+                success: function (response) {
+                    GetMakesData();
+                    if (response.status) {
+                        $("#add_new_make").modal("hide");
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" }); //Loader
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" }); //Loader
+                    }
+                }
+            });
+        }
+        else {
+
+            $.ajax({
+                url: '@Url.Content("~/Admin/EditMake")',
+                type: "POST",
+                data: { 'makeid': makeid,'make': make },
+                dataType: "JSON",
+                success: function (response) {
+                    GetMakesData();
+                    if (response.status) {
+                        $("#add_new_make").modal("hide");
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" }); //Loader
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" }); //Loader
+                    }
+                }
+            });
+
+        }
+    });
+</script>

@@ -1,0 +1,6 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 22 2019.txt
+03/22/2019 20:17:56
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekg9MMXD1ErVhzc0JKYktw9QOYbqhZU3bOQ=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona 392 V8","TrimID":1193931,"Year":2018,"YearID":2018,"Millage":"100000","StateCode":"AL","CleanTrade":"31675.000000","AverageTrade":"30125.000000","RoughTrade":"28250.000000","RetailTrade":"34475.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"22343","ConversionID":["105","106"],"ConversionAmount":["23575","24625"],"DeductionID":["1","2"],"DeductionAmount":["800","5000"],"DepericiationAmount":["13765","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________

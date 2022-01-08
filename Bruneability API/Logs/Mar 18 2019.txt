@@ -1,0 +1,6 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 18 2019.txt
+03/18/2019 12:24:02
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekif7vGoCZwvwA5xCVzkd1vP2IKCO-Z5K-MkgPJhngNkKA==","QouteID":0,"CustomerName":"Junaid Zaheer","Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Journey","ModelID":441,"Trim":"Utility 4D Crossroad 2WD V6","TrimID":1193977,"Year":2018,"YearID":2018,"Millage":"2324","StateCode":"AK","CleanTrade":"19025.000000","AverageTrade":"17950.000000","RoughTrade":"16600.000000","RetailTrade":"21100.000000","MarkUpFixed":"1500","MarkUpPercent":"0","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"10787","ConversionID":[167],"ConversionAmount":["21900"],"DeductionID":[4],"DeductionAmount":["2000"],"DepericiationAmount":["12787"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________

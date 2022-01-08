@@ -1,0 +1,300 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.EmployeeForm
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/validator.css" rel="stylesheet" />
+@*<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>*@
+<script src="~/scripts/jquery.validator.js"></script>
+<script src="~/scripts/jquery.validate.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/scripts/jquery.toast.js"></script>
+@*<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"*@
+
+<!-- Create Employee Modal   -->
+<div class="modal fade" id="create_user">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Create New Rep</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body pt-40 pb-30">
+                <form id="employeeForm" data-toggle="validator">
+                    <div id="hidden">
+                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.JoiningDate)
+                        @Html.HiddenFor(m => m.Status)
+                        @Html.HiddenFor(m => m.Message)
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">User Name</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @title = "UserName", Placeholder = "UserName", validate = "EmployeeFrom", require = "*The User Name is required" })
+                            @*@Html.ValidationMessageFor(m => m.UserName)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">User Email</label>
+                        <div class="col-sm-7">
+                            @*<input type="email" class="form-control">*@
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @title = "Email", Placeholder = "User Email", email = "Enter a valid email", validate = "EmployeeFrom", require = "*The Email is required" })
+                            @*@Html.ValidationMessageFor(m => m.Email)*@
+                        </div>
+                    </div>
+                    <div class="form-group row" style="display:none">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Role</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.RoleID, Model.RoleList, new { @class = "form-control", require = "*Selection is required" })
+
+                            @*@Html.ValidationMessageFor(m => m.RoleID)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Joining Date</label>
+                        <div class="col-sm-7">
+                            @*<input id="dx-datepicker" type="text" class="form-control">*@
+                            <div id="dx-datepicker"></div>
+                            @*@Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control datetimepicker1", @title = "JoiningDate", Placeholder = "Joining Date" })
+                                @Html.ValidationMessageFor(m => m.JoiningDate)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Contact</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+
+                            @Html.TextBoxFor(m => m.Contact, new { @class = "form-control ", @title = "ContactNo.", Placeholder = "Contact Number", type = "text", validate = "EmployeeFrom", require = "*The Contact Number is required" })
+                            @Html.ValidationMessageFor(m => m.Contact)
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">City</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control ", @title = "city", Placeholder = "City", validate = "EmployeeFrom", require = "*The city is required" })
+                            @*@Html.ValidationMessageFor(m => m.EmployeeID)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">State</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.State, new { @class = "form-control ", @title = "BranchID", Placeholder = "State", validate = "EmployeeFrom", require = "*The state is required" })
+                            @*@Html.ValidationMessageFor(m => m.EmployeeID)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Company Name</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control ", @title = "CompanyName", Placeholder = "Company Name", validate = "EmployeeFrom", require = "*The company name is required" })
+                            @*@Html.ValidationMessageFor(m => m.EmployeeID)*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right pr-0">Password</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                @*<input type="password" class="form-control">*@
+                                @Html.TextBoxFor(m => m.Password, new { @type = "password", @class = "form-control ", @title = "Password", Placeholder = "Password", validate = "EmployeeFrom", require = "*The Password is required" })
+                                @*@Html.ValidationMessageFor(m => m.Password)*@
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-eye"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-cstm btn-blue btnSave">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/scripts/moment.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        //var onloaddate=$("#dx-datepicker").dxDateBox('instance').option().text
+        //$('#JoiningDate').val(onloaddate);
+        debugger
+        var status = $("#Status").val();
+        var message = $("#Message").val();
+        if (status != "" && message != "")
+        {
+            if (status == "False")
+                AlertToast('warning',message);
+        }
+
+        //$(".loader").attr("display", "block");
+        if ($("#ID").val() != 0) {
+            $("#BranchCode").val();
+        }
+        else
+            $("#BranchCode").val("");
+
+
+
+        var d = new Date();
+        //Setting the default date in hidden field "JoiningDate"
+        defaultDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        var strDate = "";
+        var joindate = $("#JoiningDate").val();
+
+        if (joindate == "") {
+            strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            $("#JoiningDate").val(strDate);
+        }
+        
+
+        if (joindate == "") {
+            strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+
+        }
+        else {
+            debugger
+            var dateobj = joindate.split("/");
+            strDate = "" + dateobj[2] + "/" + dateobj[1] + "/" + dateobj[0] + "";
+        }
+
+
+        $("#dx-datepicker").dxDateBox({
+            type: "date",
+            pickerType: "calendar",
+            value: strDate,
+            //min: new Date(),
+            displayFormat: "dd/MM/yyyy",
+            onValueChanged: function (data) {
+                var dt = data.value;
+                dt = moment(dt).format('DD/MM/YYYY');
+                var Today = new Date();
+
+                $('#JoiningDate').val(dt);
+            }
+        });
+
+        
+    });
+
+
+
+    $(".btnSave").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var id = $("#ID").val();
+        var RoleId = $('#RoleID').val();;
+        var username = $("#UserName").val();
+        var email = $("#Email").val();
+        var phone = $("#Contact").val();
+        var joiningdate = $("#JoiningDate").val();
+        var city = $("#City").val();
+        var state = $("#State").val();
+        var companyname = $("#CompanyName").val();
+        var password = $("#Password").val();
+        var isapprove = true;
+       var datebox_= $("#dx-datepicker").dxDateBox('instance');
+      
+        //$("#employeeForm").validate({
+        //    rules: {
+        //        Contact: {
+        //            required: true,
+        //            number: true
+        //        }
+        //    }
+        //});
+        //validate("EmployeeFromEmail");
+
+       if (validate("EmployeeFrom") == true) {
+
+           if (datebox_._options.text == "") {
+               AlertToast('warning', "date is required.");
+               $(".loader").css({ "display": "none" });
+           }
+           else {
+               $.ajax({
+                   type: "POST",
+                   url: '@Url.Content("~/Manager/AddUpdateEmployee")',
+                   data: '{ID: "' + id + '",RoleID: "' + RoleId + '"  ,UserName: "' + username + '" ,Email: "' + email + '" ,Contact: "' + phone + '" ,JoiningDate: "' + joiningdate + '" ,City: "' + city + '" ,State: "' + state + '" ,CompanyName: "' + companyname + '" ,Password: "' + password + '" ,IsApproved: "' + isapprove + '"}',
+                   processData: false,
+                   contentType: false,
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   success: function (response) {
+                       debugger
+                       if (response.status) {
+                           GetEmployeeData();
+                           $("#create_user").modal("hide");
+                           AlertToast('success', response.message);
+                           $(".loader").css({ "display": "none" }); //Loader
+                       }
+                       else {
+                           AlertToast('warning', response.message);
+                           $(".loader").css({ "display": "none" }); //Loader
+                       }
+
+                   }
+
+               });
+           }
+   
+        }
+        else {
+            $(".loader").css({ "display": "none" }); //Loader
+        }
+
+    });
+
+
+    $(".input-group-prepend").click(function () {
+        debugger
+
+        //$('#Password').attr('type', 'text');
+
+        var flag = $(this).find("i").hasClass("fa fa-eye")
+        if (flag) {
+            $('#Password').attr('type', 'text');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye-slash');
+        }
+        else {
+            $('#Password').attr('type', 'password');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye');
+        }
+        //$(this).find("i").removeAttr("class");
+        //$(this).find("i").attr('class', 'fa fa-eye-slash');
+
+    });
+
+
+</script>
+

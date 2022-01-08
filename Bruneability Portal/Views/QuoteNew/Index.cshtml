@@ -1,0 +1,3391 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.EditQouteData
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/scripts/Nada.js"></script>
+
+
+@{
+
+    if (Model.qoute != null)
+    {
+    <input type="hidden" id="QouteEditData" value="@Model.qoute" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteEditData" value="" />
+    }
+
+    if (Model.makedata != null)
+    {
+    <input type="hidden" id="QouteMakeData" value="@Model.makedata" />}
+    else
+    {
+    <input type="hidden" id="QouteMakeData" value="" />
+    }
+
+    if (Model.yearsdata != null)
+    {
+    <input type="hidden" id="QouteYearData" value="@Model.yearsdata" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteYearData" value="" />
+    }
+
+    if (Model.modeldata != null)
+    {
+    <input type="hidden" id="QouteModelData" value="@Model.modeldata" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteModelData" value="" />
+    }
+
+    if (Model.trimdata != null)
+    {
+    <input type="hidden" id="QouteTrimData" value="@Model.trimdata" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteTrimData" value="" />
+    }
+
+    if (Model.regiondata != null)
+    {
+    <input type="hidden" id="QouteRegionData" value="@Model.regiondata" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteRegionData" value="" />
+    }
+
+    if (Model.tradeindata != null)
+    {
+    <input type="hidden" id="QouteTradeInData" value="@Model.tradeindata" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteTradeInData" value="" />
+    }
+
+    if (Model.TradeInPartial != null)
+    {
+    <input type="hidden" id="QoutePartialData" value="@Model.TradeInPartial" />
+    }
+    else
+    {
+    <input type="hidden" id="QoutePartialData" value="" />
+    }
+
+    if (Model.conversionslist != null)
+    {
+    <input type="hidden" id="QouteConversionsData" value="@Model.conversionslist" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteConversionsData" value="" />
+    }
+
+    if (Model.deductionslist != null)
+    {
+    <input type="hidden" id="QouteDeductionsData" value="@Model.deductionslist" />
+    }
+    else
+    {
+    <input type="hidden" id="QouteDeductionsData" value="" />
+    }
+
+
+}
+
+<script>
+    
+
+    $("#clean").click(function(){
+        debugger;
+        $(this).val('clean');
+        $("#average").val('');
+        $("#rough").val('');
+    })
+
+    $("#average").click(function(){
+        debugger;
+        $(this).val('average');
+        $("#clean").val('');
+        $("#rough").val('');
+    })
+
+    $("#rough").click(function(){
+        debugger;
+        $(this).val('clean');
+        $("#clean").val('');
+        $("#average").val('');
+    })
+
+
+    var ConversionsAmounts = [];
+    var ConversionsIDs = [];
+    var DeductionsAmounts = [];
+    var DeductionsIDs = [];
+    var Deductionsdesc = [];
+    var DepericiationAmounts = [];
+    var PriceAfterDeductionList = [];
+
+    var appendListofConversion = [];
+    var appendListofDeduction = [];
+
+    var CleanPrintData = {
+        yearVal: "",
+        makeVal: "",
+        modelVal: "",
+        trimVal: "",
+        cleanVal: "",
+        roughVal: "",
+        avgVal: "",
+        retailVal: "",
+        conversionVal: "",
+        conversionValwithMarkup: "",
+        totalCleanVal: "",
+        totalAvgVal: "",
+        totalRoughVal: "",
+        totalRetailVal: "",
+    };
+
+    function PrintCall(printSec) {
+
+        //var dedgrid = $('#deductiondetailGrid').dxDataGrid('instance');
+        ConversionsAmounts;
+        ConversionsIDs;
+        DeductionsAmounts;
+        DeductionsIDs;
+        Deductionsdesc;
+        DepericiationAmounts;
+
+        if (CleanPrintData.yearVal != 0 && CleanPrintData.yearVal != undefined && CleanPrintData.makeVal != 0 && CleanPrintData.makeVal != undefined && CleanPrintData.modelVal != 0 && CleanPrintData.modelVal != undefined && CleanPrintData.conversionVal != 0 && CleanPrintData.conversionVal != undefined && CleanPrintData.totalCleanVal != 0 && CleanPrintData.totalCleanVal != undefined) {
+
+            window.location = '/Employee/DownloadPricingDetail?PrintData=' + JSON.stringify(CleanPrintData) + '&printSection=' + printSec + '&ConNameOrAmount=' + PriceAfterDeductionList + '&Deductionsdesc=' + Deductionsdesc;
+        }
+        else {
+            AlertToast("warning", "No conversion apply. ");
+        }
+
+
+
+
+    }
+
+    function onChangeDeduction(ctrl) {
+        $(ctrl).parents("tr").next().toggle();
+    }
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function clicktab(id) {
+
+        var data = $('#EmailAddress').val();
+        if (data != "") {
+            if (isEmail(data)) {
+                $("#" + id).trigger("click"); // hides error msg if validation is true
+            }
+            else {
+
+                AlertToast("warning", "Email is not valid"); // shows validation msg if validation is false
+                event.preventDefault();
+            }
+        }
+        else {
+            $("#" + id + "").trigger("click");
+        }
+    }
+    
+
+    function checkNADAValues() {
+
+        var clean = $("#CleanTradeIn").val();
+        var avg = $("#AverageTradeIn").val();
+        var rough = $("#RoughTradeIn").val();
+
+        if ((clean == "" || clean == undefined) || (avg == "" || avg == undefined) || (rough == "" || rough == undefined)) {
+            AlertToast("warning", "TradeIn Values are mandetory.");
+        }
+        else {
+            $("#tab3").removeClass("disabled_anchor");
+            $("#tab4").removeClass("disabled_anchor");
+            clicktab("conversiondetail");
+
+
+            var makeid = $("#MakeId").val();
+            $.ajax({
+                url: '@Url.Action("GetConversionModalNew", "Employee")',
+                type: "GET",
+                data: { MakeId: makeid },
+                success: function (response) {
+                    
+
+                    $("#conversionmodal").html(response);
+
+                }
+            });
+
+
+        }
+    }
+
+    function AddPricing() {
+        if (!($("input[type='radio'][name='Iswhat']").is(":checked"))) {
+            AlertToast("warning", "Please select a Trade-In.");
+        }
+        else {
+            $.ajax({
+                url: '@Url.Action("AddPricing", "QuoteNew")',
+                type: "GET",
+                success: function (response) {
+                    $("#AddPricing").html(response);
+                    $('#AddPricingMo').modal('show');
+                }
+            });
+        }
+    }
+    function AddImages() {
+        $.ajax({
+            url: '@Url.Action("AddImages", "QuoteNew")',
+            type: "GET",
+            success: function (response) {
+                $("#AddImages").html(response);
+                $('#AddImagesMo').modal('show');
+            }
+        });
+    }
+
+    function getCarValuesbyDetails() {
+
+
+
+        //var searchType = getSelectBoxSelectedValue("vehicledetail");
+        //if (searchType === "" || searchType === undefined || searchType === "Please Select" || searchType === null) {
+
+        //    AlertToast("warning", "Please select Search Type.");
+        //    ConversionsAmounts = [];
+        //    ConversionsIDs = [];
+        //    DeductionsAmounts = [];
+        //    DeductionsIDs = [];
+        //    Deductionsdesc = [];
+        //    DepericiationAmounts = [];
+        //    appendListofConversion = [];
+        //    $("#CleanTradeIn").val('');
+        //    $("#AverageTradeIn").val('');
+        //    $("#RoughTradeIn").val('');
+
+        //    return;
+        //}
+
+        var make = getSelectBoxSelectedValue("make");
+        if (make === "" || make === undefined || make === null || make === 0) {
+
+
+            AlertToast("warning", "Please select Make.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+
+            return;
+        }
+
+        var year = getSelectBoxSelectedValue("year");
+        if (year === "" || year === undefined || year === null || year === 0) {
+            //alert("Please select 'Year'.")
+
+            AlertToast("warning", "Please select Year.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            return;
+        }
+
+        var model = getSelectBoxSelectedValue("model");
+        if (model === "" || model === undefined || model === null || model === 0) {
+
+            AlertToast("warning", "Please select Model.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            return;
+        }
+
+
+
+        var trimCode = getSelectBoxSelectedValue("trim");
+        var ucgvehicleid = trimCode;
+        if (trimCode === "" || trimCode === undefined || trimCode === null || trimCode === 0) {
+
+            AlertToast("warning", "Please select 'Trim'.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            return;
+        }
+
+        var mileage = $("#mileage").val();
+        if (mileage === "" || mileage === undefined) {
+
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            AlertToast("warning", "Mileage is required.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            return;
+        }
+
+        var stateCode = getSelectBoxSelectedValue("state");
+        if (stateCode === "" || stateCode === undefined || stateCode === 0) {
+
+
+            AlertToast("warning", "State Code is required.");
+            ConversionsAmounts = [];
+            ConversionsIDs = [];
+            DeductionsAmounts = [];
+            DeductionsIDs = [];
+            Deductionsdesc = [];
+            DepericiationAmounts = [];
+            appendListofConversion = [];
+            $("#CleanTradeIn").val('');
+            $("#AverageTradeIn").val('');
+            $("#RoughTradeIn").val('');
+            return;
+        }
+
+
+
+        trimCode = parseInt(trimCode);
+        mileage = parseInt(mileage);
+
+        var token = $("#NadaToken").val();
+
+        var period = 0;
+
+        $.ajax({
+            type: "GET",
+            url: "/QuoteNew/GetValues?period=" + period + "&ucgvehicleid=" + ucgvehicleid + "&mileage=" + mileage + "&statecode=" + stateCode,
+            async: true,
+            data: {},
+            //processData: false,
+            success: function (data) {
+                debugger
+
+
+                $("#tradein").html(data);
+                $("#hidecleanavgroughtable").show();
+                var congrid = $('#conversiondetailGrid').dxDataGrid('instance');
+                congrid.option('dataSource', []);
+                //var dedgrid = $('#deductiondetailGrid').dxDataGrid('instance');
+                //dedgrid.option('dataSource', []);
+                $('#deductiondetailGrid table tbody tr').remove();
+                $(".btnUpdateQoute,.btnSaveQoute").attr("disabled", "");
+                $("#conversiondetails #addconversion").show();
+
+                $('.conversionamount').text('0');
+                $('#total_avgvalue').text('0');
+                $('#total_retailvalue').text('0');
+                $('#total_roughvalue').text('0');
+                $('#total_cleanvalue').text('0');
+                $('#totalSum_').text('0');
+
+            }
+        });
+
+
+        ConversionsAmounts = [];
+        ConversionsIDs = [];
+        DeductionsAmounts = [];
+        DeductionsIDs = [];
+        Deductionsdesc = [];
+        DepericiationAmounts = [];
+        appendListofConversion = [];
+        $("#CleanTradeIn").val('');
+        $("#AverageTradeIn").val('');
+        $("#RoughTradeIn").val('');
+
+
+
+    }
+
+    //function getCarValuesbyDetails() {
+
+    //
+
+    //    //var searchType = getSelectBoxSelectedValue("vehicledetail");
+    //    //if (searchType === "" || searchType === undefined || searchType === "Please Select" || searchType === null) {
+
+    //    //    AlertToast("warning", "Please select Search Type.");
+    //    //    ConversionsAmounts = [];
+    //    //    ConversionsIDs = [];
+    //    //    DeductionsAmounts = [];
+    //    //    DeductionsIDs = [];
+    //    //    Deductionsdesc = [];
+    //    //    DepericiationAmounts = [];
+    //    //    appendListofConversion = [];
+    //    //    $("#CleanTradeIn").val('');
+    //    //    $("#AverageTradeIn").val('');
+    //    //    $("#RoughTradeIn").val('');
+
+    //    //    return;
+    //    //}
+
+    //    var make = getSelectBoxSelectedValue("make");
+    //    if (make === "" || make === undefined || make === null || make === 0) {
+
+
+    //        AlertToast("warning", "Please select Make.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+
+    //        return;
+    //    }
+
+    //    var year = getSelectBoxSelectedValue("year");
+    //    if (year === "" || year === undefined || year === null || year === 0) {
+    //        //alert("Please select 'Year'.")
+
+    //        AlertToast("warning", "Please select Year.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        return;
+    //    }
+
+    //    var model = getSelectBoxSelectedValue("model");
+    //    if (model === "" || model === undefined || model === null || model === 0) {
+
+    //        AlertToast("warning", "Please select Model.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        return;
+    //    }
+
+    //
+
+    //    var trimCode = getSelectBoxSelectedValue("trim");
+    //    if (trimCode === "" || trimCode === undefined || trimCode === null || trimCode === 0) {
+
+    //        AlertToast("warning", "Please select 'Trim'.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        return;
+    //    }
+
+    //    var mileage = $("#mileage").val();
+    //    if (mileage === "" || mileage === undefined) {
+
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        AlertToast("warning", "Mileage is required.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        return;
+    //    }
+
+    //    var stateCode = getSelectBoxSelectedValue("state");
+    //    if (stateCode === "" || stateCode === undefined || stateCode === 0) {
+
+
+    //        AlertToast("warning", "State Code is required.");
+    //        ConversionsAmounts = [];
+    //        ConversionsIDs = [];
+    //        DeductionsAmounts = [];
+    //        DeductionsIDs = [];
+    //        Deductionsdesc = [];
+    //        DepericiationAmounts = [];
+    //        appendListofConversion = [];
+    //        $("#CleanTradeIn").val('');
+    //        $("#AverageTradeIn").val('');
+    //        $("#RoughTradeIn").val('');
+    //        return;
+    //    }
+
+
+
+    //    trimCode = parseInt(trimCode);
+    //    mileage = parseInt(mileage);
+
+    //    var token = $("#NadaToken").val();
+
+
+    //    $.ajax({
+    //        url: "/Employee/GetPrices",
+    //        type: "GET",
+    //        async: true,
+    //        data: { Token: token, TrimCode: trimCode, Mileage: mileage, StateCode: stateCode },
+    //        success: function (data) {
+    //
+
+    //            $("#tradein").html(data);
+    //            $("#hidecleanavgroughtable").show();
+    //            var congrid = $('#conversiondetailGrid').dxDataGrid('instance');
+    //            congrid.option('dataSource', []);
+    //            //var dedgrid = $('#deductiondetailGrid').dxDataGrid('instance');
+    //            //dedgrid.option('dataSource', []);
+    //            $('#deductiondetailGrid table tbody tr').remove();
+    //            $(".btnUpdateQoute,.btnSaveQoute").attr("disabled", "");
+    //            $("#conversiondetails #addconversion").show();
+
+    //            $('.conversionamount').text('0');
+    //            $('#total_avgvalue').text('0');
+    //            $('#total_retailvalue').text('0');
+    //            $('#total_roughvalue').text('0');
+    //            $('#total_cleanvalue').text('0');
+    //            $('#totalSum_').text('0');
+
+
+
+
+    //        },
+    //        error: function (jqXHR, exception) {
+    //            //hideMessage();
+    //            //alert(exception);
+    //        }
+    //    });
+
+    //    ConversionsAmounts = [];
+    //    ConversionsIDs = [];
+    //    DeductionsAmounts = [];
+    //    DeductionsIDs = [];
+    //    Deductionsdesc = [];
+    //    DepericiationAmounts = [];
+    //    appendListofConversion = [];
+    //    $("#CleanTradeIn").val('');
+    //    $("#AverageTradeIn").val('');
+    //    $("#RoughTradeIn").val('');
+
+
+
+    //}
+    function getCarValuesbyVin() {
+
+
+        var vinNumber = $("#vinvalue").val();
+        if (vinNumber === "" || vinNumber === undefined) {
+            //alert("State Code is required.")
+            AlertToast("warning", "Vin Number is required.");
+            return;
+        }
+
+        var region = getSelectBoxSelectedValue("region");
+        if (region === "" || region === undefined || region === null || region === 0) {
+            //alert("Please select 'Trim'.")
+            AlertToast("warning", "Please select 'Region'.");
+            return;
+        }
+
+        var vinMileage = $("#mileagevin").val();
+        if (vinMileage === "" || vinMileage === undefined) {
+            //alert("State Code is required.")
+            AlertToast("warning", "Mileage is required.");
+            return;
+        }
+
+        regionID = parseInt(region);
+        mileage = parseInt(vinMileage);
+
+        var token = $("#NadaToken").val();
+
+
+        $.ajax({
+            url: "/Employee/GetPricesByVIN",
+            type: "GET",
+            data: { Token: token, VIN: vinNumber, RegionID: regionID, Mileage: mileage },
+            success: function (data) {
+
+                //console.log(data);
+
+                $("#tradein").html(data);
+                if($(".btnUpdateQoute").text() != "Update"){
+                    $(".btnUpdateQoute,.btnSaveQoute").attr("disabled", "");
+                }
+                
+
+
+            },
+            error: function (jqXHR, exception) {
+                //hideMessage();
+                //alert(exception);
+            }
+        });
+
+    }
+
+    function DefaultConversionGrid(conversionList) {
+
+        $("#conversiondetailGrid").dxDataGrid({
+            dataSource: conversionList,
+            columns: ["ConversionName",
+                {
+                    dataField: 'Description',
+                    caption: 'Conversion Description',
+                    //width: 60,
+                }
+                , "RetailPrice"],
+            showBorders: true
+        });
+    }
+
+    function moveToNextTab(ctrl) {
+        $("*[href='#" + $(ctrl).parents(".tab-pane").attr("id") + "']").parent().next().find("a").click();
+    }
+    function moveToPrevTab(ctrl) {
+        $("*[href='#" + $(ctrl).parents(".tab-pane").attr("id") + "']").parent().prev().find("a").click();
+    }
+
+
+
+
+
+
+    $(document).ready(function () {
+        
+        
+
+        BinddxDropdown('state', StateCodes, false, 0);
+
+
+
+
+        if(@ViewBag.RoleID == 4 || @ViewBag.RoleID == 5 || @ViewBag.RoleID == 3)
+        {
+            $("#PricingDetailsandImd").css("display", "block");
+        }
+        window.onbeforeunload = function () {
+            return true;
+        };
+
+
+        var qouteeditdata = $("#QouteEditData").val();
+
+        if (qouteeditdata == null || qouteeditdata == "") {
+            debugger;
+            getYears(0);
+
+            BinddxDropdown('vehicledetail', SearchType, true, 0);
+            DisableDropDown('make', true);
+            DisableDropDown('year', true);
+            DisableDropDown('model', true);
+            DisableDropDown('trim', true);
+            DisableDropDown('region', true);
+
+            $("#NadaToken").val("") //Token Hidden Field
+            $("#tradein").html(""); //Empty Partial View
+            $("#vehicledetails1").addClass("disabled_anchor");
+            $("#vehicledetails2").addClass("disabled_anchor");
+            DefaultConversionGrid(null);
+            //DefaultDeductionGrid(null);
+        }
+
+        else {
+            EditQouteData(qouteeditdata);
+            $("#tab3").removeClass("disabled_anchor");
+            $("#tab4").removeClass("disabled_anchor");
+            if(window.location.href.slice(window.location.href.indexOf('?') + 1).split('&')[1] == "View=true")
+            {
+                $('.btnUpdateQoute').css("display","none")
+            }
+        }
+
+        
+        
+    });
+   
+   
+    var data_qoute;
+    function EditQouteData(editdata) {
+
+        debugger;
+
+
+        $("#FormSubmit").removeClass("btnSaveQoute").addClass("btnUpdateQoute");
+        $("#FormSubmit").text("Update");
+
+        data_qoute = JSON.parse(editdata);
+        if (data_qoute.IsClean == true) {
+            var vehicleCondition = $("input[type='radio'][name='Iswhat'][value='clean']").attr('checked', 'checked');
+        }
+        else if (data_qoute.IsAverage == true) {
+            var vehicleCondition = $("input[type='radio'][name='Iswhat'][value='average']").attr('checked', 'checked');
+        }
+
+        else if (data_qoute.IsRough == true) {
+            var vehicleCondition = $("input[type='radio'][name='Iswhat'][value='rough']").attr('checked', 'checked');
+        }
+        var makedata = $("#QouteMakeData").val();
+        var yearsdata = $("#QouteYearData").val();
+
+
+        debugger
+        var modeldata = $("#QouteModelData").val();
+        var trimdata = $("#QouteTrimData").val();
+        var tradeindata = $("#QouteTradeInData").val();
+        var regiondata = $("#QouteRegionData").val();
+        var partialdata = $("#QoutePartialData").val();
+        var conversionslist = $("#QouteConversionsData").val();
+        var deductionslist = $("#QouteDeductionsData").val();
+        debugger
+        var data_makes = JSON.parse(makedata);
+        data_makes = JSON.parse(data_makes);
+
+        var data_years = JSON.parse(yearsdata);
+        data_years = JSON.parse(data_years);
+        var data_models = JSON.parse(modeldata);
+        data_models = JSON.parse(data_models);
+
+        var data_trims = JSON.parse(trimdata);
+        data_trims = JSON.parse(data_trims);
+        var data_tradein = JSON.parse(tradeindata);
+        var data_region = JSON.parse(regiondata);
+
+        data_region = JSON.parse(data_region);
+
+        var data_conversionlist = JSON.parse(conversionslist);
+        var data_deductionlist = JSON.parse(deductionslist);
+        for (var i = 0; i < data_conversionlist.ConversionsList.length; i++) {
+            Deductionsdesc.push(data_conversionlist.ConversionsList[i].DeductionName);
+            appendListofConversion.push(data_conversionlist.ConversionsList[i]);
+        }
+        for (var i = 0; i < data_deductionlist.DeductionList.length; i++) {
+            appendListofDeduction.push(data_deductionlist.DeductionList[i]);
+        }
+        if(data_qoute.Status == "Approved" || data_qoute.Status == "Decline")
+        {  
+            $(".btnUpdateQoute").css("display","none");
+        }
+        $("#QouteID").val(data_qoute.ID);
+        $("#CustomerName").val(data_qoute.CustomerName);
+        $("#EmailAddress").val(data_qoute.EmailAddress);
+        $("#PhoneNumber").val(data_qoute.PhoneNumber);
+        $("#AddressLine1").val(data_qoute.AddressLine1);
+        $("#AddressLine2").val(data_qoute.AddressLine2);
+        $("#MakeValue").val(data_qoute.Make);
+        $("#YearValue").val(data_qoute.Year);
+        $("#ModelValue").val(data_qoute.Model);
+        $("#TrimValue").val(data_qoute.Trim);
+        $("#mileage").val(data_qoute.Millage);
+        $("#state").val(data_qoute.StateCode);
+        $("#MarkUpPercentValue").val(data_qoute.MarkUpPercent);
+        $("#CleanValue").val(data_qoute.CleanTrade);
+        $("#AverageValue").val(data_qoute.AverageTrade);
+        $("#RoughValue").val(data_qoute.RoughTrade);
+        $("#RetailValue").val(data_qoute.RetailTrade);
+        $("#MarkUpPercentValue").val(data_qoute.MarkUpPercent);
+        $("#MarkUpPercentValue").val(data_qoute.MarkUpPercent);
+
+        $("#hdnPricing").val(data_qoute.SuggestedPrice);
+        $('#hdnComment').val(data_qoute.Comment);
+        $('textarea#Comment').val(data_qoute.Comment);
+
+
+
+        $("#tradein").html(partialdata);
+
+        $(".searchType").prop("checked", false);
+
+        if (data_qoute.SearchTypeID == "Vehicle Details") {
+
+            $(".searchType").eq(0).prop("checked", true).change();
+            debugger;
+            //collapseanchor("searchvehicledetails");
+
+
+
+            //$("#vehicledetails2").removeClass("disabled_anchor");
+            //$('.byvehicle').collapse("toggle");
+            //$('.byvehicle').collapse("show");
+
+            //$("#vehicledetails1").addClass("disabled_anchor");
+            //$('.byvin').collapse("toggle");
+            //$('.byvin').collapse("show");
+
+        } else if (data_qoute.SearchType == "By VIN") {
+            debugger
+            $(".searchType").eq(1).prop("checked", true).change();
+            $("#mileagevin").val(data_qoute.Millage);
+            $("#vinvalue").val(data_qoute.VinNumber);
+
+
+
+            if (data_qoute.RegionVal != "" && data_region.status == true) {
+
+                BinddxDropdown('region', data_region.data, false, data_qoute.RegionVal.toString());
+
+            }
+            else {
+                BinddxDropdown('region', [], false, data_qoute.RegionVal);
+            }
+            $("#regionVal").val(data_qoute.RegionVal);
+            $("#regionText").val(data_qoute.RegionText);
+            //collapseanchor("searchvin");
+            //$("#vehicledetails1").addClass("disabled_anchor");
+
+            //$('.byvin').collapse("toggle");
+            //$('.byvin').collapse("show");
+        } else {
+            $(".searchType").eq(0).prop("checked", true).change();
+        }
+
+
+        //if (data_qoute.SearchTypeID != "") {
+        //    BinddxDropdown('vehicledetail', SearchType, false, data_qoute.SearchTypeID);
+        //}
+        //else {
+        //    BinddxDropdown('vehicledetail', SearchType, true, 0);
+        //}
+
+        //if (data_qoute.SearchType == "By VIN") {
+        //    BinddxDropdown('region', data_region.Regions, false, parseInt(data_qoute.RegionVal));
+        //    $("#mileagevin").val(data_qoute.Millage);
+        //    $("#vinvalue").val(data_qoute.VinNumber);
+
+        //}
+        //BinddxDropdown('region', data.RegionText, false, data.RegionVal);
+        if (data_qoute.MakeID != "" && data_makes.status == true) {
+
+            BinddxDropdown('make', data_makes.data, false, data_qoute.Make);
+
+        }
+        else {
+            BinddxDropdown('make', [], false, data_qoute.MakeID);
+        }
+
+        if (data_qoute.YearID != "" && data_years.status == true) {
+            debugger
+            BinddxDropdown('year', data_years.data, false, data_qoute.YearID.toString());
+
+        }
+        else {
+            BinddxDropdown('year', [], false, data_qoute.YearID);
+        }
+
+        if (data_qoute.ModelID != "" && data_models.status == true) {
+
+            BinddxDropdown('model', data_models.data, false, data_qoute.Model);
+
+        }
+        else {
+            BinddxDropdown('model', [], false, data_qoute.YearID);
+        }
+
+        if (data_qoute.TrimID != "" && data_trims.status == true) {
+
+            BinddxDropdown('trim', data_trims.data, false, data_qoute.TrimID);
+
+        }
+        else {
+            BinddxDropdown('trim', [], false, data_qoute.YearID);
+        }
+        debugger;
+        BinddxDropdown('state', StateCodes, false, data_qoute.StateCode);
+
+
+        $("#CleanTradeIn").val(data_qoute.CleanTrade);
+        $("#AverageTradeIn").val(data_qoute.AverageTrade);
+        $("#RoughTradeIn").val(data_qoute.RoughTrade);
+        $("#RetailTradeIn").val(data_qoute.RetailTrade);
+        $("#MarkUpPercent").val();
+        $("#MarkUpFixed").val();
+
+        $("#MakeId").val(data_qoute.MakeID);
+        $("#MakeName").val(data_qoute.Make);
+
+        $("#Model").val(data_qoute.Model);
+        $("#ModelId").val(data_qoute.ModelID);
+
+        $("#Year").val(data_qoute.Year);
+        $("#YearId").val(data_qoute.YearID);
+
+        $("#Trim").val(data_qoute.Trim);
+        $("#TrimId").val(data_qoute.TrimID);
+
+
+        EditConversionGrid(data_conversionlist.ConversionsList);
+        EditDeductionGrid(data_conversionlist.ConversionsList, data_deductionlist.DeductionList);
+        $("#totalSum_").text(data_qoute.TotalConversionDeduction);
+        if (data_qoute.SearchType == "Vehicle Details") {
+            $("#vehicledetails2").addClass("disabled_anchor");
+
+            $('.byvehicle').collapse("show");
+
+        }
+
+        else {
+            $("#vehicledetails1").addClass("disabled_anchor");
+
+            $('.byvin').collapse("show");
+        }
+        $("#conversiondetails #addconversion").hide();
+
+        $(".AmountFormate").each(function( index ) {
+            $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        });
+        
+    }
+
+    function EditConversionGrid(conversionlist) {
+
+        //for (var i = 0; i < conversionlist.length; i++) {
+        ConversionsIDs.push(conversionlist[0].ID);
+        ConversionsAmounts.push(conversionlist[0].RetailPrice);
+        DepericiationAmounts.push(conversionlist[0].DepreciatedAmount);
+        //}
+        var conversionListNew = [];
+        conversionListNew.push(conversionlist[0]);
+        $("#conversiondetailGrid").dxDataGrid({
+
+            dataSource: conversionListNew,
+
+            columns: ["ConversionName", {
+                dataField: 'Description',
+                caption: 'Conversion Description',
+                //width: 60,
+            }, "RetailPrice",
+            {
+                dataField: 'ID',
+                caption: 'Delete',
+                fixed: true,
+                fixedPosition: 'right',
+                //width: 60,
+                alignment: 'center',
+                allowSorting: false,
+                cellTemplate: function (container, options) {
+                    $('<div />').dxButton({
+                        icon: 'trash',
+                        type: 'danger',
+                        onClick: function (e) {
+
+                            $('#conversiondetailGrid').dxDataGrid('instance').deleteRow(options.rowIndex);;
+
+                        }
+                    }).appendTo(container);
+                },
+            }
+            ],
+
+            showBorders: true,
+            onRowRemoving: function (e) {
+
+                /////
+                ConversionsAmounts;
+                ConversionsIDs;
+                DeductionsAmounts;
+                DeductionsIDs;
+                DepericiationAmounts;
+                for (var i = 0; i < ConversionsIDs.length; i++) {
+                    if (ConversionsIDs[i] == e.data.ID) {
+                        ConversionsIDs.splice(i, 1);
+                        ConversionsAmounts.splice(i, 1);
+                        DeductionsIDs.splice(i, 1);
+                        Deductionsdesc.splice(i, 1);
+                        DeductionsAmounts.splice(i, 1);
+                        appendListofConversion.splice(i, 1);
+                    }
+                }
+
+
+
+                for (var i = 0; i < DepericiationAmounts.length; i++) {
+                    if (DepericiationAmounts[i] == e.data.DepreciatedAmount) {
+                        DepericiationAmounts.splice(i, 1);
+
+                    }
+                }
+
+                $("#deductiondetailGrid tbody tr").remove();
+
+
+                //$('#deductiondetailGrid').dxDataGrid('instance').deleteRow(e.component.getRowIndexByKey(e.key));
+                //$("#totalSum_").text('0');
+                //
+                // var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+                // var priceafterde = 0;
+                // $('#totalSum_').text(0);
+
+                // var sumval = 0;
+                // for (var i = 0; i < DeductionsIDs.length ; i++) {
+
+                //     var priceafterde = grid.getCellElement(i, 3).html();
+
+                //     //if (sumval >= 0) {
+                //     // var sumval =  parseFloat(DepericiationAmounts[i]) - parseFloat(DeductionsAmounts[i]);
+                //     sumval += parseFloat(priceafterde);
+
+                //     //}
+
+
+                // }
+                // $('#totalSum_').text(sumval);
+
+            },
+
+            onRowRemoved: function (e) {
+                $("#conversiondetails #addconversion").show();
+                $("#tab4").addClass("disabled_anchor");
+                $(".btnUpdateQoute,.btnSaveQoute").attr("disabled", "");
+
+                $("#totalSum_").text('0');
+
+                //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+                var priceafterde = 0;
+                $('#totalSum_').text(0);
+
+                var sumval = 0;
+                for (var i = 0; i < DeductionsIDs.length ; i++) {
+
+                    var priceafterde = grid.getCellElement(i, 3).html();
+
+                    //if (sumval >= 0) {
+                    // var sumval =  parseFloat(DepericiationAmounts[i]) - parseFloat(DeductionsAmounts[i]);
+                    sumval += parseFloat(priceafterde);
+
+                    //}
+
+
+                }
+                $('#totalSum_').text(sumval);
+            }
+        });
+    }
+
+    function addDeductionRow(conversion, deductionlist) {
+        var html;
+
+        html = '<tr>'
+             + '    <td>' + conversion.ConversionName + '</td>'
+             + '    <td>' + conversion.DepreciatedAmount + '</td>'
+             + '    <td>'
+             + '        <label class="form-switch">Deduction<input type="checkbox" onchange="onChangeDeduction(this)" checked><i></i></label>'
+             + '    </td>'
+             + '    <td>' + conversion.ActualValue + '</td>'
+             //<input id="hdnConversionValue" type="hidden" value="' + conversion.ActualValue + '">
+             + '</tr>'
+
+             + '<tr class="comparisonRow">'
+             + '    <td colspan="5">'
+             + '        <table class="comparisonSelectionTable checkbox">'
+             + '            <tbody>'
+        var number = 0;
+        html += '<tr>'
+        $.each(deductionlist, function (i, e) {
+            number += 1;
+            var threeCalc = (number / 3).toString();
+            var amount = e.Amount;
+            amount = addCommas(amount);
+            var deductionName = e.Description;
+            html += '<td class="checkbox-custom">'
+            + '    <label><input data-id="' + e.ID + '" id="' + i + '" amount="' + amount + '" name="deduction1" deductionname="' + deductionName + '" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$' + amount + '</b> ' + deductionName + '</label>'
+            + '</td>'
+
+            if (threeCalc.indexOf(".") == -1) {
+                html += '</tr><tr>'
+            }
+        })
+        html += '</tr>'
+
+
+
+        html += '            </tbody>'
+        + '        </table>'
+        + '    </td>'
+        + '</tr>'
+        + ''
+        + ''
+        + ''
+        $("#deductiondetailGrid table tbody").append(html);
+
+        
+    }
+
+    function onradiochange(b) {
+        //when make new quote.
+
+        b.setAttribute("checked", "");
+        //var hdnConversionValue = parseInt($("#hdnConversionValue").val());
+        var dedcution_amount = $(b).attr('amount'); //Deduction Amount
+
+        //var grid = $("#deductiondetailGrid").dxDataGrid("instance");
+
+
+        //conversion_amount = grid.cellValue(rowindex, "RetailPrice"); //Conversion Amount
+
+        //var depreciated_amount = grid.cellValue(rowindex, "DepreciatedAmount");
+
+        var depreciated_amount = parseInt($(b).parents(".comparisonRow").prev().find("td:nth-child(2)").text());
+
+
+
+
+
+        var aftercal_amount = depreciated_amount - parseInt(dedcution_amount); //After Deduction Amount
+
+        //appendListofConversion[rowindex].ActualValue = aftercal_amount;
+        var deductionAmounts = [];
+        $('input[name="deduction1"]').each(function (i, e) {
+            if ($(this).is(":checked")) {
+                var amount = parseInt($(this).attr("amount"));
+                deductionAmounts.push(amount);
+            }
+        })
+        var totalAmountToDeduct = 0;
+        $.each(deductionAmounts, function (i, e) {
+            totalAmountToDeduct += e;
+        })
+
+        $(b).parents(".comparisonRow").prev().find("td:nth-child(4)").html(depreciated_amount - totalAmountToDeduct);
+
+        //grid.getCellElement(rowindex, 3).html(aftercal_amount);
+        //Arrays for DeductionIDs and DeductionsAmounts
+
+        if ($(b).is(":checked")) {
+            if (DeductionsIDs.indexOf($(b).attr('data-id')) == -1) {
+                DeductionsAmounts.push($(b).attr('amount'));
+                DeductionsIDs.push($(b).attr('data-id'));
+                Deductionsdesc.push($(b).attr('deductionname'));
+            }
+        } else {
+            if (DeductionsIDs.indexOf($(b).attr('data-id')) != -1) {
+                var index = DeductionsIDs.indexOf($(b).attr('data-id'));
+                DeductionsAmounts.splice(index, 1);
+                DeductionsIDs.splice(index, 1);
+                Deductionsdesc.splice(index, 1);
+            }
+        }
+
+
+
+
+        //DeductionsAmounts[rowindex] = $(b).attr('amount');
+        //DeductionsIDs[rowindex] = $(b).attr('id');
+        //Deductionsdesc[rowindex] = $(b).attr('deductionname');
+        //var sds = grid.cellValue(rowindex, "DepreciatedAmount");
+
+        var priceafterde = 0;
+        $('#totalSum_').text(0);
+        var sumval = parseInt($('#totalSum_').text());
+
+        //for (var i = 0; i < grid.totalCount() ; i++) {
+
+        //    var priceafterde = grid.getCellElement(i, 3).html();
+
+        //    if (sumval >= 0) {
+
+        //        if (priceafterde == '&nbsp;') {
+        //            priceafterde = 0;
+        //        }
+        //        var sum_ = parseInt(priceafterde) + parseInt($('#totalSum_').text())
+        //        $('#totalSum_').text(sum_);
+        //    }
+
+        //    else {
+        //        var sum_ = parseInt(priceafterde);
+        //        $('#totalSum_').text(sum_);
+        //    }
+        //}
+
+
+
+
+    }
+
+
+
+    function EditDeductionGrid(conversionlist, deductionlist) {
+
+        //for (var i = 0; i < conversionlist.length; i++) {
+        //    DeductionsIDs.push(conversionlist[i].DeductionID);
+        //    DeductionsAmounts.push(conversionlist[i].DeductionAmount);
+        //}
+        $.ajax({
+            async: false,
+            url: '/Employee/GetDeductionsByQouteID?QuoteID=' + conversionlist[0].QuoteID,
+            type: 'GET',
+            success: function (response) {
+
+                var Deductions = JSON.parse(response.jsondata).DeductionList;
+                addDeductionRow(conversionlist[0], deductionlist);
+                $.each(Deductions, function (i, e) {
+                    $("input[data-id='" + e.DeductionID + "']").prop("checked", true);
+
+                    //$("#" + e.DeductionID).prop("checked", true);
+                })
+                onradiochange($('input[name="deduction1"]').get(0));
+            }
+        });
+
+
+
+        //$("#deductiondetailGrid").dxDataGrid({
+        //    dataSource: conversionlist,
+        //    editing: {
+        //        texts: { confirmDeleteMessage: "" },
+        //    },
+        //    columns: ["ConversionName", "DepreciatedAmount",
+        //        {
+        //            //dataField: "authorId",
+        //            caption: "Deductions",
+        //            width: "50%",
+        //            alignment: "left",
+        //            cellTemplate: function (container, options) {
+        //
+        //                //index = index + 1;
+        //                //$("<div class='radio'>").appendTo(container);
+
+        //                //for (var i = 0; i < deductionList.length; i++) {
+        //                //    $("<div class='radio'>")
+        //                //    .append($("<label><input id=" + deductionList[i].ID + " name='deduction' type='radio' checked=''><span class='circle'></span><span class='check'></span><b>$" + deductionList[i].Amount + "</b> (" + deductionList[i].Description + ")</label>"))
+        //                //    .appendTo(container);
+        //                //}
+        //                //
+        //                //index = index++;
+        //
+        //                var radiobuttons = "";
+
+        //                radiobuttons += "<div class='radio'>";
+
+        //                for (var i = 0; i < deductionlist.length; i++) {
+        //                    var isFound = false;
+
+
+        //                    if (options.data.DeductionID == deductionlist[i].ID) {
+        //                        isFound = true;
+
+        //                    }
+
+
+        //
+        //                    if (isFound) {
+
+        //                        radiobuttons += '<label><input id=' + deductionlist[i].ID + ' amount="' + deductionlist[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionlist[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionlist[i].Amount + '</b> (' + deductionlist[i].Description + ')</label></br>';
+        //                    }
+        //                    else {
+        //                        if (deductionlist[i].Amount == 0) {
+
+        //                            radiobuttons += '<label><input id=' + deductionlist[i].ID + ' amount="' + deductionlist[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionlist[i].Description + '" type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$' + deductionlist[i].Amount + '</b> (' + deductionlist[i].Description + ')</label></br>';
+        //                        }
+        //                        else {
+        //                            radiobuttons += '<label><input id=' + deductionlist[i].ID + ' amount="' + deductionlist[i].Amount + '"  name="deduction' + icount + '" deductionname="' + deductionlist[i].Description + '" type="radio" onclick="onradiochange(this)" ><span class="circle"></span><span class="check"></span><b>$' + deductionlist[i].Amount + '</b> (' + deductionlist[i].Description + ')</label></br>';
+        //                            //radiobuttons += "<label><input id=" + objdeductionlist.ID + " amount='" + objdeductionlist.Amount + "'  name='deduction" + icount + "' type='radio' onclick='onradiochange(this) '><span class='circle'></span><span class='check'></span><b>$" + objdeductionlist.Amount + "</b>(" + objdeductionlist.Description + ")</label></br>";
+        //                        }
+        //                        //radiobuttons += "<label><input id=" + objdeductionlist.ID + " amount='" + objdeductionlist.Amount + "'  name='deduction" + icount + "' type='radio' onclick='onradiochange(this) '><span class='circle'></span><span class='check'></span><b>$" + objdeductionlist.Amount + "</b>(" + objdeductionlist.Description + ")</label></br>";
+        //                    }
+
+
+
+
+        //                }
+
+        //                icount++;
+
+        //                radiobuttons += "</div>";
+
+        //                $(radiobuttons).appendTo(container);
+        //                //for (var i = 0; i < deductionList.length; i++) {
+        //                //    .append($("<label><input name='deduction' type='radio' checked=''><span class='circle'></span><span class='check'></span><b>$100</b> (Lorem Ipsum has been the industry's standard)</label>"))
+        //                //    .appendTo(container);
+        //                //}
+
+        //                //.append($("<label><input name='deduction' type='radio' checked=''><span class='circle'></span><span class='check'></span><b>$100</b> (Lorem Ipsum has been the industry's standard)</label>"))
+        //                //.appendTo(container);
+
+
+        //            },
+
+
+        //        },
+        //        {
+        //            dataField: "ActualValue",
+        //            caption: "Price After Deduction"
+        //            //calculateCellValue: function (e) {
+        //            //
+        //            //    //if (e.dataField == "ID")
+        //            //    //    return 0;
+
+
+
+        //            //    //if (e.IsActive == true)
+        //            //    //    return ["Active"];
+        //            //    //if (data.IsActive == false)
+        //            //    //    return ["InActive"];
+
+        //            //}
+
+
+
+        //        }
+        //    ],
+        //    //onCellPrepared: function (e) {
+        //    //    if (e.column.caption == "Deductions")
+        //    //    {
+        //    //        //index = index++;
+        //    //    }
+
+        //    //    //if (e.rowType == "detailAdaptive") {
+        //    //    //    e.cellElement.addClass("adaptiveRowStyle");
+        //    //    //}
+        //    //},
+        //    onRowPrepared: function (e) {
+        //        //
+        //        if (e.rowType == "data")
+        //            icount = e.rowIndex;
+        //    },
+        //    onRowClick: function (e) {
+        //        //
+        //        if (e.rowType == "data") {
+        //            rowindex = e.rowIndex;
+        //        }
+
+
+        //    },
+        //    summary: {
+        //        totalItems: [{
+
+
+        //            column: "RetailPrice",
+        //            summaryType: "sum",
+        //            alignment: "left",
+        //            customizeText: function (data) {
+        //                //
+        //                $("#ConversionAmount").val(data.value);
+        //                return ("Total Conversion Price: " + data.value);
+
+
+        //            }
+        //        },
+
+
+        //        //,
+        //        //{
+        //        //    column: "Priceafterdeduction",
+        //        //    summaryType: "sum",
+        //        //    alignment: "right",
+        //        //    valueFormat: "currency"
+        //        //}
+        //            //valueFormat: "currency"
+        //        ]
+        //    },
+        //    showBorders: true
+        //});
+    }
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+
+    $(function () {
+
+
+
+        $("#PhoneNumber,#mileage").on("keypress", function (e) {
+            if (isNaN(e.key)) {
+                return false;
+            }
+        })
+
+        $(".btnDiscardQoute").click(function () {
+
+            $("#DiscardConfirmation").modal("show");
+        });
+
+        $(".btnDiscard").click(function () {
+            window.location.href = '/Employee/ListofQoute';
+
+        });
+        collapseanchor("searchvin");
+        $(".searchType").change(function (e) {
+            debugger;
+            if ($(this).is(":checked")) {
+                var data = { value: $(this).parents("label").text().trim() };
+
+                debugger;
+                if (data.value == "Vehicle Details") {
+                    //clicktab("searchvehicledetails");
+                    var year = new Date().getFullYear();
+                    getYears(0);
+                    //getMakeListByYear(year);
+                    //$("#searchvehicledetails").trigger("click");
+                    //clicktab("searchvehicledetails");
+
+                    BinddxDropdown('state', StateCodes, false, 0);
+
+                    collapseanchor("searchvehicledetails");
+
+
+
+
+                }
+                else {
+                    //
+                    //clicktab("searchvin");
+                    //$("#searchvehicledetails").trigger("click");
+                    //$("#searchvin").trigger("click");
+                    //clicktab("searchvehicledetails");
+                    //clicktab("searchvin");
+                    collapseanchor("searchvin");
+
+                }
+
+                //var year = new Date().getFullYear();
+                //getMakeListByYear(year);
+            }
+
+        });
+
+
+        $(".btnResetNada").click(function () {
+
+            BinddxDropdown('vehicledetail', SearchType, false, "Please Select");
+            BinddxDropdown('make', null, true, 0);
+            BinddxDropdown('year', null, true, 0);
+            BinddxDropdown('model', null, true, 0);
+            BinddxDropdown('trim', null, true, 0);
+
+            DisableDropDown('make', true);
+            DisableDropDown('year', true);
+            DisableDropDown('model', true);
+            DisableDropDown('trim', true);
+            $("#mileage").val(""),
+            $("#state").val(""),
+
+            $("#NadaToken").val("") //Token Hidden Field
+            $("#tradein").html(""); //Empty Partial View
+
+            $(".searchType").eq(0).prop("checked", true).change();
+
+        });
+
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            $(e.target).parent().removeClass("visited").nextAll().removeClass("visited");
+            $(e.target).parent().prevAll().addClass("visited");
+            //e.target
+            //e.relatedTarget // previous active tab
+        })
+
+        $("#retailprice").click(function () {
+
+            $("#retailmodal").modal("show");
+        });
+
+        $("#pricingdetail").click(function () {
+
+            PriceAfterDeductionList = [];
+            $(".cleanconversions > tfoot").find("tr:not(:last)").remove();
+            $(".retailconversions > tfoot").find("tr:not(:last)").remove();
+
+            var htmlForColName = '';
+            var htmlForColVal = '';
+            var gridForCon = $("#conversiondetailGrid").dxDataGrid("instance");
+            //var gridFor = $("#deductiondetailGrid").dxDataGrid("instance");
+            //var gridForLength = gridFor.totalCount();
+            //for (var i = 0; i < gridForLength; i++) {
+            //    var checknan = gridFor.getCellElement(i, 3).html();
+            //    var conName = gridForCon.getCellElement(i, 0).html();
+            //    if (!isNaN(checknan)) {
+
+            //        PriceAfterDeductionList.push([parseInt(checknan), conName]);
+            //    }
+
+            //}
+            var checknan = $("#deductiondetailGrid > table > tbody > tr:not(.comparisonRow) > td:nth-child(4)").text();
+            var conName = $("#deductiondetailGrid > table > tbody > tr:not(.comparisonRow) > td:nth-child(1)").text();
+            if (!isNaN(checknan)) {
+
+                PriceAfterDeductionList.push([parseInt(checknan), conName]);
+            }
+
+            if (PriceAfterDeductionList.length > 0) {
+                var htCleanrow = "<tr><th style='height:0px!important'><span><span class='mb-10' style='color:#1a6acc;'>Selected Conversion</span></span></th></tr>" +
+                                 "<tr><td><span class='text-right footamount ConName'></span></td><td  class='text-right ConVal'> </td></tr>";
+                $(htCleanrow).prependTo(".cleanconversions > tfoot");
+
+                var htRetailrow = "<tr><th style='height:0px!important'><span><span class='mb-10' style='color:#1a6acc;'>Selected Conversion</span></span></th></tr>" +
+                                 "<tr><td><span class='text-right footamount ConName'></span></td></tr>";
+                $(htRetailrow).prependTo(".retailconversions > tfoot");
+            }
+
+
+            for (var i = 0; i < PriceAfterDeductionList.length; i++) {
+
+                PriceAfterDeductionList[i][0] = addCommas(PriceAfterDeductionList[i][0]);
+                htmlForColName += '<span class="mb-10">' + PriceAfterDeductionList[i][1] + '</span><br>';
+                htmlForColVal += '<span class="mb-10"> $ ' + PriceAfterDeductionList[i][0] + '</span><br>';
+            }
+            $('.ConName').append(htmlForColName);
+            $('.ConVal').append(htmlForColVal);
+            console.log(PriceAfterDeductionList);
+            var _markupper = 0
+            var _markfix = 0
+            var Id = 0
+            var totalAmount = 0
+            var roundoftotalamount = 0
+            $.ajax({
+                async: false,
+                url: '/Employee/GetSelectedMarkup',
+                type: 'GET',
+                success: function (response) {
+
+                    _markupper = response.MarkRecord.MarkUpPer;
+                    _markfix = response.MarkRecord.MarkUpFixed;
+                    Id = response.MarkRecord.Id;
+                    totalAmount = checknan;
+                    roundoftotalamount = Math.round(parseFloat(totalAmount));
+                }
+            });
+
+            //
+
+            var cleanvalue = $("#CleanTradeIn").val();
+            var avgvalue = $("#AverageTradeIn").val();
+            var roughvalue = $("#RoughTradeIn").val();
+            var retailvalue = $("#RetailTradeIn").val();
+
+            var markup_percentvalue = $("#MarkUpPercent").val();
+            var markup_fixedvalue = $("#MarkUpFixed").val();
+
+            var makevalue = $("#MakeName").val();
+            var modelvalue = $("#Model").val();
+            var yearvalue = $("#Year").val();
+
+            var trimvalue = $("#Trim").val();
+
+            var conversionvalue = roundoftotalamount;
+
+            CleanPrintData.yearVal = yearvalue;
+            CleanPrintData.makeVal = makevalue;
+            CleanPrintData.modelVal = modelvalue;
+            CleanPrintData.trimVal = trimvalue;
+            CleanPrintData.cleanVal = cleanvalue;
+            CleanPrintData.avgVal = avgvalue;
+            CleanPrintData.roughVal = roughvalue;
+            CleanPrintData.retailVal = retailvalue;
+
+            CleanPrintData.conversionVal = roundoftotalamount;
+
+
+            CleanPrintData.totalCleanVal = Math.round(parseFloat(roundoftotalamount) + parseFloat(cleanvalue));
+            CleanPrintData.totalAvgVal = Math.round(parseFloat(roundoftotalamount) + parseFloat(avgvalue));
+            CleanPrintData.totalRoughVal = Math.round(parseFloat(roundoftotalamount) + parseFloat(roughvalue));
+
+            var totalcleanvalue = 0;
+            var totalavgvalue = 0;
+            var totalroughvalue = 0;
+            var retailconversionvalue = 0;
+            var retailmarkupvalue = 0;
+
+            //Calculated MarkUp Amount of Retail Price
+            //if(retailvalue != "")
+            //{
+            //    if (markup_percentvalue != "")
+            //    {
+            //        retailmarkupvalue = (parseFloat(retailvalue) / 100) * parseFloat(markup_percentvalue);
+            //    }
+            //    else
+            //    {
+            //        retailmarkupvalue = (parseFloat(retailvalue) / 100) * 0;
+            //    }
+
+            //}
+            //else
+            //{
+            //    if (markup_percentvalue != "") {
+            //        retailmarkupvalue = (0 / 100) * parseFloat(markup_percentvalue);
+            //    }
+            //    else {
+            //        retailmarkupvalue = (0 / 100) * 0;
+            //    }
+            //}
+
+            //if (conversionvalue == "") {
+
+            //    retailconversionvalue = parseFloat(0.00) + parseFloat(retailmarkupvalue);
+            //}
+            //else {
+            //    retailconversionvalue = parseFloat(conversionvalue) + parseFloat(retailmarkupvalue);
+            //}
+
+
+            if (cleanvalue == "" || avgvalue == "" || roughvalue == "") {
+                $("#cleanval").text("$ 0");
+                $("#avgval").text("$ 0");
+                $("#roughval").text("$ 0");
+                $("#retailval").text("$ 0");
+                $(".cardescription").text("Year Make Model");
+                $(".cartrim").text("Trim");
+                // $(".markupconversionamount").text("$ " + retailconversionvalue);
+                $("#total_cleanvalue").html("$ 0");
+                $("#total_avgvalue").html("$ 0");
+                $("#total_roughvalue").html("$ 0");
+                $("#total_retailvalue").html("$ 0");
+                $(".markupconversionamount").text("$ 0");
+
+
+                //if (conversionvalue == "") {
+                totalcleanvalue = parseFloat(0.00) + parseFloat(0.00);
+                totalavgvalue = parseFloat(0.00) + parseFloat(0.00);
+                totalroughvalue = parseFloat(0.00) + parseFloat(0.00);
+                totalretailvalue = parseFloat(0.00) + parseFloat(0.00)
+                //}
+                //else {
+                //    totalcleanvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //    totalavgvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //    totalroughvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //    totalretailvalue = parseFloat(0.00) + parseFloat(retailconversionvalue);
+                //}
+
+                //totalcleanvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //totalavgvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //totalroughvalue = parseFloat(0.00) + parseFloat(conversionvalue);
+                //totalretailvalue = parseFloat(0.00) + parseFloat(retailconversionvalue)
+                $("#total_cleanvalue").html("$" + totalcleanvalue);
+                $("#total_avgvalue").html("$" + totalavgvalue);
+                $("#total_roughvalue").html("$" + totalroughvalue);
+                $("#total_retailvalue").html("$" + totalretailvalue);
+            }
+            else {
+                //
+                var result = 0;
+                cleanvalue = addCommas(cleanvalue);
+                avgvalue = addCommas(avgvalue);
+                roughvalue = addCommas(roughvalue);
+                retailvalue = addCommas(retailvalue);
+                $("#cleanval").text("$ " + cleanvalue);
+                $("#avgval").text("$ " + avgvalue);
+                $("#roughval").text("$ " + roughvalue);
+                $("#retailval").text("$ " + retailvalue);
+
+                $(".cardescription").text(yearvalue + " " + makevalue + " " + modelvalue);
+                $(".cartrim").text(trimvalue);
+
+                if (_markupper > 0 && parseInt(Id) == 1) {
+                    var cal = (parseInt(roundoftotalamount) * parseFloat(_markupper)) / 100;
+                    result = (parseInt(roundoftotalamount) + Math.round(parseFloat(cal)));
+                    $('.markupconversionamount').text("$ " + result);
+                    CleanPrintData.conversionValwithMarkup = result;
+                }
+
+                else {
+                    if (ConversionsIDs.length > 0) {
+                        result = (parseInt(roundoftotalamount) + parseInt(_markfix));
+                        $('.markupconversionamount').text("$ " + result);
+                        CleanPrintData.conversionValwithMarkup = result;
+                    }
+
+                    else {
+                        $('.markupconversionamount').text("$ " + 0);
+                    }
+
+                }
+
+                if (roundoftotalamount != "" && roundoftotalamount > 0) {
+                    totalcleanvalue = Math.round(parseFloat(cleanvalue) + parseFloat(roundoftotalamount));
+                    totalavgvalue = Math.round(parseFloat(avgvalue) + parseFloat(roundoftotalamount));
+                    totalroughvalue = Math.round(parseFloat(roughvalue) + parseFloat(roundoftotalamount));
+                    totalretailvalue = Math.round(parseFloat(retailvalue) + parseFloat(result));
+                    CleanPrintData.totalRetailVal = totalretailvalue;
+
+                }
+                else {
+
+                    totalcleanvalue = Math.round(parseFloat(cleanvalue) + parseFloat(0.00));
+                    totalavgvalue = Math.round(parseFloat(avgvalue) + parseFloat(0.00));
+                    totalroughvalue = Math.round(parseFloat(roughvalue) + parseFloat(0.00));
+                    totalretailvalue = Math.round(parseFloat(retailvalue) + parseFloat(0.00));
+                }
+
+                //totalcleanvalue = parseFloat(cleanvalue) + parseFloat(conversionvalue);
+                //totalavgvalue = parseFloat(avgvalue) + parseFloat(conversionvalue);
+                //totalroughvalue = parseFloat(roughvalue) + parseFloat(conversionvalue);
+                //totalretailvalue = parseFloat(retailvalue) + parseFloat(retailconversionvalue)
+                totalcleanvalue = addCommas(totalcleanvalue);
+                totalavgvalue = addCommas(totalavgvalue);
+                totalroughvalue = addCommas(totalroughvalue);
+                totalretailvalue = addCommas(totalretailvalue);
+                $("#total_cleanvalue").html("$" + totalcleanvalue);
+                $("#total_avgvalue").html("$" + totalavgvalue);
+                $("#total_roughvalue").html("$" + totalroughvalue);
+                $("#total_retailvalue").html("$" + totalretailvalue);
+
+
+
+            }
+            debugger
+            if (conversionvalue == "") {
+                $(".conversionamount").text("$ " + 0);
+            }
+            else {
+
+                debugger
+                roundoftotalamount = roundoftotalamount == NaN? 0: roundoftotalamount
+                if(roundoftotalamount == NaN)
+                {
+                    alert(roundoftotalamount);
+                }
+                console.log(roundoftotalamount);
+                roundoftotalamount = addCommas(roundoftotalamount);
+                $(".conversionamount").text("$ " + roundoftotalamount);
+            }
+
+
+
+
+            //$("#cleanval").text("$ " + cleanvalue);
+            //$("#avgval").text("$ " + avgvalue);
+            //$("#roughval").text("$ " + roughvalue);
+            //$("#cardescription").text(yearvalue + " " + makevalue + " " + modelvalue);
+            //$("#cartrim").text(trimvalue);
+        });
+
+        $(".btnResetNada").click(function () {
+
+            BinddxDropdown('vehicledetail', SearchType, false, "Please Select");
+            BinddxDropdown('make', null, true, 0);
+            BinddxDropdown('year', null, true, 0);
+            BinddxDropdown('model', null, true, 0);
+            BinddxDropdown('trim', null, true, 0);
+
+            DisableDropDown('make', true);
+            DisableDropDown('year', true);
+            DisableDropDown('model', true);
+            DisableDropDown('trim', true);
+            $("#mileage").val(""),
+            $("#state").val(""),
+
+            $("#NadaToken").val("") //Token Hidden Field
+            $("#tradein").html(""); //Empty Partial View
+
+        });
+
+
+        $("#addconversion").click(function () {
+            var makeid = $("#MakeId").val();
+            $.ajax({
+                url: '/Employee/GetConversionModalNew',
+                type: "GET",
+                data: { MakeId: makeid }, // Need to change when NADA issue get resolve.
+                success: function (response) {
+
+
+                    $("#conversionmodal").html(response);
+                    $("#addconversion").modal("show");
+                }
+            });
+
+        });
+
+        $("#vinvalue").focusout(function () {
+            debugger
+
+            var token = $("#NadaToken").val();
+            var vin = $("#vinvalue").val();
+
+            if (vin == "") {
+                AlertToast("warning", "VIN is required.");
+            }
+            else {
+
+                $.ajax({
+                    url: "/Employee/ValidateVin",
+                    type: "GET",
+                    data: { Token: token, Vin: vin },
+                    success: function (data) {
+
+                        //console.log(data);
+                        if (data.validate) {
+                            getRegions();
+                            AlertToast("success", data.message);
+                        }
+                        else {
+                            AlertToast("warning", data.message);
+                        }
+
+                    }
+                });
+            }
+
+
+
+        });
+
+
+
+        $(".btnUpdateQoute").click(function () {
+
+            if (!($("input[type='radio'][name='Iswhat']").is(":checked"))) {
+                AlertToast("warning", "Please select a Trade-In.");
+            }
+            else {
+                var _isClean = false;
+                var _isAverage = false;
+                var _isRough = false;
+
+                var vehicleCondition = $("input[type='radio'][name='Iswhat']:checked").val();
+
+                if (vehicleCondition == "clean") {
+                    _isClean = true;
+                }
+                else if (vehicleCondition == "average") {
+                    _isAverage = true;
+                }
+
+                else if (vehicleCondition == "rough") {
+                    _isRough = true;
+                }
+
+
+                var status = "";
+                var cleanvalue = $("#CleanTradeIn").val();
+                var avgvalue = $("#AverageTradeIn").val();
+                var roughvalue = $("#RoughTradeIn").val();
+                var conversionvalue = $("#ConversionAmount").val();
+                var name = $("#CustomerName").val();
+                var totatsum = $("#deductiondetailGrid > table > tbody > tr > td:nth-child(4)").text();
+
+                var datagrid_row_Count = $("#conversiondetailGrid").dxDataGrid("instance");
+                var _datagrid_row_Count = datagrid_row_Count.totalCount();
+
+                if (cleanvalue != "" && avgvalue != "" && roughvalue != "" && name != "" && totatsum != "" && totatsum != "0" && _datagrid_row_Count > 0)
+                {
+                    status = "New";
+                }
+                else
+                { status = "Draft" }
+
+
+                var searchType = $(".searchType:checked").parents("label").text().trim();
+
+                var data = {
+                    token: "",
+                    QouteID: $("#QouteID").val(),
+                    CustomerName: $("#CustomerName").val(),
+                    Email: $("#EmailAddress").val(),
+                    Phone: $("#PhoneNumber").val(),
+                    AddressLine1: $("#AddressLine1").val(),
+                    AddressLine2: $("#AddressLine2").val(),
+                    SearchType: searchType,
+                    SearchTypeID: searchType,
+                    Make: $("#MakeName").val(),
+                    MakeID: $("#MakeId").val(),
+                    Model: $("#Model").val(),
+                    ModelID: $("#ModelId").val(),
+                    Year: $("#Year").val(),
+                    YearID: $("#Year").val(),
+                    Trim: $("#Trim").val(),
+                    TrimID: $("#TrimId").val(),
+                    Mileagevin: "",
+                    Millage: "",
+                    VinNumber: "",
+                    Region: "",
+                    StateCode: $("#state").dxSelectBox('instance').option('value'),
+                    Status: status,
+                    CleanTrade: $("#CleanTradeIn").val(),
+                    AverageTrade: $("#AverageTradeIn").val(),
+                    RoughTrade: $("#RoughTradeIn").val(),
+                    RetailTrade: $("#RetailTradeIn").val(),
+                    EmployeeID: "",
+
+                    TotalConversionDeduction: totatsum,
+                    ConversionID: ConversionsIDs,
+                    ConversionAmount: ConversionsAmounts,
+                    DeductionID: DeductionsIDs,
+                    DeductionAmount: DeductionsAmounts,
+                    DepericiationAmount: DepericiationAmounts,
+                    IsClean: _isClean,
+                    IsAverage: _isAverage,
+                    IsRough: _isRough,
+                    SuggestedPrice: $("#SuggestedPrice").val(),
+                    Comment: $('#hdnComment').val(),
+                    //QouteAmount: "531",
+                };
+
+
+                if (searchType == "By VIN") {
+                    data.RegionVal = getSelectBoxSelectedValue("region");
+                    data.RegionText = getSelectBoxSelectedText("region");
+                    data.VinNumber = $('#vinvalue').val();
+                    data.Millage = $('#mileagevin').val();
+                }
+                else {
+                    data.StateCode = getSelectBoxSelectedValue("state");
+                    data.Millage = $("#mileage").val();
+                }
+                var json = JSON.stringify(data);
+
+                $.ajax({
+                    url: '@Url.Action("UpdateQoute", "Employee")',
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    data: json,
+                    success: function (response) {
+                        //
+                        if (response.status) {
+                            AlertToast("success", response.message);
+                            window.setTimeout(function () {
+                                location.href = '@Url.Action("ListofQoute", "Employee")';
+                            }, 5000);
+                        }
+                        else {
+                            AlertToast("warning", response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        //
+                    }
+                });
+            }
+
+        });
+
+
+
+        $(".btnSaveQoute").click(function ()
+        {
+
+            if (!($("input[type='radio'][name='Iswhat']").is(":checked"))) {
+                AlertToast("warning", "Please select a Trade-In.");
+            }
+            else {
+                var isClean = false;
+                var isAverage = false;
+                var isRough = false;
+
+                var vehicleCondition = $("input[type='radio'][name='Iswhat']:checked").val();
+
+                if (vehicleCondition=="clean") {
+                    isClean = true;
+                }
+                else if (vehicleCondition == "average") {
+                    isAverage = true;
+                }
+
+                else if (vehicleCondition == "rough") {
+                    isRough = true;
+                }
+                $(this).attr("disabled","");
+                var status = "";
+                var cleanvalue = $("#CleanTradeIn").val();
+                var avgvalue = $("#AverageTradeIn").val();
+                var roughvalue = $("#RoughTradeIn").val();
+                var retailvalue = $("#RetailTradeIn").val();
+
+                var conversionvalue = $("#totalSum_").text();
+                var name = $("#CustomerName").val();
+                var totatsum = $("#deductiondetailGrid > table > tbody > tr > td:nth-child(4)").text();
+
+
+                var datagrid_row_Count = $("#conversiondetailGrid").dxDataGrid("instance");
+                var _datagrid_row_Count = datagrid_row_Count.totalCount();
+
+                if (cleanvalue != "" && avgvalue != "" && roughvalue != "" && name != "" && totatsum != "" && totatsum != "0" && _datagrid_row_Count>0)
+                {
+                    status = "New";
+                }
+                else
+                { status = "Draft" }
+
+                var searchType = $(".searchType:checked").parents("label").text().trim();
+
+
+                //var ConversionsIDs = 105;
+                //var ConversionsAmounts = 23575.00;
+                //var DeductionsIDs = 1;
+                //var DeductionsAmounts = 0.00;
+                //var DepericiationAmounts = 12015;
+
+                debugger;
+                var data = {
+                    token: "",
+                    CustomerName: $("#CustomerName").val(),
+                    Email: $("#EmailAddress").val(),
+                    Phone: $("#PhoneNumber").val(),
+                    AddressLine1: $("#AddressLine1").val(),
+                    AddressLine2: $("#AddressLine2").val(),
+                    SearchType: searchType,
+                    SearchTypeID: searchType,
+                    // Make: getSelectBoxSelectedText("make"),
+                    Make: $("#MakeName").val(),
+                    MakeID: $("#MakeId").val(),
+                    Model: $("#Model").val(),
+                    ModelID: $("#ModelId").val(),
+                    Year: $("#Year").val(),
+                    YearID: $("#Year").val(),
+                    Trim: $("#Trim").val(),
+                    TrimID: $("#TrimId").val(),
+                    Millage:"",
+                    VinNumber:"",
+                    RegionVal: "",
+                    RegionText: "",
+                    StateCode: $("#state").dxSelectBox('instance').option('value'),
+                    Status: status,
+                    //CleanTrade: $("#total_cleanvalue").html().replace('$', ''),
+                    //AverageTrade: $("#total_avgvalue").html().replace('$', ''),
+                    //RoughTrade: $("#total_roughvalue").html().replace('$', ''),
+                    //RetailTrade: $("#total_retailvalue").html().replace('$', ''),
+                    CleanTrade: cleanvalue,
+                    AverageTrade: avgvalue,
+                    RoughTrade: roughvalue,
+                    RetailTrade: retailvalue,
+                    EmployeeID: "",
+                    TotalConversionDeduction: totatsum,
+                    ConversionID: ConversionsIDs,
+                    ConversionAmount: ConversionsAmounts,
+                    DeductionID: DeductionsIDs,
+                    DeductionAmount: DeductionsAmounts,
+                    DepericiationAmount: DepericiationAmounts,
+                    IsClean: isClean,
+                    IsAverage: isAverage,
+                    IsRough: isRough,
+                    SuggestedPrice: $("#SuggestedPrice").val(),
+                    Comment: $('textarea#Comment').val(),
+                    //QouteAmount: "531",
+
+                };
+
+                if (searchType == "By VIN") {
+                    data.RegionVal = getSelectBoxSelectedValue("region");
+                    data.RegionText = getSelectBoxSelectedText("region");
+                    data.VinNumber = $('#vinvalue').val();
+                    data.Millage = $('#mileagevin').val();
+                }
+                else {
+                    //data.StateCode = getSelectBoxSelectedValue("state");
+                    //data.StateCode = "";
+                    data.Millage = $("#mileage").val();
+                }
+
+                var json = JSON.stringify(data);
+
+                $.ajax({
+                    url: '@Url.Action("SaveQoute", "Employee")',
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    data: json ,
+                    success: function (response) {
+                        //
+                        if (response.status)
+                        {
+                            AlertToast("success", response.message);
+                            @*window.location.href = '@Url.Action("NewQoute", "Employee")';*@
+
+                            window.setTimeout(function () {
+                                location.href = '@Url.Action("ListofQoute", "Employee")';
+                            }, 5000);
+                        }
+                        else
+                        {
+                            AlertToast("warning", response.message);
+                            $(".btnSaveQoute").removeAttr("disabled");
+                        }
+                    },
+                    error: function (xhr) {
+                        //
+                    }
+                });
+            }
+
+        });
+    })
+
+    $( ".AmountFormate" ).each(function( index ) {
+        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+    });
+
+    function addCommas(num) {
+        var str = num.toString().split('.');
+        if (str[0].length >= 4) {
+            //add comma every 3 digits befor decimal
+            str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        /* Optional formating for decimal places
+        if (str[1] && str[1].length >= 4) {
+            //add space every 3 digits after decimal
+            str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+        }*/
+        return str.join('.');
+    }
+
+</script>
+
+
+
+<div class="container-fluid pl-30 pr-30">
+    <div class="row">
+        <div class="col-sm-7">
+            <h1 class="main-hdng mb-30 ff-myriad">
+                New Quotes
+                <span class="v-line mr-20 ml-20"></span>
+                <img class="img-nadalogo" src="~/assets/images/img-powerednada.png">
+            </h1>
+        </div><!-- End col -->
+
+        <div class="col-sm-5 text-sm-right">
+            <button class="btn btn-cstm btn-white mt-10 btnDiscardQoute">Discard</button>
+            @*@{
+                    if (Model.qoute != null)
+                    {
+                        <button id="FormSubmit" class="btn btn-cstm btn-green mt-10 btnUpdateQoute">Update Quote</button>
+                    }
+                    else
+                    {
+                        <button id="FormSubmit" class="btn btn-cstm btn-green mt-10 btnSaveQoute">Save Quote</button>
+                    }
+                }*@
+            <button id="FormSubmit" class="btn btn-cstm btn-green mt-10 btnSaveQoute">Save Quote</button>
+
+        </div><!-- End col -->
+    </div><!-- End row -->
+    <input type="hidden" id="QouteID" value="" />
+    <input type="hidden" id="hdnPricing" value="" />
+    <input type="hidden" id="hdnComment" value="" />
+
+    <div class="newQuoteContainer">
+        <ul class="nav nav-tabs cstm-tabs customDesign" role="tablist">
+            <li id="tab1" class="nav-item">
+                <a id="customerdetail" class="nav-link active" data-toggle="tab" href="#customerdetails">
+                    <span class="number">1</span>
+                    Customer Details
+                </a>
+            </li>
+            <li id="tab2" class="nav-item">
+                <a id="vehicledetailss" class="nav-link" data-toggle="tab" href="#vehicledetails">
+                    <span class="number">2</span>
+                    Vehicle Details
+                </a>
+            </li>
+            <li id="tab3" class="nav-item disabled_anchor">
+                <a id="conversiondetail" class="nav-link" data-toggle="tab" href="#conversiondetails">
+                    <span class="number">3</span>
+                    Conversion Details
+                </a>
+            </li>
+            <li id="tab4" class="nav-item disabled_anchor">
+                <a id="pricingdetail" class="nav-link" data-toggle="tab" href="#pricingdetails">
+                    <span class="number">4</span>
+                    Pricing Details
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content pb-50 customDesign">
+            <div id="customerdetails" class="tab-pane active pt-40">
+                <h4 class="main_hdng_sm mb-30">
+                    Customer Details
+                    <span class="text-li8">(Optional)</span>
+                </h4>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="form-group row">
+                            <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Customer Name</label>
+                            <div class="col-sm-8">
+                                <input id="CustomerName" type="text" class="form-control frm_user">
+                                @*@Html.TextBoxFor(x => x.customer.CustomerName, new { @class = "form-control frm_user", @title = "CustomerName" })*@
+                            </div><!-- End col -->
+                        </div><!-- End form-group -->
+
+                        <div class="form-group row">
+                            <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Email Address</label>
+                            <div class="col-sm-8">
+
+                                <input id="EmailAddress" type="email" autocomplete="off" class="form-control frm_user">
+                                @*@Html.TextBoxFor(x => x.customer.EmailAddress, new { @class = "form-control frm_user", @title = "EmailAddress" })*@
+                            </div><!-- End col -->
+                        </div><!-- End form-group -->
+
+                        <div class="form-group row">
+                            <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Phone Number</label>
+                            <div class="col-sm-8">
+                                <input id="PhoneNumber" type="text" class="form-control frm_user">
+                                @*@Html.TextBoxFor(x => x.customer.PhoneNumber, new { @class = "form-control frm_user", @title = "PhoneNumber" })*@
+                            </div><!-- End col -->
+                        </div><!-- End form-group -->
+
+                        <div class="form-group row">
+                            <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Address Line 1</label>
+                            <div class="col-sm-8">
+                                <input id="AddressLine1" type="text" class="form-control frm_user">
+                                @*@Html.TextBoxFor(x => x.customer.AddressLine1, new { @class = "form-control frm_user", @title = "AddressLine1" })*@
+                            </div><!-- End col -->
+                        </div><!-- End form-group -->
+
+                        <div class="form-group row">
+                            <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Address Line 2</label>
+                            <div class="col-sm-8">
+
+                                <input id="AddressLine2" autocomplete="off" type="text" class="form-control frm_user">
+                                @*@Html.TextBoxFor(x => x.customer.AddressLine2, new { @class = "form-control frm_user", @title = "AddressLine2" })*@
+                            </div><!-- End col -->
+                        </div><!-- End form-group -->
+                        @*<div class="form-group row">
+                                <label class="cstm-label text-sm-right col-sm-4 pr-0 pt-5 pb-5 mb-0">Customer Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control frm_user">
+                                </div><!-- End col -->
+                            </div><!-- End form-group -->*@
+
+
+                    </div><!-- End col -->
+                    <div class="col-sm-6"></div>
+                </div><!-- End row -->
+                <hr class="mt-20 mb-10 mt-sm-30">
+
+                <div class="text-right">
+                    <button class="btn btn-cstm btn-white" onclick="clicktab('vehicledetailss')">Skip</button>
+                    <button class="btn btn-cstm btn-blue" onclick="clicktab('vehicledetailss')">Next</button>
+                </div>
+            </div>
+
+            <div id="vehicledetails" class="tab-pane pt-40 fade">
+                <h4 class="main_hdng_sm mb-30">
+                    Vehicle Details
+                </h4>
+                <input type="hidden" id="NadaToken" />
+                <div class="form-group row">
+                    <label class="cstm-label text-sm-right col-sm-2 pr-0 mb-0">Search Type</label>
+                    <div class="col-sm-4">
+                        @*<select class="form-control frm_user">
+                                <option>Vehicle Details</option>
+                            </select>*@
+                        @*<div id="vehicledetail" class="form-control frm_user"></div>*@
+                        <div class="radio">
+                            <label class="mr-20">
+                                <input name="markup" type="radio" checked="checked" class="searchType" id="byVeh">
+                                <span class="circle"></span>
+                                <span class="check"></span>
+                                Vehicle Details
+                            </label>
+                            <label>
+                                <input name="markup" type="radio" checked="checked" class="searchType" id="byVin">
+                                <span class="circle"></span>
+                                <span class="check"></span>
+                                By VIN
+                            </label>
+                        </div>
+                    </div><!-- End col -->
+                </div><!-- End form-group -->
+
+                <hr class="mb-25 mt-25">
+
+                <div id="vehicle_details">
+                    <div class="card mb-30">
+                        <div id="vehicledetails1" class="card-header">
+                            <a id="searchvehicledetails" class="card-link collapsed" data-toggle="collapse" href="#searchvehicledetailscontent">
+                                Search by Vehicle Details
+                            </a>
+                        </div>
+                        <div id="searchvehicledetailscontent" class="collapse byvehicle" data-parent="#vehicle_details">
+                            <div class="card-body">
+                                <div class="innerTabs">
+                                    <ul class="nav nav-tabs cstm-tabs" role="tablist">
+                                        <li id="tab1" class="nav-item">
+                                            <a id="customerdetail" class="nav-link active" data-toggle="tab" href="#makeYear">
+                                                <span class="step">Step 1 - </span>
+                                                Make & Year
+                                            </a>
+                                        </li>
+                                        <li id="tab2" class="nav-item">
+                                            <a id="vehicledetailss" class="nav-link" data-toggle="tab" href="#modelTrim">
+                                                <span class="step">Step 2 - </span>
+                                                Model & Trim
+                                            </a>
+                                        </li>
+                                        <li id="tab3" class="nav-item">
+                                            <a id="conversiondetail" class="nav-link" data-toggle="tab" href="#currentMileage">
+                                                <span class="step">Step 3 - </span>
+                                                Current Mileage
+                                            </a>
+                                        </li>
+                                        <li id="tab4" class="nav-item">
+                                            <a id="pricingdetail" class="nav-link" data-toggle="tab" href="#stateCode">
+                                                <span class="step">Step 4 - </span>
+                                                State Code
+                                            </a>
+                                        </li>
+                                    </ul>
+
+
+                                    <div class="tab-content">
+                                        <div id="makeYear" class="tab-pane pt-40 fade active show">
+                                            <div class="form-group row">
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Year</label>
+                                                <div class="col-sm-4">
+                                                    @*<select class="form-control frm_user">
+                                                            <option>2013</option>
+                                                        </select>*@
+                                                    <div id="year" class="form-control frm_user"></div>
+                                                </div><!-- End col -->
+
+
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Make</label>
+                                                <div class="col-sm-4 mb-sm-15">
+                                                    @*<select class="form-control frm_user">
+                                                            <option>Acura</option>
+                                                        </select>*@
+                                                    <div id="make" class="form-control frm_user"></div>
+                                                </div><!-- End col -->
+
+
+                                            </div><!-- End form-group -->
+                                            <div class="actionContianer">
+                                                <button class="btn btn-cstm btn-blue mt-10 right" onclick="moveToNextTab(this)">Next</button>
+                                            </div><!-- End text-right -->
+                                        </div>
+                                        <div id="modelTrim" class="tab-pane pt-40 fade">
+                                            <div class="form-group row">
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Model</label>
+                                                <div class="col-sm-4 mb-sm-15">
+                                                    @*<select class="form-control frm_user">
+                                                            <option>RDX</option>
+                                                        </select>*@
+                                                    <div id="model" class="form-control frm_user"></div>
+                                                </div><!-- End col -->
+
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Trim</label>
+                                                <div class="col-sm-4">
+                                                    @*<select class="form-control frm_user">
+                                                            <option>Utility 4D Technology 2WD</option>
+                                                        </select>*@
+                                                    <div id="trim" class="form-control frm_user"></div>
+                                                </div><!-- End col -->
+                                            </div><!-- End form-group -->
+                                            <div class="actionContianer">
+                                                <button class="btn btn-cstm btn-blue mt-10" onclick="moveToPrevTab(this)">Back</button>
+                                                <button class="btn btn-cstm btn-blue mt-10 right" onclick="moveToNextTab(this)">Next</button>
+                                            </div><!-- End text-right -->
+                                        </div>
+                                        <div id="currentMileage" class="tab-pane pt-40 fade">
+                                            <div class="form-group row">
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Current Mileage</label>
+                                                <div class="col-sm-4 mb-sm-15 form-inline">
+                                                    @*<select class="form-control frm_user col-10">
+                                                            <option>33500</option>
+                                                        </select>*@
+                                                    <input id="mileage" class="form-control frm_user col-10" onkeypress="allowNumbersOnly(event);" />
+                                                    <label class="col-2">miles</label>
+                                                </div><!-- End col -->
+                                            </div><!-- End form-group -->
+                                            <div class="actionContianer">
+                                                <button class="btn btn-cstm btn-blue mt-10" onclick="moveToPrevTab(this)">Back</button>
+                                                <button class="btn btn-cstm btn-blue mt-10 right" onclick="moveToNextTab(this)">Next</button>
+                                            </div><!-- End text-right -->
+                                        </div>
+                                        <div id="stateCode" class="tab-pane pt-40 fade">
+                                            <div class="form-group row">
+                                                <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">State Code</label>
+                                                <div class="col-sm-4">
+                                                    @*<select class="form-control frm_user">
+                                                            <option>10001</option>
+                                                        </select>*@
+                                                    <div id="state" class="form-control frm_user"></div>
+                                                </div><!-- End col -->
+                                            </div><!-- End form-group -->
+                                            <div class="actionContianer">
+                                                <button class="btn btn-cstm btn-blue mt-10" onclick="moveToPrevTab(this)">Back</button>
+                                                <button id="nadavalues" class="btn btn-cstm btn-blue mt-10 right" onclick="getCarValuesbyDetails()">Search</button>
+                                            </div><!-- End text-right -->
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="vehicledetails2" class="card-header">
+                            <a id="searchvin" class="card-link collapsed" data-toggle="collapse" href="#searchvincontent">
+                                Search by Vin
+                            </a>
+                        </div>
+                        <div id="searchvincontent" class="collapse byvin" data-parent="#vehicle_details">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">VIN</label>
+                                    <div class="col-sm-4 mb-sm-15">
+                                        @*<select class="form-control frm_user">
+                                                <option>Acura</option>
+                                            </select>*@
+                                        <input id="vinvalue" class="form-control frm_user" />
+                                        @*<label class="col-2">miles</label>*@
+                                    </div><!-- End col -->
+
+                                    <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Regions</label>
+                                    <div class="col-sm-4">
+                                        @*<select class="form-control frm_user">
+                                                <option>2013</option>
+                                            </select>*@
+                                        <div id="region" class="form-control frm_user"></div>
+                                    </div><!-- End col -->
+                                </div><!-- End form-group -->
+
+                                <div class="form-group row">
+                                    <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Mileage</label>
+                                    <div class="col-sm-4 mb-sm-15 form-inline">
+                                        @*<select class="form-control frm_user">
+                                                <option>RDX</option>
+                                            </select>*@
+                                        <input type="number" id="mileagevin" class="form-control frm_user col-10" />
+                                        <label class="col-2">miles</label>
+                                    </div><!-- End col -->
+                                    @*<label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Trim</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control frm_user">
+                                                <option>Utility 4D Technology 2WD</option>
+                                            </select>
+                                        </div>*@<!-- End col -->
+                                </div><!-- End form-group -->
+                                @*<div class="form-group row">
+                                        <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Current Mileage</label>
+                                        <div class="col-sm-4 mb-sm-15 form-inline">
+
+                                            <select class="form-control frm_user col-10">
+                                                <option>33500</option>
+                                            </select>
+                                            <label class="col-2">km</label>
+                                        </div><!-- End col -->
+
+                                        <label class="cstm-label text-sm-right col-sm-2 pr-0 pt-5 pb-5 mb-0">Zip Code</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control frm_user">
+                                                <option>10001</option>
+                                            </select>
+                                        </div><!-- End col -->
+                                    </div><!-- End form-group -->*@
+
+                                <div class="text-right">
+                                    <button class="btn btn-cstm btn-blue mt-10" onclick="getCarValuesbyVin()">Search</button>
+                                </div><!-- End text-right -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*<hr class="mt-25 mb-30 mr_-15 ml_-15">*@
+
+
+
+
+                <hr class="mt-25 mb-30">
+
+
+                @*Partial View for TradeIn Values*@
+                <div id="tradein">
+                </div>
+
+                @*<div class="row">
+                        <div class="col-lg-8 m-auto">
+                            <h4 class="main_hdng_sm">Vehicle Result</h4>
+
+                            <div class="text-center">
+                                <img class="img-responsive img-car mt-30 mb-20" src="assets/images/img-car.jpg">
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table_trade">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Trade-in</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Clean Trade</td>
+                                            <td align="right">$18,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Average Trade</td>
+                                            <td align="right">$16,800</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rough Trade</td>
+                                            <td align="right">$15,350</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- End table-responsive -->
+                        </div><!-- End col -->
+                    </div><!-- End row -->*@
+
+                <hr class="mt-30 mb-10 mr_-15 ml_-15">
+
+                <div class="text-right mb-15">
+                    <button class="btn btn-cstm btn-white btnResetNada">Reset</button>
+                    <button class="btn btn-cstm btn-blue" onclick="checkNADAValues()">Next</button>
+                </div><!-- End text-right -->
+            </div>
+            <div id="AddImages"></div>
+            <div id="AddPricing"></div>
+            <div id="conversionmodal"></div> @*Add Conversion Modal*@
+
+            <div id="conversiondetails" class="tab-pane pt-40 fade">
+                <h4 class="main_hdng_sm">
+                    Conversion Detail
+                    <a href="javascript:;" id="addconversion"><i class="icn icon-add-circle"></i> Add Conversion</a>
+                </h4>
+
+                <div id="conversiondetailGrid" class="dev_cstm_grid mt-20"></div>
+
+                <h4 class="main_hdng_sm mt-15">
+                    Deduction Detail
+                </h4>
+                <div id="deductiondetailGrid">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Conversion Name</th>
+                                <th>Depreciated Amount</th>
+                                <th>Deductions</th>
+                                <th>Price After Deduction</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                @*<table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Conversion Name</th>
+                                <th>Depreciated Amount</th>
+                                <th>Deductions</th>
+                                <th>Price After Deduction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Dodge Entervan W/ Carpet</td>
+                                <td>12015</td>
+                                <td>
+                                    <label class="form-switch">
+                                        Deduction
+                                        <input type="checkbox">
+                                        <i></i>
+                                    </label>
+                                </td>
+                                <td>12015</td>
+                            </tr>
+                            <tr class="comparisonRow">
+                                <td colspan="5">
+                                    <table class="comparisonSelectionTable checkbox">
+                                        <tr>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="2" amount="400" name="deduction1" deductionname="Damaged Lower Flare (one)" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$400</b> (Damaged Lower Flare (one))
+                                                </label>
+                                            </td>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="2" amount="400" name="deduction1" deductionname="Damaged Lower Flare (one)" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$400</b> (Damaged Lower Flare (one))
+                                                </label>
+                                            </td>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="3" amount="800" name="deduction1" deductionname="Damagaed Lower Flares  (two)" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$800</b> (Damagaed Lower Flares (two))
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="4" amount="1200" name="deduction1" deductionname="Damaged Lower Flares (three)" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$1200</b> (Damaged Lower Flares (three))
+                                                </label>
+                                            </td>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="13" amount="350" name="deduction1" deductionname="REMOVE AFTERMARKET TRAILER HITCH" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$350</b> (REMOVE AFTERMARKET TRAILER HITCH)
+                                                </label>
+                                            </td>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="14" amount="750" name="deduction1" deductionname="Remove simple electronic devices " type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$750</b> (Remove simple electronic devices )
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="15" amount="2000" name="deduction1" deductionname="Missing Quick release seat" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2000</b> (Missing Quick release seat)
+                                                </label>
+                                            </td>
+                                            <td class="checkbox-custom">
+                                                <label>
+                                                    <input id="16" amount="5000" name="deduction1" deductionname="Remove Hi-Tech Gas Brake and Steering" type="checkbox" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Remove Hi-Tech Gas Brake and Steering)
+                                                </label>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+
+                                    <div class="radio">
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+
+                                        <br>
+                                        <label>
+                                            <input id="17" amount="2500" name="deduction1" deductionname="Remove Electrnic Gas / Brake OR Steering " type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2500</b> (Remove Electrnic Gas / Brake OR Steering )
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input id="18" amount="5000" name="deduction1" deductionname="less than 5 year old Non Crash Tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (less than 5 year old Non Crash Tested Conv.)
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input id="19" amount="7500" name="deduction1" deductionname="older than 5 year Non Crash tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$7500</b> (older than 5 year Non Crash tested Conv.)
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input id="22" amount="5000" name="deduction1" deductionname="Limited resale" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Limited resale)
+                                        </label>
+                                        <br>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>*@
+
+                @*<div id="deductiondetailGrid" class="dev_cstm_grid mt-20 dx-widget dx-visibility-change-handler" role="presentation">
+                        <div class="dx-datagrid dx-gridbase-container dx-datagrid-borders" role="grid" aria-label="Data grid" aria-rowcount="2" aria-colcount="4">
+                            <div class="dx-hidden"></div>
+                            <div class="dx-hidden"></div>
+                            <div class="dx-hidden"></div>
+                            <div class="dx-hidden"></div>
+                            <div class="dx-datagrid-headers dx-datagrid-nowrap" role="presentation" style="padding-right: 0px;">
+
+                                <div class="dx-datagrid-content dx-datagrid-scroll-container" role="presentation">
+                                    <table class="dx-datagrid-table dx-datagrid-table-fixed" role="presentation">
+                                        <colgroup>
+                                            <col>
+                                            <col>
+                                            <col style="width: 50%;">
+                                            <col>
+                                        </colgroup>
+                                        <tbody role="presentation">
+                                            <tr class="dx-row dx-column-lines dx-header-row" role="row">
+                                                <td aria-selected="false" role="columnheader" aria-colindex="1" id="dx-col-32" aria-label="Column Conversion Name" class="dx-datagrid-action dx-cell-focus-disabled" aria-sort="none" style="text-align: left;">
+                                                    <div class="dx-column-indicators" role="presentation" style="float: right;"><span class="dx-sort dx-sort-none"></span></div>
+                                                    <div class="dx-datagrid-text-content dx-text-content-alignment-left" role="presentation">Conversion Name</div>
+                                                </td>
+                                                <td aria-selected="false" role="columnheader" aria-colindex="2" id="dx-col-33" aria-label="Column Depreciated Amount" class="dx-datagrid-action dx-cell-focus-disabled" aria-sort="none" style="text-align: right;">
+                                                    <div class="dx-column-indicators" role="presentation" style="float: left;"><span class="dx-sort dx-sort-none"></span></div>
+                                                    <div class="dx-datagrid-text-content dx-text-content-alignment-right" role="presentation">Depreciated Amount</div>
+                                                </td>
+                                                <td aria-selected="false" role="columnheader" aria-colindex="3" id="dx-col-34" aria-label="Column Deductions" aria-sort="none" class="dx-cell-focus-disabled" style="text-align: left;">
+                                                    <div class="dx-datagrid-text-content" role="presentation">Deductions</div>
+                                                </td>
+                                                <td aria-selected="false" role="columnheader" aria-colindex="4" id="dx-col-35" aria-label="Column Price After Deduction" class="dx-datagrid-action dx-cell-focus-disabled" aria-sort="none" style="text-align: right;">
+                                                    <div class="dx-column-indicators" role="presentation" style="float: left;"><span class="dx-sort dx-sort-none"></span></div>
+                                                    <div class="dx-datagrid-text-content dx-text-content-alignment-right" role="presentation">Price After Deduction</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="dx-datagrid-rowsview dx-datagrid-nowrap" role="presentation">
+                                <div class="dx-datagrid-content">
+                                    <table class="dx-datagrid-table dx-datagrid-table-fixed" role="presentation">
+                                        <colgroup>
+                                            <col>
+                                            <col>
+                                            <col style="width: 50%;">
+                                            <col>
+                                        </colgroup>
+                                        <tbody role="presentation">
+                                            <tr class="dx-row dx-data-row dx-column-lines" role="row" aria-selected="false" aria-rowindex="1">
+                                                <td aria-describedby="dx-col-32" aria-selected="false" role="gridcell" aria-colindex="1" tabindex="0" style="text-align: left;">Dodge Entervan W/ Carpet</td>
+                                                <td aria-describedby="dx-col-33" aria-selected="false" role="gridcell" aria-colindex="2" style="text-align: right;">12015</td>
+                                                <td aria-describedby="dx-col-34" aria-selected="false" role="gridcell" aria-colindex="3" style="text-align: left;" tabindex="0" class="dx-cell-focus-disabled">
+
+                                                </td>
+                                                <td aria-describedby="dx-col-35" aria-selected="false" role="gridcell" aria-colindex="4" style="text-align: right;">12015</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input id="1" amount="0" name="deduction1" deductionname="NO DEDUCTION " type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$0</b> (NO DEDUCTION )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="2" amount="400" name="deduction1" deductionname="Damaged Lower Flare (one)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$400</b> (Damaged Lower Flare (one))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="3" amount="800" name="deduction1" deductionname="Damagaed Lower Flares  (two)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$800</b> (Damagaed Lower Flares (two))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="4" amount="1200" name="deduction1" deductionname="Damaged Lower Flares (three)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$1200</b> (Damaged Lower Flares (three))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="13" amount="350" name="deduction1" deductionname="REMOVE AFTERMARKET TRAILER HITCH" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$350</b> (REMOVE AFTERMARKET TRAILER HITCH)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="14" amount="750" name="deduction1" deductionname="Remove simple electronic devices " type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$750</b> (Remove simple electronic devices )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="15" amount="2000" name="deduction1" deductionname="Missing Quick release seat" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2000</b> (Missing Quick release seat)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="16" amount="5000" name="deduction1" deductionname="Remove Hi-Tech Gas Brake and Steering" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Remove Hi-Tech Gas Brake and Steering)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="17" amount="2500" name="deduction1" deductionname="Remove Electrnic Gas / Brake OR Steering " type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2500</b> (Remove Electrnic Gas / Brake OR Steering )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="18" amount="5000" name="deduction1" deductionname="less than 5 year old Non Crash Tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (less than 5 year old Non Crash Tested Conv.)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="19" amount="7500" name="deduction1" deductionname="older than 5 year Non Crash tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$7500</b> (older than 5 year Non Crash tested Conv.)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="22" amount="5000" name="deduction1" deductionname="Limited resale" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Limited resale)
+                                                        </label>
+                                                        <br>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="dx-row dx-data-row dx-column-lines" role="row" aria-selected="false" aria-rowindex="2">
+                                                <td aria-describedby="dx-col-32" aria-selected="false" role="gridcell" aria-colindex="1" style="text-align: left;">Dodge Entervan W/ Rubber</td>
+                                                <td aria-describedby="dx-col-33" aria-selected="false" role="gridcell" aria-colindex="2" style="text-align: right;">12550</td>
+                                                <td aria-describedby="dx-col-34" aria-selected="false" role="gridcell" aria-colindex="3" style="text-align: left;">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input id="1" amount="0" name="deduction2" deductionname="NO DEDUCTION " type="radio" onclick="onradiochange(this)" checked=""><span class="circle"></span><span class="check"></span><b>$0</b> (NO DEDUCTION )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="2" amount="400" name="deduction2" deductionname="Damaged Lower Flare (one)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$400</b> (Damaged Lower Flare (one))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="3" amount="800" name="deduction2" deductionname="Damagaed Lower Flares  (two)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$800</b> (Damagaed Lower Flares (two))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="4" amount="1200" name="deduction2" deductionname="Damaged Lower Flares (three)" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$1200</b> (Damaged Lower Flares (three))
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="13" amount="350" name="deduction2" deductionname="REMOVE AFTERMARKET TRAILER HITCH" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$350</b> (REMOVE AFTERMARKET TRAILER HITCH)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="14" amount="750" name="deduction2" deductionname="Remove simple electronic devices " type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$750</b> (Remove simple electronic devices )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="15" amount="2000" name="deduction2" deductionname="Missing Quick release seat" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2000</b> (Missing Quick release seat)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="16" amount="5000" name="deduction2" deductionname="Remove Hi-Tech Gas Brake and Steering" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Remove Hi-Tech Gas Brake and Steering)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="17" amount="2500" name="deduction2" deductionname="Remove Electrnic Gas / Brake OR Steering " type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$2500</b> (Remove Electrnic Gas / Brake OR Steering )
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="18" amount="5000" name="deduction2" deductionname="less than 5 year old Non Crash Tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (less than 5 year old Non Crash Tested Conv.)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="19" amount="7500" name="deduction2" deductionname="older than 5 year Non Crash tested Conv." type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$7500</b> (older than 5 year Non Crash tested Conv.)
+                                                        </label>
+                                                        <br>
+                                                        <label>
+                                                            <input id="22" amount="5000" name="deduction2" deductionname="Limited resale" type="radio" onclick="onradiochange(this)"><span class="circle"></span><span class="check"></span><b>$5000</b> (Limited resale)
+                                                        </label>
+                                                        <br>
+                                                    </div>
+                                                </td>
+                                                <td aria-describedby="dx-col-35" aria-selected="false" role="gridcell" aria-colindex="4" style="text-align: right;">12550</td>
+                                            </tr>
+                                            <tr class="dx-row dx-column-lines dx-freespace-row" role="presentation" style="height: 0px; display: none;">
+                                                <td style="text-align: left;"></td>
+                                                <td style="text-align: right;"></td>
+                                                <td style="text-align: left;"></td>
+                                                <td style="text-align: right;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div><span class="dx-datagrid-nodata dx-hidden">No data</span>
+                            </div>
+                            <div class="dx-overlay dx-widget dx-visibility-change-handler dx-loadpanel dx-state-invisible">
+                                <div class="dx-overlay-content dx-resizable dx-loadpanel-content dx-state-invisible" style="width: 200px; height: 90px; z-index: 1502; margin: 0px; left: 0px; top: 0px; transform: translate(663px, 186px); transition: all 0s ease 0s;" aria-hidden="true">
+                                    <div class="dx-loadpanel-content-wrapper">
+                                        <div class="dx-loadpanel-indicator dx-loadindicator dx-widget">
+                                            <div class="dx-loadindicator-wrapper">
+                                                <div class="dx-loadindicator-content">
+                                                    <div class="dx-loadindicator-icon">
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment7"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment6"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment5"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment4"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment3"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment2"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment1"></div>
+                                                        <div class="dx-loadindicator-segment dx-loadindicator-segment0"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dx-loadpanel-message">Loading...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dx-hidden" style="padding-right: 0px;"></div>
+                            <div></div>
+                            <div class="dx-hidden"></div>
+                            <div class="dx-hidden"></div>
+                            <div class="dx-datagrid-drag-header dx-datagrid-text-content dx-widget" style="display: none;"></div>
+                            <div class="dx-context-menu dx-has-context-menu dx-widget dx-visibility-change-handler dx-collection dx-datagrid" role="presentation"></div>
+                            <div class="dx-header-filter-menu"></div>
+                            <div></div>
+                        </div>
+                    </div>*@
+
+                <input type="hidden" id="ConversionTexts" value="">
+                <input type="hidden" id="ConversionIDs" value="">
+                <input type="hidden" id="DeductionsTexts" value="">
+                <input type="hidden" id="DeductionsIDs" value="">
+                <input type="hidden" id="Deductionsdesc" value="">
+                @*<div style="/*float:right;margin-right:50px*/text-align:right;">Total Sum: <span id="totalSum_">24565</span></div>*@
+                <hr class="mt-30 mb-10 mr_-15 ml_-15">
+
+                <div class="text-right mb-15">
+                    <!-- <button class="btn btn-cstm btn-white">Reset</button> -->
+                    <button class="btn btn-cstm btn-blue" onclick="clicktab('pricingdetail')">Next</button>
+                </div><!-- End text-right -->
+            </div>
+
+
+            <!-- Qoute Discard Confirmation Modal   -->
+            <div id="DiscardConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        </div>
+
+
+                        <div class="modal-body">
+                            <div id='myModalContent_PromoCode'></div>
+                            <label>Are you sure you want to discard ?</label>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <div class="col-sm-12 text-right">
+                                <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                                <button class="btn btn-cstm btn-blue btnDiscard" deleteid="">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qoute Discard Confirmation Modal   -->
+            <div id="DiscardConfirmation" class="modal modal-adminpro-general default-popup-PrimaryModal fade bounceIn animated in" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        </div>
+
+
+                        <div class="modal-body">
+                            <div id='myModalContent_PromoCode'></div>
+                            <label>Are you sure you want to discard ?</label>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <div class="col-sm-12 text-right">
+                                <button class="btn btn-cstm btn-white" data-dismiss="modal">No</button>
+                                <button class="btn btn-cstm btn-blue btnDiscard" deleteid="">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pricingdetails" class="tab-pane pt-40 fade">
+
+                <div id="PricingDetailsandImd" style="display:none">
+                    <div class="row main_hdng_sm btm-line mb-2">
+                        <div class="col-md-6 mb-2"><label class="cstm-heading-as">Pricing Details</label></div>
+                        <div class="col-md-6 text-right mb-2">
+                            <button class="btn btn-cstm btn-white" onclick="AddPricing()" id="sugPric">Suggested Price</button>
+                            <button class="btn btn-cstm btn-white" onclick="AddImages()" id="btnupload">Upload Pictures</button>
+                        </div>
+                    </div>
+
+                    @*<h4 class="main_hdng_sm">
+                        <label class="cstm-heading-as">Pricing Details</label>
+                        <button class="btn btn-cstm btn-white mt-10" onclick="AddPricing()" id="sugPric">Suggested Price</button>
+                        <button class="btn btn-cstm btn-white mt-10" onclick="AddImages()" id="btnupload">Upload Pictures</button>
+                    </h4>*@
+                </div>
+
+                <input type="hidden" id="makrUp%" value="">
+                <input type="hidden" id="markUp$" value="">
+
+                <h4 class="main_hdng_sm">
+
+                    <label class="cstm-heading-as">
+                        <input type="radio" value="clean" name="Iswhat">
+
+                        Clean Trade-in Price
+                    </label>
+                    <span class="v-line mr-20 ml-20"></span>
+
+                    <i onclick="PrintCall('CleanSec')" style="cursor:pointer" class="icn icon-printer"></i>
+                </h4>
+
+                <div class="table-responsive mb-100">
+
+                    <table class="table table_price cleanconversions">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-right" colspan="2">Clean Trade-in</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="forclear">
+                            <tr>
+                                <td>
+                                    <span class="txt_li8">Vehicle Details</span><br>
+
+                                    <span class="cardescription"></span><br />
+                                    <span class="txt_li8"><span class="cartrim"></span></span>
+                                </td>
+                                <td align="right" colspan="2">
+                                    <table class="table table-borderless m-0">
+                                        <tr>
+                                            <td class="border-0 text-right p-0">
+                                                <ul class="ul_carsimg">
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs6.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs5.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs4.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs1.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs2.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs3.jpg"></li>
+                                                </ul>
+                                            </td>
+
+                                            <td width="140px" class="border-0 text-right p-0"><span class="AmountFormate" id="cleanval"></span></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+
+                                <th>
+                                    <span class="mb-10">Conversion Amount</span><br>
+                                    Final Trade-in Amounts
+                                </th>
+
+                                <th class="text-right">
+                                    <span class="mb-10 conversionamount">$990</span><br>
+                                    <span id="total_cleanvalue"></span>
+                                </th>
+
+                            </tr>
+
+                        </tfoot>
+                    </table>
+                </div><!-- table-responsive -->
+
+                <h4 class="main_hdng_sm">
+
+                    <label class="cstm-heading-as">
+                        <input type="radio" value="average" name="Iswhat" >
+
+                        Average Trade-in Price
+                    </label>
+                    <span class="v-line mr-20 ml-20"></span>
+                    <i onclick="PrintCall('AvgSec')" style="cursor:pointer" class="icn icon-printer"></i>
+
+
+
+                </h4>
+
+                <div class="table-responsive mb-100">
+                    <table class="table table_price cleanconversions">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-right" colspan="2">Average Trade-in</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="forclear">
+                            <tr>
+                                <td>
+                                    <span class="txt_li8">Vehicle Details</span><br>
+                                    @*2016-2018 Ford Explorer<br>
+                                        <span class="txt_li8">XI-C - Ford Explorer MXV</span>*@
+                                    @*@(Model.tradein.YearValue + " " + Model.tradein.MakeValue + " " + Model.tradein.ModelValue)<br>*@
+                                    <span class="cardescription"></span><br />
+                                    <span class="txt_li8"><span class="cartrim"></span></span>
+                                </td>
+                                <td align="right" colspan="2">
+                                    <table class="table table-borderless m-0">
+                                        <tr>
+                                            <td class="border-0 text-right p-0">
+                                                <ul class="ul_carsimg">
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs6.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs5.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs4.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs1.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs2.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs3.jpg"></li>
+                                                </ul>
+                                            </td>
+                                            @*<td width="140px" class="border-0 text-right p-0">$18,000</td>*@
+                                            <td width="140px" class="border-0 text-right p-0"><span id="avgval"></span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <span class="mb-10">Conversion Amount</span><br>
+                                    Final Trade-in Amounts
+                                </th>
+
+                                <th class="text-right">
+                                    <span class="mb-10 conversionamount">$990</span><br>
+                                    <span id="total_avgvalue"></span>
+                                </th>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div><!-- table-responsive -->
+
+                <h4 class="main_hdng_sm">
+
+                    <label class="cstm-heading-as">
+                        <input type="radio" value="rough" name="Iswhat">
+
+                        Rough Trade-in Price
+                    </label>
+                    <span class="v-line mr-20 ml-20"></span>
+                    <i onclick="PrintCall('RoughSec')" style="cursor:pointer" class="icn icon-printer"></i>
+
+                </h4>
+
+                <div class="table-responsive mb-50">
+                    <table class="table table_price cleanconversions">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-right" colspan="2">Rough Trade-in</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="forclear">
+                            <tr>
+                                <td>
+                                    <span class="txt_li8">Vehicle Details</span><br>
+                                    @*2016-2018 Ford Explorer<br>
+                                        <span class="txt_li8">XI-C - Ford Explorer MXV</span>*@
+                                    @*@(Model.tradein.YearValue + " " + Model.tradein.MakeValue + " " + Model.tradein.ModelValue)<br>
+                                        <span class="txt_li8">@Model.tradein.TrimValue</span>*@
+                                    <span class="cardescription"></span><br />
+                                    <span class="txt_li8"><span class="cartrim"></span></span>
+                                </td>
+                                <td align="right" colspan="2">
+                                    <table class="table table-borderless m-0">
+                                        <tr>
+                                            <td class="border-0 text-right p-0">
+                                                <ul class="ul_carsimg">
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs6.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs5.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs4.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs1.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs2.jpg"></li>
+                                                    <li><img class="img_crs" src="~/assets/images/img_crs3.jpg"></li>
+                                                </ul>
+                                            </td>
+                                            @*<td width="140px" class="border-0 text-right p-0">$18,000</td>*@
+                                            <td width="140px" class="border-0 text-right p-0"><span id="roughval"></span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <span class="mb-10">Conversion Amount</span><br>
+                                    Final Trade-in Amounts
+
+                                </th>
+                                <th class="text-right">
+                                    <span class="mb-10 conversionamount">$990</span><br>
+                                    <span id="total_roughvalue"></span>
+                                </th>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div><!-- table-responsive -->
+
+                <div class="text-right">
+                    <a id="retailprice" href="javascript:;" data-toggle="modal" data-target="#retailmodal" class="btn btn-cstm btn-blue">See Retail Price</a>
+                </div><!-- End text-right -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Retail price--->
+<div class="modal fade" id="retailmodal">
+    <div class="modal-dialog" style="max-width:70%">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Retail Price
+                    <span class="v-line mr-20 ml-20"></span>
+                    <i onclick="PrintCall('RetailSec')" style="cursor:pointer" class="icn icon-printer"></i>
+
+                </h4>
+
+
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="row">
+                        <div class="col-sm-4 m-auto">
+                            <div class="form-group row">
+                                <label class="cstm-label col-sm-3"><b>Markup</b></label>
+                                <div class="col-sm-9">
+                                    <div class="radio">
+                                        <label>
+                                            <input id="percent" val="" name="markup" type="radio" onclick="calc_totalretail('percent')">
+                                            <span class="circle"></span>
+                                            <span class="check"></span>
+                                            Percent (%)
+                                        </label>
+
+                                        <label>
+                                            <input id="fixed" val="" name="markup" type="radio" onclick="calc_totalretail('fixed')">
+                                            <span class="circle"></span>
+                                            <span class="check"></span>
+                                            Fixed ($)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                <div class="table-responsive mb-50">
+                    <table class="table table_price retailconversions">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-right" colspan="2">Retail Trade-in</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="forclear">
+                            <tr>
+                                <td>
+                                    <span class="txt_li8">Vehicle Details</span><br>
+                                    <span class="cardescription"></span><br />
+                                    <span class="txt_li8"><span class="cartrim"></span></span>
+                                </td>
+                                <td align="right" colspan="2">
+                                    <table class="table table-borderless m-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="border-0 text-right p-0">
+                                                    <ul class="ul_carsimg">
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs6.jpg"></li>
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs5.jpg"></li>
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs4.jpg"></li>
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs1.jpg"></li>
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs2.jpg"></li>
+                                                        <li><img class="img_crs" src="~/assets/images/img_crs3.jpg"></li>
+                                                    </ul>
+                                                </td>
+                                                <td width="140px" class="border-0 text-right p-0"><span id="retailval"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <span class="mb-10">Conversion Amount</span><br>
+                                    Final Retail Amount
+                                </th>
+                                <th class="text-right">
+                                    <span class="mb-10 markupconversionamount"></span><br>
+                                    <span id="total_retailvalue"></span>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <input type="hidden" name="name" id="" value="" />
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!---close Retail price--->

@@ -1,0 +1,348 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.LoginRequest
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Braun Ability</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap datepicker -->
+    <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- font-awesome -->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- poppins font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- iconmoon -->
+    <link href="~/assets/css/iconmoon.css" rel="stylesheet">
+
+    <!-- Toaster CSS -->
+    <link href="~/Content/jquery.toast.css" rel="stylesheet" />
+
+    <!-- mtstyle -->
+    <link href="~/assets/css/mtstyles.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    
+
+    <style type="text/css">
+       .errorEmailNotMatch, .error {
+        color:red;
+        }
+        .field-validation-error {
+            color: #fff;
+            /*background-color:white;*/
+            font-weight:bold;
+         
+        }
+          .loader {
+             
+            
+    border: 7px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #3498db;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+    </style>
+
+    
+</head>
+
+<body class="h-100">
+ 
+    <div class="bg-login">
+        @Html.HiddenFor(m => m.Status)
+        @Html.HiddenFor(m => m.Message)
+        <div class="container">
+            
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+            {
+                <div class="bx_registration">
+                    <img class="logo-login" src="~/assets/images/login-logo.png">
+
+                    <div class="form-group">
+                        @*<input type="email" class="form-control" placeholder="Email Address">*@
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email Address",   autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div><!-- End form-group -->
+                    @*<div class="form-group input-group">
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                            @*<input type="password" class="form-control" placeholder="Password">
+                        </div><!-- End form-group --> *@
+
+                    <div class="form-group ">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+
+                    <input type="submit" class="btn btn-cstm btn-login w-100" value="log in" />
+
+                    <span id="forgotPasswordModal" class="forgotpswrd">Forgot password?</span>
+
+                    <a href="/Login/SignUpEmployee" class="btn btn-cstm btn-login btn-border w-100 mt-30">Sign up</a>
+                </div>
+            }
+        </div>
+
+        <div class="login-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <P class="m-0">© Code Creators 2018, All Rights Reserved.</P>
+                    </div>
+
+                    <div class="col text-center">
+                        <img class="img-go" src="~/assets/images/logo-go.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <div class="modal fade" id="forgotpswrd">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Forgot Password</h4>
+                      
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="forgotForm">
+                           
+                            
+                            <div class="form-group row" style="margin-left: -3px!important;">
+
+                                <label class="col-sm-2 col-form-label text-sm-right pr-0">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" id="Email_forgotpassword" autocomplete="off" style="height:0px"  placeholder="Enter your Email Address"  name="Email_forgotpassword" class="form-control">
+                                    <span class="errorEmailNotMatch"></span>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group row" style="margin-left: 80px!important;">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-cstm btn-blue btn_save" type="submit">Send Request</button>
+                                    <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                                    </div></div>
+                            
+</form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="col-sm-12 text-right">
+
+
+                            @*<input type="submit" value="Validate!" class="btn btn-cstm btn-blue" />*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+     </div><!-- End bg-login -->
+    <!-- jQuery -->
+
+    @*<script src="~/scripts/jquery.validate.unobtrusive.js"></script>*@
+
+</body>
+</html>
+<script src="~/assets/js/SweetAlert.js"></script>
+<script src="~/assets/js/SweetAlertPolyFill.js"></script>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<link href="~/Content/validator.css" rel="stylesheet" />
+<script src="~/scripts/jquery.validate.min.js"></script>
+<script src="~/scripts/jquery.validator.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/scripts/jquery.toast.js"></script>
+<script src="~/scripts/toastNotifications.js"></script>
+
+<script>
+
+    $('#forgotPasswordModal').on('click', function () {
+        $('#Email_forgotpassword').val('');
+        $('.errorEmailNotMatch').text(' ');
+
+        $('.error').text(' ');
+        $('#forgotpswrd').modal('toggle');
+        $('#forgotpswrd').modal('show');
+        
+
+    });
+
+    $(function() {
+       
+        $('#forgotForm').validate({
+            rules: {
+                Email_forgotpassword: {
+                    required: true
+                }
+            },
+            messages: {
+                Email_forgotpassword: {
+                    required: "Please provide an Email",
+                }
+            },
+            submitHandler: function (form) {
+                $('.btn_save').attr("disabled", true);
+                $('.errorEmailNotMatch').text(' ');
+               
+                
+                $.ajax({
+                    type:'POST',
+                    url: "/Login/IsEmailExist",
+                    data: { emailEnter: $('#Email_forgotpassword').val() },
+                    async: false,
+                    success: function (response) {
+                        debugger
+                       
+                        if (response.status) {
+                            $('#Email_forgotpassword').val('');
+                            AlertToast("success", "Check your email username and password has successfuly sent.");
+                            $('.btn_save').attr("disabled", false);
+                            $('#forgotpswrd').modal('toggle');
+                            $('#forgotpswrd').modal('hide');
+                            $('.error').text(' ');
+                          
+                            
+                        }
+                        else {
+                            $('.btn_save').attr("disabled", false);
+                           
+                            $('.errorEmailNotMatch').text('Above Email is not Exist.');
+                           
+                        }
+                       
+                    },
+                    error:function(){
+                        alert('error');
+                    }
+                    
+                })
+            }
+        });
+        
+    });
+    
+
+    $(document).ready(function () {
+        $('.btn_save').attr("disabled", false);
+      
+        //$('#forgotForm').validate({
+        //    rules: {
+        //        Email_forgotpassword: {
+        //            required: true
+        //        }
+        //    },
+        //    messages: {
+        //        Email_forgotpassword: {
+        //            required: "Please provide a password",
+        //        }
+        //    },
+        //    submitHandler: function (form) {
+        //        debugger
+        //        // some other code
+        //        // maybe disabling submit button
+        //        // then:
+        //        alert('ok is valid');
+        //    }
+        //});
+
+        var status = $("#Status").val();
+
+        var validation_error = $(".field-validation-error").text();
+        var splitmessage = validation_error.split('.');
+
+        var message = $("#Message").val();
+
+        if (status != "" && message != "")
+        {
+            if (status === "True")
+            {
+                AlertToast("success", message);
+            }
+            
+            else
+            {
+                if (validation_error!="") {
+                    AlertToast("warning", splitmessage[0] + "\n" + splitmessage[1]);
+                }
+                else {
+                    AlertToast("warning", message);
+                }
+                       
+            }
+                
+        }
+        else if (status === "False" || status === false)
+        {
+            AlertToast("warning", "Username or Password is incorrect.");
+        }
+    });
+
+
+    $(".input-group-prepend").click(function () {
+        debugger
+
+        //$('#Password').attr('type', 'text');
+
+        var flag = $(this).find("i").hasClass("fa fa-eye")
+        if (flag) {
+            $('#Password').attr('type', 'text');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye-slash');
+        }
+        else {
+            $('#Password').attr('type', 'password');
+            $(this).find("i").removeAttr("class");
+            $(this).find("i").attr('class', 'fa fa-eye');
+        }
+        //$(this).find("i").removeAttr("class");
+        //$(this).find("i").attr('class', 'fa fa-eye-slash');
+
+    });
+
+</script>

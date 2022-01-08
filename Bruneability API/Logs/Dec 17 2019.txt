@@ -1,0 +1,30 @@
+
+Log Entry : 
+D:\MVCProjects\Braunability\Bruneability API\Logs\Dec 17 2019.txt
+12/17/2019 01:48:53
+Error in: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=4&Mileage=200. Error Message:
+  [Error]: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=4&Mileage=200
+  [Errornumber]: Bruneability API
+  [ErrorMessage]: Object reference not set to an instance of an object.
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________
+
+Log Entry : 
+D:\MVCProjects\Braunability\Bruneability API\Logs\Dec 17 2019.txt
+12/17/2019 01:49:06
+Error in: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=4&Mileage=200. Error Message:
+  [Error]: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=4&Mileage=200
+  [Errornumber]: Bruneability API
+  [ErrorMessage]: Object reference not set to an instance of an object.
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________
+
+Log Entry : 
+D:\MVCProjects\Braunability\Bruneability API\Logs\Dec 17 2019.txt
+12/17/2019 01:53:16
+Error in: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=5&Mileage=23000. Error Message:
+  [Error]: http://localhost:2500/api/Admin/GetValuesByVIN?token=E8niTZ4Hp3gfpg_ESiY0ckvADHRZnfGwh78rAHLtIg8hdlV-AC5szA==&VIN=2C4RDGCG6GR318234&RegionID=5&Mileage=23000
+  [Errornumber]: Bruneability API
+  [ErrorMessage]: Object reference not set to an instance of an object.
+  [ErrorSource]: Void TryCatchExceptionNADA(System.Exception)
+__________________________

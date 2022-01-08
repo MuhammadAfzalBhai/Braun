@@ -1,0 +1,322 @@
+﻿@model Braunability_ViewModal.Model.BraunVM_Request.ConversionDetailForm
+
+<style type="text/css">
+    .field-validation-error {
+        color: red;
+    }
+</style> 
+
+<link href="~/Content/validator.css" rel="stylesheet" />
+
+<script src="~/scripts/jquery.validator.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/scripts/jquery.toast.js"></script>
+
+@Html.HiddenFor(x => x.Status)
+@Html.HiddenFor(x => x.Message)
+
+
+@*@using (Ajax.BeginForm("AddUpdateConversion", "Admin", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess"})) 
+{*@
+        <!-- Add ConversionDetail Modal -->
+    <div class="modal fade" id="conversiondetails">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New Conversion</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                </div>
+                @Html.HiddenFor(x => x.ID)
+
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Conversion Title</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.ConversionName, new { @class = "form-control", @title = "Conversion Title" , validate = "ConversionForm", require = "*Conversion Name is required" })
+                            @Html.ValidationMessageFor(m => m.ConversionName)
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Conversion Tier</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @*@Html.TextBoxFor(m => m.Type, new { @class = "form-control", @title = "Conversion Type" })
+                            @Html.ValidationMessageFor(m => m.Type)*@
+
+                            
+
+
+                            @Html.DropDownListFor(m => m.TierID, Model.TierList, new { @class = "form-control", require = "*Selection is required" })
+
+                            @Html.ValidationMessageFor(m => m.Type)
+
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Retail Price</label>
+                        <div class="col-sm-3">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.RetailPrice, new { @class = "form-control", @title = "Retail Price",min="0", onpaste = "return false;", @onkeypress = "allowNumbersOnly(event);", type = "number", validate = "ConversionForm", require = "*Retail Price is required" })
+                            @Html.ValidationMessageFor(m => m.RetailPrice)
+                        </div>
+
+                        <label class="col-sm-2 col-form-label pr-0">Dealer Price</label>
+                        <div class="col-sm-2">
+                            @*<input type="text" class="form-control">*@
+                            @Html.TextBoxFor(m => m.DealerPrice, new { @class = "form-control", @title = "Dealer Price", min = "0", onpaste = "return false;", @onkeypress = "allowNumbersOnly(event);", type = "number" })
+                            @Html.ValidationMessageFor(m => m.DealerPrice)
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Conversion Year</label>
+                        <div class="col-sm-7">
+                            @*<input type="text" class="form-control">*@
+                            @*@Html.TextBoxFor(m => m.Year, new { @class = "form-control", @title = "Conversion Year", type = "number", regular = "Year must be 4 chars long." ,validExpress = ".{4,}" , validate = "ConversionForm", require = "*The Conversion Year is required" })*@
+                            @Html.TextBoxFor(m => m.Year, new { @class = "form-control", @readonly="readonly",@title = "Conversion Year", @type = "text",validate = "ConversionForm" })
+                              @Html.ValidationMessageFor(m => m.Year)
+                          
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Description</label>
+                        <div class="col-sm-7">
+                            @*<textarea class="form-control" rows="5"></textarea>*@
+                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @title = "Description" })
+                            @Html.ValidationMessageFor(m => m.Description)
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pr-0">Makes</label>
+                        <div class="col-sm-3">
+                            @*<input type="text" class="form-control">*@
+                            @*@Html.TextBoxFor(m => m.Make, new { @class = "form-control", @title = "Make", validate = "ConversionForm", require = "*Make is required" })*@
+                            
+
+                            @Html.DropDownListFor(m => m.MakeID, Model.MakeList, new { @class = "form-control", require = "*Selection is required" })
+
+                            @Html.ValidationMessageFor(m => m.RetailPrice)
+
+
+                        </div>
+
+                        @*<label class="col-sm-2 col-form-label pr-0">Make ID</label>
+                        <div class="col-sm-2">*@
+                            @*<input type="text" class="form-control">*@
+                            @*@Html.TextBoxFor(m => m.MakeID, new { @class = "form-control", @title = "Make ID", min = "0", onpaste = "return false;" ,@onkeypress = "allowNumbersOnly(event);", type = "number", validate = "ConversionForm", require = "*Make ID is required" })
+                            @Html.ValidationMessageFor(m => m.DealerPrice)
+                        </div>*@
+                    </div>
+
+                </div>
+
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-cstm btn-white" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-cstm btn-blue btnSave">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@*}*@
+
+<script>
+
+   
+    $(document).ready(function () {
+        debugger
+        if ($("#ID").val() == 0)
+        {
+            $("#Year").val("2019");
+            $("#MakeID").val("");
+        }
+        else
+        {
+            $("#Year").val();
+            $("#MakeID").val();
+        }
+            
+        $("#Year").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+        });
+
+        //For toaster
+
+        var status = $("#Status").val();
+        var message = $("#Message").val();
+
+        if (status != "" && message != "") {
+
+            if (status == "False") {
+                AlertToast("warning", message);
+            }
+
+        }
+
+        ////////////
+
+
+    });
+
+    //function onSuccess(data) {
+    //    debugger
+
+
+    //var IsValid =  $('.field-validation-error').text();
+    //if (IsValid != "") {
+    //    debugger
+
+    //    $('#conversiondetails').modal('toggle');
+    //   $(".modal-backdrop").removeClass("show");
+    //    $("#popupConversionDetails").html(data);
+    //    $('#conversiondetails').modal('show');
+    //    return;
+    //}
+    //else {
+
+    //    $('#conversiondetails').modal('toggle');
+    //    //For toaster
+    //     var status = $("#Status").val();
+    //    var message = $("#Message").val();
+
+    //    if (status != "" && message != "") {
+    //        if (status == "True") {
+    //            //$("#conversiondetails").modal("hide");
+    //            ConversionDetailsGrid();
+    //            AlertToast("success", message);
+    //            $("#conversiondetails").modal("hide");
+    //        }
+    //        else {
+    //            AlertToast("warning", message);
+    //        }
+
+    //    }
+      
+    //    ////////////
+
+    //}
+
+        //if (data.indexOf("field-validation-error") > -1) {
+
+        //    debugger
+        //    //$.ajaxSetup({ cache: false });
+        //    //$("#popupConversionDetails").html("");
+        //    $('#conversiondetails').modal('toggle');
+     
+        //    $(".modal-backdrop").removeClass("show");
+        //    $("#popupConversionDetails").html(data);
+        //    $('#conversiondetails').modal('toggle');
+        //    //$("#conversiondetails").modal("show");
+        //    return;
+        //}
+        //else {
+          
+        //    //if (data.status) {
+        //    //    ConversionDetailsGrid();
+        //    //    $("#conversiondetails").modal("hide");
+        //    //    AlertToast("success", data.message)
+        //    //}
+        //    //else {
+
+        //    //    AlertToast("warning", data.message)
+        //    //}
+
+        //    //toaster();
+        //}
+    //}
+
+
+    //function toaster() {
+    //    debugger
+    //    var status = $("#Status").val();
+    //    var message = $("#Message").val();
+
+    //    if (status != "" && message != "") {
+    //        if (status == true)
+    //            AlertToast("success", message);
+    //        else
+    //            AlertToast("warning", message);
+    //    }
+    //}
+
+    function allowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    $(".btnSave").click(function () {
+        debugger
+        $(".loader").css({ "display": "block" }); //Loader
+        var id = $("#ID").val();
+        var conversionname = $("#ConversionName").val();
+        var type = $("#Type").val();
+        var retailprice = $("#RetailPrice").val();
+        var dealerprive = $("#DealerPrice").val();
+        var year = $("#Year").val();
+        var description = $("#Description").val();
+        var make = $("#MakeID").children("option:selected").text();;
+        var makeid = $("#MakeID").val();
+        var TierId = $("#TierID").val();
+
+        if (validate("ConversionForm") == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Admin/AddUpdateConversion")',
+                data: '{ID: "' + id + '" ,ConversionName: "' + conversionname + '" ,Type: "' + type + '" ,RetailPrice: "' + retailprice + '" ,DealerPrice: "' + dealerprive + '" ,Year: "' + year + '" ,Description: "' + description + '",Make: "' + make + '",MakeID: "' + makeid + '",TierID:"'+TierId+'" }',
+                processData: false,
+                contentType: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    debugger
+                    if (response.status) {
+                        ConversionDetailsGrid();
+                        $("#conversiondetails").modal("hide");
+                        AlertToast('success', response.message);
+                        $(".loader").css({ "display": "none" });
+                        //window.setTimeout(function () {
+                        //    location.href = "/Admin/ConversionDetails";
+                        //}, 5000);
+                        
+                    }
+                    else {
+                        AlertToast('warning', response.message);
+                        $(".loader").css({ "display": "none" }); //Loader
+                    }
+
+
+                }
+
+            });
+        }
+        else {
+            $(".loader").css({ "display": "none" }); //Loader
+        }
+
+
+        
+    });
+
+
+
+</script>

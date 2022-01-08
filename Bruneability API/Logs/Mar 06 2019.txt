@@ -1,0 +1,6 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 06 2019.txt
+03/06/2019 11:26:17
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekgif_MM72MlMzDGsGyqYLB-KbxBisafnRg=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Durango","ModelID":232,"Trim":"Utility 4D Citadel AWD","TrimID":1193947,"Year":2018,"YearID":2018,"Millage":"1200.00","StateCode":"AK","CleanTrade":"35455","AverageTrade":"34180","RoughTrade":"32605","RetailTrade":"49855","MarkUpFixed":"12000","MarkUpPercent":"0","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"630","ConversionID":[164],"ConversionAmount":["13900"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["5630"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________

@@ -1,0 +1,84 @@
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 14:08:11
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLq69g-DFe5GIOP-08eiAN-k=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona V8","TrimID":1193930,"Year":2018,"YearID":2018,"Millage":"1200.00","StateCode":"AL","CleanTrade":"35125.000000","AverageTrade":"33625.000000","RoughTrade":"31800.000000","RetailTrade":"37800.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"0","ConversionID":null,"ConversionAmount":null,"DeductionID":null,"DeductionAmount":null,"DepericiationAmount":null,"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 15:01:32
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLnKWlayrOeoOwz_m6HrGvgo=","QouteID":0,"CustomerName":"Junaid Zaheer","Email":"junaidzaheerkhan@outlook.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"CHRYSLER","MakeID":9,"Model":"200","ModelID":4,"Trim":"Sedan 4D Limited V6","TrimID":1189098,"Year":2017,"YearID":2017,"Millage":"11111.00","StateCode":"CA","CleanTrade":"15150.000000","AverageTrade":"14150.000000","RoughTrade":"12900.000000","RetailTrade":"17825.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"New","EmployeeID":1022,"TotalConversionDeduction":"13241","ConversionID":[140,142],"ConversionAmount":["26450","28600"],"DeductionID":[2,3],"DeductionAmount":["5000","2000"],"DepericiationAmount":["9725","10516"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":true,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 15:33:32
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmcCpBlLOvkXgnvmJZZ3Vrs=","QouteID":0,"CustomerName":null,"Email":null,"Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"TOYOTA","MakeID":47,"Model":"Sienna","ModelID":752,"Trim":"Wagon 5D L V6","TrimID":1195440,"Year":2018,"YearID":2018,"Millage":"1200.00","StateCode":"AL","CleanTrade":"23875.000000","AverageTrade":"22725.000000","RoughTrade":"21300.000000","RetailTrade":"25825.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"9627","ConversionID":[112],"ConversionAmount":["25050"],"DeductionID":[2],"DeductionAmount":["5000"],"DepericiationAmount":["14627"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":true,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 17:29:16
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLg5IR29EY_AsqP7FjJJhRs0=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D SRT Demon","TrimID":1193339,"Year":2018,"YearID":2018,"Millage":"5000.00","StateCode":"CA","CleanTrade":"110875.000000","AverageTrade":"108975.000000","RoughTrade":"106650.000000","RetailTrade":"114850.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"22151","ConversionID":[105,107],"ConversionAmount":["23575","26350"],"DeductionID":[2,4],"DeductionAmount":["5000","2000"],"DepericiationAmount":["13765","15386"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:10:55
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SE V6","TrimID":1194653,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"11150.000000","AverageTrade":"10075.000000","RoughTrade":"8750.000000","RetailTrade":"12475.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"NaN","ConversionID":[164,170],"ConversionAmount":["13900","24625"],"DeductionID":[2,1],"DeductionAmount":["5000",null],"DepericiationAmount":["8116","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:11:19
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SE V6","TrimID":1194653,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"11150.000000","AverageTrade":"10075.000000","RoughTrade":"8750.000000","RetailTrade":"12475.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"NaN","ConversionID":[164,170],"ConversionAmount":["13900","24625"],"DeductionID":[2,1],"DeductionAmount":["5000",null],"DepericiationAmount":["8116","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:11:46
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SE V6","TrimID":1194653,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"11150.000000","AverageTrade":"10075.000000","RoughTrade":"8750.000000","RetailTrade":"12475.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"NaN","ConversionID":[164,170],"ConversionAmount":["13900","24625"],"DeductionID":[2,1],"DeductionAmount":["5000",null],"DepericiationAmount":["8116","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:12:19
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SE V6","TrimID":1194653,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"11150.000000","AverageTrade":"10075.000000","RoughTrade":"8750.000000","RetailTrade":"12475.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"NaN","ConversionID":[164,170],"ConversionAmount":["13900","24625"],"DeductionID":[2,1],"DeductionAmount":["5000",null],"DepericiationAmount":["8116","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:12:56
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE TRUCK","MakeID":12,"Model":"Grand Caravan","ModelID":374,"Trim":"Grand Caravan SE V6","TrimID":1194653,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"11150.000000","AverageTrade":"10075.000000","RoughTrade":"8750.000000","RetailTrade":"12475.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"NaN","ConversionID":[164,170],"ConversionAmount":["13900","24625"],"DeductionID":[2,1],"DeductionAmount":["5000",null],"DepericiationAmount":["8116","14378"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:15:50
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona V8","TrimID":1193930,"Year":2018,"YearID":2018,"Millage":"120000","StateCode":"AK","CleanTrade":"26050.000000","AverageTrade":"24550.000000","RoughTrade":"22725.000000","RetailTrade":"28725.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"19151","ConversionID":[105,107],"ConversionAmount":["23575","26350"],"DeductionID":[2,2],"DeductionAmount":["5000","5000"],"DepericiationAmount":["13765","15386"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:23:13
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D SRT-8 V8","TrimID":1178806,"Year":2014,"YearID":2014,"Millage":"12000","StateCode":"AL","CleanTrade":"29850.000000","AverageTrade":"28450.000000","RoughTrade":"26750.000000","RetailTrade":"32275.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"1662","ConversionID":[106,108],"ConversionAmount":["24625","27200"],"DeductionID":[3,1],"DeductionAmount":["2000","800"],"DepericiationAmount":["2120","2342"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:28:31
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D Daytona V8","TrimID":1193930,"Year":2018,"YearID":2018,"Millage":"12000","StateCode":"AZ","CleanTrade":"34175.000000","AverageTrade":"32675.000000","RoughTrade":"30850.000000","RetailTrade":"36850.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"20805","ConversionID":[106,109],"ConversionAmount":["24625","22995"],"DeductionID":[2,3],"DeductionAmount":["5000","2000"],"DepericiationAmount":["14378","13427"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:30:57
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Challenger","ModelID":159,"Trim":"Coupe 2D R/T Plus V8","TrimID":1191222,"Year":2017,"YearID":2017,"Millage":"12000","StateCode":"AK","CleanTrade":"29025.000000","AverageTrade":"27600.000000","RoughTrade":"25850.000000","RetailTrade":"31875.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"4732","ConversionID":[105,108],"ConversionAmount":["23575","27200"],"DeductionID":[1,3],"DeductionAmount":["800","2000"],"DepericiationAmount":["3497","4035"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":false,"IsRough":false}
+__________________________
+
+Log Entry : 
+D:\Junaid Zaheer\TFS Projects\BraunAbility\Bruneability API\Logs\Mar 12 2019.txt
+03/12/2019 18:32:11
+Error in: http://localhost:2500/api/Employee/SaveQoute. Error Message:{"token":"NDIjIBUgekjzK7mxt0CeLmu9WUk36XepEYaFNELVg3U=","QouteID":0,"CustomerName":null,"Email":"sam@gmail.com","Phone":null,"AddressLine1":null,"AddressLine2":null,"SearchType":"Vehicle Details","SearchTypeID":"Vehicle Details","Make":"DODGE","MakeID":11,"Model":"Charger","ModelID":162,"Trim":"Sedan 4D GT AWD","TrimID":1193934,"Year":2018,"YearID":2018,"Millage":"12000","StateCode":"AK","CleanTrade":"24775.000000","AverageTrade":"23400.000000","RoughTrade":"21725.000000","RetailTrade":"27175.000000","MarkUpFixed":"0","MarkUpPercent":"50","Status":"Draft","EmployeeID":1022,"TotalConversionDeduction":"17012","ConversionID":[106,123],"ConversionAmount":["24625","16500"],"DeductionID":[2,3],"DeductionAmount":["5000","2000"],"DepericiationAmount":["14378","9634"],"QouteAmount":null,"VinNumber":null,"RegionVal":null,"RegionText":null,"IsClean":false,"IsAverage":true,"IsRough":false}
+__________________________
